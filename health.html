@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System Health</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1a1a1a; --muted:#666; --line:#e2e2e2;
+          --accent:#0b6bcb; --warn:#b45309; --card:#f7f7f8;
+          --ok:#0ca30c; --err:#c62828; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131316; --fg:#e8e8ea; --muted:#9a9aa2; --line:#2c2c31;
+            --accent:#6cb2ff; --warn:#f0a24b; --card:#1c1c21;
+            --ok:#2fbf2f; --err:#ef5350; } }
+  body { margin:0 auto; max-width:56rem; padding:2rem 1.25rem;
+         background:var(--bg); color:var(--fg);
+         font:16px/1.6 -apple-system, "Segoe UI", sans-serif; }
+  h1 { font-size:1.5rem; margin-bottom:.25rem; }
+  h2 { font-size:1.15rem; margin-top:2rem; border-bottom:1px solid var(--line);
+       padding-bottom:.3rem; }
+  .meta { color:var(--muted); font-size:.9rem; }
+  nav { display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0 1.5rem;
+        border-bottom:1px solid var(--line); padding-bottom:.75rem; font-size:.95rem; }
+  nav a { color:var(--accent); text-decoration:none; }
+  nav a.active { font-weight:700; color:var(--fg); }
+  .card { background:var(--card); border:1px solid var(--line);
+          border-radius:8px; padding:.75rem 1rem; margin:.75rem 0; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+           gap:.75rem; margin:1rem 0; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:8px;
+          padding:.75rem 1rem; }
+  .tile .k { color:var(--muted); font-size:.8rem; text-transform:uppercase;
+             letter-spacing:.04em; }
+  .tile .v { font-size:1.35rem; font-weight:700; margin-top:.15rem; }
+  .tile .s { color:var(--muted); font-size:.8rem; }
+  table { border-collapse:collapse; width:100%; font-size:.92rem; }
+  .tablewrap { overflow-x:auto; }
+  th,td { text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--line);
+          vertical-align:top; }
+  code { background:var(--card); padding:.1em .35em; border-radius:4px; font-size:.9em; }
+  .badge { display:inline-block; padding:.05em .55em; border-radius:99px;
+           font-size:.78rem; font-weight:600; color:#fff; }
+  .badge.ok { background:var(--ok); } .badge.warn { background:var(--warn); }
+  .badge.err { background:var(--err); } .badge.na { background:var(--muted); }
+  .pos { color:var(--ok); font-weight:600; } .neg { color:var(--err); font-weight:600; }
+  .gallery { display:grid; grid-template-columns:1fr; gap:1rem; }
+  .shot { background:var(--card); border:1px solid var(--line); border-radius:8px;
+          padding:.75rem; }
+  .shot img { max-width:100%; border-radius:4px; display:block; }
+  .shot .cap { color:var(--muted); font-size:.85rem; margin-top:.5rem; }
+  footer { margin-top:2.5rem; color:var(--muted); font-size:.8rem;
+           border-top:1px solid var(--line); padding-top:.75rem; }
+</style></head><body>
+<h1>System Health</h1>
+<p class="meta">Updated 2026-07-23 17:45 ET</p>
+<nav><a href="index.html">Overview</a><a href="roadmap.html">Roadmap</a><a href="health.html" class="active">Health</a><a href="trading.html">Paper Trading</a><a href="gallery.html">Gallery</a></nav>
+
+<p>Automated post-hoc checks, one row per trading day. <strong>Market data</strong> diffs
+the intended subscription set against what actually streamed (silent/stale/missing
+symbols). <strong>Ledger</strong> compares the canonical trade ledger against live broker
+state per account. <strong>Greeks shadow</strong> cross-checks two greeks vendors while a
+data-source cutover is in flight.</p>
+<div class="tablewrap"><table>
+<tr><th>Date</th><th>Market data</th><th>Ledger vs live</th><th>Greeks shadow</th></tr>
+<tr><td>2026-07-23</td><td><span class="badge na">18 silent / 1189 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-22</td><td><span class="badge na">33 silent / 1142 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-21</td><td><span class="badge na">13 silent / 1394 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-20</td><td><span class="badge na">8 silent / 1402 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-17</td><td><span class="badge na">24 silent / 1380 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-16</td><td><span class="badge na">38 silent / 888 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-15</td><td><span class="badge na">8 silent / 922 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-14</td><td><span class="badge na">6 silent / 899 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-13</td><td><span class="badge na">7 silent / 929 stale (off-hours)</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no pairs</span></td></tr><tr><td>2026-07-12</td><td><span class="badge na">no data</span></td><td><span class="badge ok">7/7 in sync</span></td><td><span class="badge na">no data</span></td></tr>
+</table></div>
+
+<footer>Static snapshot, regenerated on a schedule. Live trading data is paper-account
+only; live accounts appear as aggregate health checks. Generated 2026-07-23 17:45 ET.</footer>
+</body></html>

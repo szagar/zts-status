@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Trading</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1a1a1a; --muted:#666; --line:#e2e2e2;
+          --accent:#0b6bcb; --warn:#b45309; --card:#f7f7f8;
+          --ok:#0ca30c; --err:#c62828; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131316; --fg:#e8e8ea; --muted:#9a9aa2; --line:#2c2c31;
+            --accent:#6cb2ff; --warn:#f0a24b; --card:#1c1c21;
+            --ok:#2fbf2f; --err:#ef5350; } }
+  body { margin:0 auto; max-width:56rem; padding:2rem 1.25rem;
+         background:var(--bg); color:var(--fg);
+         font:16px/1.6 -apple-system, "Segoe UI", sans-serif; }
+  h1 { font-size:1.5rem; margin-bottom:.25rem; }
+  h2 { font-size:1.15rem; margin-top:2rem; border-bottom:1px solid var(--line);
+       padding-bottom:.3rem; }
+  .meta { color:var(--muted); font-size:.9rem; }
+  nav { display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0 1.5rem;
+        border-bottom:1px solid var(--line); padding-bottom:.75rem; font-size:.95rem; }
+  nav a { color:var(--accent); text-decoration:none; }
+  nav a.active { font-weight:700; color:var(--fg); }
+  .card { background:var(--card); border:1px solid var(--line);
+          border-radius:8px; padding:.75rem 1rem; margin:.75rem 0; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+           gap:.75rem; margin:1rem 0; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:8px;
+          padding:.75rem 1rem; }
+  .tile .k { color:var(--muted); font-size:.8rem; text-transform:uppercase;
+             letter-spacing:.04em; }
+  .tile .v { font-size:1.35rem; font-weight:700; margin-top:.15rem; }
+  .tile .s { color:var(--muted); font-size:.8rem; }
+  table { border-collapse:collapse; width:100%; font-size:.92rem; }
+  .tablewrap { overflow-x:auto; }
+  th,td { text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--line);
+          vertical-align:top; }
+  code { background:var(--card); padding:.1em .35em; border-radius:4px; font-size:.9em; }
+  .badge { display:inline-block; padding:.05em .55em; border-radius:99px;
+           font-size:.78rem; font-weight:600; color:#fff; }
+  .badge.ok { background:var(--ok); } .badge.warn { background:var(--warn); }
+  .badge.err { background:var(--err); } .badge.na { background:var(--muted); }
+  .pos { color:var(--ok); font-weight:600; } .neg { color:var(--err); font-weight:600; }
+  .gallery { display:grid; grid-template-columns:1fr; gap:1rem; }
+  .shot { background:var(--card); border:1px solid var(--line); border-radius:8px;
+          padding:.75rem; }
+  .shot img { max-width:100%; border-radius:4px; display:block; }
+  .shot .cap { color:var(--muted); font-size:.85rem; margin-top:.5rem; }
+  footer { margin-top:2.5rem; color:var(--muted); font-size:.8rem;
+           border-top:1px solid var(--line); padding-top:.75rem; }
+</style></head><body>
+<h1>Paper Trading</h1>
+<p class="meta">Updated 2026-07-23 17:45 ET</p>
+<nav><a href="index.html">Overview</a><a href="roadmap.html">Roadmap</a><a href="health.html">Health</a><a href="trading.html" class="active">Paper Trading</a><a href="gallery.html">Gallery</a></nav>
+
+<p>Paper-account activity only — strategy bots firing real logic against live market
+data, filling simulated orders at fixed base size (1 lot) so per-trade results measure
+the strategy's edge, not sizing. As of 2026-07-23.</p>
+
+<h2>kaity_paper</h2>
+<div class="tiles">
+  <div class="tile"><div class="k">Closed (14d)</div><div class="v">74</div></div>
+  <div class="tile"><div class="k">Win rate</div><div class="v">64%</div></div>
+  <div class="tile"><div class="k">Net P&amp;L (14d)</div><div class="v"><span class="pos">+$3,494.50</span></div></div>
+  <div class="tile"><div class="k">Open groups</div><div class="v">2</div></div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>Closed</th><th>Bot</th><th>Underlying</th><th>Structure</th><th>Qty</th><th>P&amp;L</th></tr>
+<tr><td>07-23</td><td>idx_ibfly_0dte_30w_ok_kaity_paper</td><td>SPXW</td><td>iron_fly</td><td>1</td><td><span class="pos">+$567.50</span></td></tr><tr><td>07-23</td><td>dbl_cal_idx_kaity_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$1,090.00</span></td></tr><tr><td>07-21</td><td>dbl_cal_etf_kaity_paper</td><td>QQQ</td><td>iron_condor</td><td>1</td><td><span class="pos">+$2.50</span></td></tr><tr><td>07-20</td><td>dbl_cal_idx_kaity_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-20.00</span></td></tr><tr><td>07-20</td><td>dbl_cal_etf_kaity_paper</td><td>QQQ</td><td>iron_condor</td><td>1</td><td><span class="pos">+$4.00</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$265.00</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-17.50</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$32.50</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-17.50</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$20.00</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$15.00</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$255.00</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$170.00</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$235.00</span></td></tr><tr><td>07-17</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$100.00</span></td></tr><tr><td>07-17</td><td>idx_ibfly_0dte_30w_ok_kaity_paper</td><td>SPXW</td><td>iron_fly</td><td>1</td><td><span class="pos">+$482.50</span></td></tr><tr><td>07-17</td><td>dbl_cal_idx_kaity_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$5.00</span></td></tr><tr><td>07-17</td><td>dbl_cal_etf_kaity_paper</td><td>QQQ</td><td>iron_condor</td><td>1</td><td><span class="neg">$-4.50</span></td></tr><tr><td>07-16</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">$0.00</span></td></tr><tr><td>07-16</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$7.50</span></td></tr><tr><td>07-16</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$25.00</span></td></tr><tr><td>07-16</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-22.50</span></td></tr><tr><td>07-16</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$35.00</span></td></tr><tr><td>07-16</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$10.00</span></td></tr><tr><td>07-16</td><td>systest_meic_kaity</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-10.00</span></td></tr>
+</table></div>
+
+<h2>sniper_paper</h2>
+<div class="tiles">
+  <div class="tile"><div class="k">Closed (14d)</div><div class="v">5</div></div>
+  <div class="tile"><div class="k">Win rate</div><div class="v">80%</div></div>
+  <div class="tile"><div class="k">Net P&amp;L (14d)</div><div class="v"><span class="pos">+$382.50</span></div></div>
+  <div class="tile"><div class="k">Open groups</div><div class="v">0</div></div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>Closed</th><th>Bot</th><th>Underlying</th><th>Structure</th><th>Qty</th><th>P&amp;L</th></tr>
+<tr><td>07-23</td><td>sniper_ir</td><td>SPXW</td><td>vertical_call</td><td>1</td><td><span class="pos">+$80.00</span></td></tr><tr><td>07-23</td><td>sniper_ic</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$127.50</span></td></tr><tr><td>07-22</td><td>sniper_ic</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$197.50</span></td></tr><tr><td>07-21</td><td>sniper_ic</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$50.00</span></td></tr><tr><td>07-20</td><td>sniper_ic</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-72.50</span></td></tr>
+</table></div>
+
+<h2>squid_paper</h2>
+<div class="tiles">
+  <div class="tile"><div class="k">Closed (14d)</div><div class="v">76</div></div>
+  <div class="tile"><div class="k">Win rate</div><div class="v">58%</div></div>
+  <div class="tile"><div class="k">Net P&amp;L (14d)</div><div class="v"><span class="pos">+$3,660.00</span></div></div>
+  <div class="tile"><div class="k">Open groups</div><div class="v">0</div></div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>Closed</th><th>Bot</th><th>Underlying</th><th>Structure</th><th>Qty</th><th>P&amp;L</th></tr>
+<tr><td>07-23</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$315.00</span></td></tr><tr><td>07-23</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$112.50</span></td></tr><tr><td>07-23</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$295.00</span></td></tr><tr><td>07-23</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$262.50</span></td></tr><tr><td>07-23</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-12.50</span></td></tr><tr><td>07-23</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">$0.00</span></td></tr><tr><td>07-23</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">$0.00</span></td></tr><tr><td>07-23</td><td>idx_ibfly_0dte_30w_ok_squid_paper</td><td>SPXW</td><td>iron_fly</td><td>1</td><td><span class="pos">+$407.50</span></td></tr><tr><td>07-22</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$95.00</span></td></tr><tr><td>07-22</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$35.00</span></td></tr><tr><td>07-22</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-32.50</span></td></tr><tr><td>07-22</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$27.50</span></td></tr><tr><td>07-22</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$47.50</span></td></tr><tr><td>07-22</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$155.00</span></td></tr><tr><td>07-22</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-127.50</span></td></tr><tr><td>07-21</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$240.00</span></td></tr><tr><td>07-21</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$247.50</span></td></tr><tr><td>07-21</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$142.50</span></td></tr><tr><td>07-21</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$262.50</span></td></tr><tr><td>07-21</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-32.50</span></td></tr><tr><td>07-21</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$240.00</span></td></tr><tr><td>07-21</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-77.50</span></td></tr><tr><td>07-20</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$152.50</span></td></tr><tr><td>07-20</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-22.50</span></td></tr><tr><td>07-20</td><td>meic_squid_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-15.00</span></td></tr>
+</table></div>
+
+<h2>szagar_paper</h2>
+<div class="tiles">
+  <div class="tile"><div class="k">Closed (14d)</div><div class="v">48</div></div>
+  <div class="tile"><div class="k">Win rate</div><div class="v">62%</div></div>
+  <div class="tile"><div class="k">Net P&amp;L (14d)</div><div class="v"><span class="pos">+$5,828.25</span></div></div>
+  <div class="tile"><div class="k">Open groups</div><div class="v">10</div></div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>Closed</th><th>Bot</th><th>Underlying</th><th>Structure</th><th>Qty</th><th>P&amp;L</th></tr>
+<tr><td>07-23</td><td>idx_ic_45dte_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$525.00</span></td></tr><tr><td>07-23</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$315.00</span></td></tr><tr><td>07-23</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$112.50</span></td></tr><tr><td>07-23</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$295.00</span></td></tr><tr><td>07-23</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$262.50</span></td></tr><tr><td>07-23</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-17.50</span></td></tr><tr><td>07-23</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$12.50</span></td></tr><tr><td>07-23</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-5.00</span></td></tr><tr><td>07-23</td><td>fut_ibfly_0dte_30w_ok_paper</td><td>E4DN6</td><td>iron_fly</td><td>1</td><td><span class="pos">+$273.75</span></td></tr><tr><td>07-23</td><td>idx_ibfly_0dte_30w_ok_paper</td><td>SPXW</td><td>iron_fly</td><td>1</td><td><span class="pos">+$350.00</span></td></tr><tr><td>07-22</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$100.00</span></td></tr><tr><td>07-22</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$35.00</span></td></tr><tr><td>07-22</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-32.50</span></td></tr><tr><td>07-22</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$27.50</span></td></tr><tr><td>07-22</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$47.50</span></td></tr><tr><td>07-22</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$155.00</span></td></tr><tr><td>07-22</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-142.50</span></td></tr><tr><td>07-21</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$225.00</span></td></tr><tr><td>07-21</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$240.00</span></td></tr><tr><td>07-21</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$247.50</span></td></tr><tr><td>07-21</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$262.50</span></td></tr><tr><td>07-21</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-32.50</span></td></tr><tr><td>07-21</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$240.00</span></td></tr><tr><td>07-21</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-77.50</span></td></tr><tr><td>07-20</td><td>meic_paper</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$152.50</span></td></tr>
+</table></div>
+
+<h2>tommyboy_paper</h2>
+<div class="tiles">
+  <div class="tile"><div class="k">Closed (14d)</div><div class="v">66</div></div>
+  <div class="tile"><div class="k">Win rate</div><div class="v">61%</div></div>
+  <div class="tile"><div class="k">Net P&amp;L (14d)</div><div class="v"><span class="pos">+$917.50</span></div></div>
+  <div class="tile"><div class="k">Open groups</div><div class="v">0</div></div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>Closed</th><th>Bot</th><th>Underlying</th><th>Structure</th><th>Qty</th><th>P&amp;L</th></tr>
+<tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$265.00</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-17.50</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$32.50</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-17.50</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$20.00</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$20.00</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$15.00</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$117.50</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-27.50</span></td></tr><tr><td>07-17</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-55.00</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$27.50</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$7.50</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$70.00</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$15.00</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-22.50</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$32.50</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$10.00</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-10.00</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$105.00</span></td></tr><tr><td>07-16</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-30.00</span></td></tr><tr><td>07-15</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$32.50</span></td></tr><tr><td>07-15</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-57.50</span></td></tr><tr><td>07-15</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$42.50</span></td></tr><tr><td>07-15</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="neg">$-37.50</span></td></tr><tr><td>07-15</td><td>systest_meic_tommyboy</td><td>SPXW</td><td>iron_condor</td><td>1</td><td><span class="pos">+$90.00</span></td></tr>
+</table></div>
+
+
+<footer>Static snapshot, regenerated on a schedule. Live trading data is paper-account
+only; live accounts appear as aggregate health checks. Generated 2026-07-23 17:45 ET.</footer>
+</body></html>

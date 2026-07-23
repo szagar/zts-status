@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZTS Platform</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1a1a1a; --muted:#666; --line:#e2e2e2;
+          --accent:#0b6bcb; --warn:#b45309; --card:#f7f7f8;
+          --ok:#0ca30c; --err:#c62828; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131316; --fg:#e8e8ea; --muted:#9a9aa2; --line:#2c2c31;
+            --accent:#6cb2ff; --warn:#f0a24b; --card:#1c1c21;
+            --ok:#2fbf2f; --err:#ef5350; } }
+  body { margin:0 auto; max-width:56rem; padding:2rem 1.25rem;
+         background:var(--bg); color:var(--fg);
+         font:16px/1.6 -apple-system, "Segoe UI", sans-serif; }
+  h1 { font-size:1.5rem; margin-bottom:.25rem; }
+  h2 { font-size:1.15rem; margin-top:2rem; border-bottom:1px solid var(--line);
+       padding-bottom:.3rem; }
+  .meta { color:var(--muted); font-size:.9rem; }
+  nav { display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0 1.5rem;
+        border-bottom:1px solid var(--line); padding-bottom:.75rem; font-size:.95rem; }
+  nav a { color:var(--accent); text-decoration:none; }
+  nav a.active { font-weight:700; color:var(--fg); }
+  .card { background:var(--card); border:1px solid var(--line);
+          border-radius:8px; padding:.75rem 1rem; margin:.75rem 0; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+           gap:.75rem; margin:1rem 0; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:8px;
+          padding:.75rem 1rem; }
+  .tile .k { color:var(--muted); font-size:.8rem; text-transform:uppercase;
+             letter-spacing:.04em; }
+  .tile .v { font-size:1.35rem; font-weight:700; margin-top:.15rem; }
+  .tile .s { color:var(--muted); font-size:.8rem; }
+  table { border-collapse:collapse; width:100%; font-size:.92rem; }
+  .tablewrap { overflow-x:auto; }
+  th,td { text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--line);
+          vertical-align:top; }
+  code { background:var(--card); padding:.1em .35em; border-radius:4px; font-size:.9em; }
+  .badge { display:inline-block; padding:.05em .55em; border-radius:99px;
+           font-size:.78rem; font-weight:600; color:#fff; }
+  .badge.ok { background:var(--ok); } .badge.warn { background:var(--warn); }
+  .badge.err { background:var(--err); } .badge.na { background:var(--muted); }
+  .pos { color:var(--ok); font-weight:600; } .neg { color:var(--err); font-weight:600; }
+  .gallery { display:grid; grid-template-columns:1fr; gap:1rem; }
+  .shot { background:var(--card); border:1px solid var(--line); border-radius:8px;
+          padding:.75rem; }
+  .shot img { max-width:100%; border-radius:4px; display:block; }
+  .shot .cap { color:var(--muted); font-size:.85rem; margin-top:.5rem; }
+  footer { margin-top:2.5rem; color:var(--muted); font-size:.8rem;
+           border-top:1px solid var(--line); padding-top:.75rem; }
+</style></head><body>
+<h1>ZTS Platform</h1>
+<p class="meta">Updated 2026-07-23 17:45 ET</p>
+<nav><a href="index.html" class="active">Overview</a><a href="roadmap.html">Roadmap</a><a href="health.html">Health</a><a href="trading.html">Paper Trading</a><a href="gallery.html">Gallery</a></nav>
+
+<p>An automated options-trading platform: market data, strategy bots, order management, and a canonical trade ledger — built as a Python monorepo.</p>
+<div class="tiles">
+  <div class="tile"><div class="k">Market data</div><div class="v"><span class="badge na">18 silent / 1189 stale (off-hours)</span></div>
+    <div class="s">latest subscription check</div></div>
+  <div class="tile"><div class="k">Ledger</div><div class="v"><span class="badge ok">7/7 in sync</span></div>
+    <div class="s">ledger vs broker drift</div></div>
+  <div class="tile"><div class="k">Paper P&amp;L today</div><div class="v"><span class="pos">+$5,368.75</span></div>
+    <div class="s">22 trade group(s) closed</div></div>
+  <div class="tile"><div class="k">Trades this week</div><div class="v">70</div>
+    <div class="s">closed paper trade groups</div></div>
+</div>
+<div class="shot"><img src="assets/cockpit-live.png" alt="ZTS cockpit screenshot"><div class="cap">The live cockpit — trade-group blotter with per-leg detail. More in the <a href="gallery.html">gallery</a>.</div></div>
+<h2>In the lab</h2>
+<ul>
+  <li>A new Bot Intelligence layer is coming online in the cockpit — five linked screens (performance, lineage map, regime matrix, idea pipeline, and exit lab) that turn forward-test data into a decision surface.</li>
+  <li>The Idea Pipeline screen tracks each strategy&#x27;s lifecycle as a cohort funnel — experimental to paper to live-pilot to production — with per-bot readiness meters against an explicit promotion bar.</li>
+  <li>A cohort/promotion audit log now records every move between lifecycle stages, and a sources rail indexes where ideas come from — a research talent pool, TradingView signal emitters, and event/seasonality studies — with built-versus-untapped counts.</li>
+  <li>Regime output is being wired to gate strategy entries — favorable / neutral / caution / halt, with hysteresis so the label doesn&#x27;t flap.</li>
+</ul>
+<h2>What's here</h2>
+<ul>
+  <li><a href="roadmap.html">Roadmap</a> — where the build is, track by track.</li>
+  <li><a href="health.html">Health</a> — daily automated system checks.</li>
+  <li><a href="trading.html">Paper trading</a> — bot activity and results.</li>
+  <li><a href="gallery.html">Gallery</a> — screenshots of the system.</li>
+</ul>
+<h2>Recent daily reports</h2>
+<ul><li><a href="reports/daily-report-2026-07-23.html">2026-07-23</a></li><li><a href="reports/daily-report-2026-07-22.html">2026-07-22</a></li><li><a href="reports/daily-report-2026-07-20.html">2026-07-20</a></li><li><a href="reports/daily-report-2026-07-17.html">2026-07-17</a></li><li><a href="reports/daily-report-2026-07-16.html">2026-07-16</a></li><li><a href="reports/daily-report-2026-07-15.html">2026-07-15</a></li><li><a href="reports/daily-report-2026-07-14.html">2026-07-14</a></li><li><a href="reports/daily-report-2026-07-13.html">2026-07-13</a></li><li><a href="reports/daily-report-2026-07-10.html">2026-07-10</a></li><li><a href="reports/daily-report-2026-07-09.html">2026-07-09</a></li></ul>
+
+<footer>Static snapshot, regenerated on a schedule. Live trading data is paper-account
+only; live accounts appear as aggregate health checks. Generated 2026-07-23 17:45 ET.</footer>
+</body></html>

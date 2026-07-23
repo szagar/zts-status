@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body{font-family:Arial,sans-serif;font-size:14px;color:#222;max-width:900px;margin:0 auto;padding:16px}
+h1{color:#1a237e;border-bottom:2px solid #1a237e;padding-bottom:6px}
+h2{color:#283593;margin-top:24px;margin-bottom:8px}
+table{border-collapse:collapse;width:100%;margin-bottom:16px}
+th{background:#e8eaf6;color:#1a237e;text-align:left;padding:8px 10px;font-size:13px}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;font-size:13px;vertical-align:top}
+tr:hover td{background:#f5f5f5}
+.profit{color:#2e7d32;font-weight:bold}
+.loss{color:#c62828;font-weight:bold}
+.badge-ok{background:#e8f5e9;color:#2e7d32;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-warn{background:#fff8e1;color:#f57f17;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-err{background:#ffebee;color:#c62828;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-skip{background:#f3f3f3;color:#777;padding:2px 7px;border-radius:10px;font-size:12px}
+.box-ok{background:#f1f8e9;border-left:4px solid #66bb6a;padding:8px 12px;margin-bottom:12px}
+.box-warn{background:#fffde7;border-left:4px solid #ffca28;padding:8px 12px;margin-bottom:12px}
+.box-err{background:#ffebee;border-left:4px solid #ef5350;padding:8px 12px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<p style="font-size:.85rem"><a href="../index.html">&larr; back to overview</a></p>
+
+<h1>ZTS Daily Report &#8212; 2026-07-14</h1>
+
+<div class="box-ok">
+  <strong>Summary:</strong>
+  <ul>
+    <li><strong>Day P&amp;L: <span class="profit">+$4,746.56</span></strong> across 29 closed groups &#8212; 21 winners / 8 losers / 0 scratch. Nearly all SPXW 0DTE MEIC iron condors (paper systest / squid arms) plus one paper SPX iron-fly and one <em>live</em> /ES calendar (+$129.06, individual).</li>
+    <li><strong>Bot activity:</strong> 2,466 bot fires (1,042 submitted / 1,424 skipped), <strong>0 errors, 0 stuck runs</strong>. 85 orders, <strong>all FILLED</strong> &#8212; no rejections. 3 groups still open (live /ES calendar, paper /ES IC, paper /ES iron-fly).</li>
+    <li><strong>MDS healthy:</strong> 3 instances (szagar/sydney/tommyboy) up 00:00&#8211;16:33 ET, 1 graceful DXLink reconnect each (~2s) at the 08:00 restart. Peak 1,133 quote + 82 greeks subs. 0 MISSING symbols.</li>
+    <li><strong>Watch:</strong> 4 MDS ERRORs (tommyboy) &#8212; a Sunday /ESU6 expiration (2026-07-13) lookup at startup; low impact (ES bots submitted fine later). WARNING volume is dominated (~457k) by <code>derived.shadow.mismatch</code> 16&#916; band-selection noise &#8212; see Smells.</li>
+    <li><strong>Snapshots:</strong> greeks-shadow roots empty (expected post-07-09 Massive cutover &#8212; no DXLink greeks to pair). bot-metrics &amp; ledger-health run at 16:45/17:15 ET, <em>after</em> this 16:30 report &#8212; not yet written (not a failure).</li>
+  </ul>
+</div>
+
+<h2>Bot Fires</h2>
+<p style="color:#777;font-size:12px;margin-top:0">Submitted / mixed bots shown individually; high-volume exit &amp; stop polls collapsed to one row; low-signal disabled entry bots summarized at the bottom.</p>
+<table>
+  <tr><th>Time (ET)</th><th>Bot</th><th>Login</th><th>Result</th><th>ms</th><th>Detail</th></tr>
+  <tr><td>10:00</td><td>systest_meic_kaity_v1</td><td>kaity</td><td><span class="badge-ok">submitted &#215;10</span></td><td>~4,619</td><td>SPX MEIC &#183; 10 entries &#183; TG 1461&#8230;1517 (all closed EOD)</td></tr>
+  <tr><td>10:00</td><td>systest_meic_tommyboy_v1</td><td>tommyboy</td><td><span class="badge-ok">submitted &#215;10</span></td><td>~4,937</td><td>SPX MEIC &#183; 10 entries &#183; TG 1460&#8230;1516 (all closed EOD)</td></tr>
+  <tr><td>10:01</td><td>systest_meic_stop_kaity</td><td>kaity</td><td><span class="badge-ok">356 cycles</span></td><td>~312</td><td>MEIC stop monitor &#8212; no exits triggered (4 cycles skipped: no open entries)</td></tr>
+  <tr><td>10:01</td><td>systest_meic_stop_tommyboy</td><td>tommyboy</td><td><span class="badge-ok">356 cycles</span></td><td>~306</td><td>MEIC stop monitor &#8212; no exits triggered</td></tr>
+  <tr><td>10:45</td><td>es_ic_45dte_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>2,016</td><td>/ES IC (EW3U6) &#183; OMS-CFF1D0C9DBF8 &#183; TG 1469 <em>(open)</em></td></tr>
+  <tr><td>11:00</td><td>spx_ibfly_0dte_30w_ok_kaity_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>2,848</td><td>SPX iron-fly &#183; OMS-A6B75654A4C0 &#183; TG 1476 (closed <span class="profit">+$387.50</span>)</td></tr>
+  <tr><td>11:00</td><td>spx_meic_squid_paper_v1</td><td>sydney</td><td><span class="badge-ok">submitted &#215;7</span></td><td>~3,750</td><td>SPX MEIC &#183; 7 entries &#183; TG 1475&#8230;1511 (all closed EOD)</td></tr>
+  <tr><td>11:01</td><td>spx_meic_stop_squid_paper</td><td>sydney</td><td><span class="badge-ok">296 cycles</span></td><td>~280</td><td>MEIC stop monitor &#8212; no exits triggered</td></tr>
+  <tr><td>13:34</td><td>spx_ibfly_0dte_30w_ok_profit_exit_kaity_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>1,685</td><td>Profit-target exit &#8212; closed TG 1476 (149 prior polls skipped)</td></tr>
+  <tr><td>14:32</td><td>es_ibfly_0dte_30w_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>12,210</td><td>/ES iron-fly (E2BN6) &#183; OMS-23BE3F2DA555 &#183; TG 1520 <em>(open)</em></td></tr>
+  <tr><td>15:55</td><td>systest_meic_eod_kaity</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>16,728</td><td>EOD close-all (SPX MEIC)</td></tr>
+  <tr><td>15:55</td><td>systest_meic_eod_tommyboy</td><td>tommyboy</td><td><span class="badge-ok">submitted</span></td><td>16,717</td><td>EOD close-all (SPX MEIC)</td></tr>
+  <tr><td>15:55</td><td>spx_meic_eod_squid_paper</td><td>sydney</td><td><span class="badge-ok">submitted</span></td><td>10,519</td><td>EOD close-all (SPX MEIC)</td></tr>
+  <tr><td>11:00</td><td>es_ibfly_0dte_30w_ok_individual</td><td>szagar</td><td><span class="badge-skip">floor skip</span></td><td>16,969</td><td><em>live</em> &#8212; Net credit 18.22 below minimum 20.00 (see Iron-Fly table)</td></tr>
+  <tr><td>11:00</td><td>es_ibfly_0dte_30w_ok_paper</td><td>szagar</td><td><span class="badge-skip">floor skip</span></td><td>19,200</td><td>Net credit 18.08 below minimum 20.00 (see Iron-Fly table)</td></tr>
+  <tr><td>&#8212;</td><td>exit / profit-target / DTE polls (26 bots)</td><td>all</td><td><span class="badge-skip">skipped</span></td><td>&#8212;</td><td>Poll cycles with no matching open entries (e.g. spx_meic_stop_paper 300&#215;, es_ibfly_ok_profit_exit 158&#215;, put-spreads-v1-exit 72&#215;). No action needed.</td></tr>
+  <tr><td>&#8212;</td><td>disabled / no-signal entry bots (~24 bots)</td><td>szagar/sydney</td><td><span class="badge-skip">skipped</span></td><td>&#8212;</td><td>Runtime-disabled (flag=0 / undefined) or no signal today: spx_ibfly_*_smz, spx_ic_*, earnings_*, pead_*, test1/2/3, neglected_strangle.</td></tr>
+</table>
+
+<h2>Iron-Fly Credit Floor</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Bot</th><th>Login</th><th>Priced</th><th>Floor</th><th>R:R @ price</th><th>Outcome</th></tr>
+  <tr><td>11:00</td><td>es_ibfly_0dte_30w_ok_individual</td><td>szagar</td><td>18.225 (lim 18.00)</td><td>20.00</td><td>1.55</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+  <tr><td>11:00</td><td>es_ibfly_0dte_30w_ok_paper</td><td>szagar</td><td>18.075 (lim 18.00)</td><td>20.00</td><td>1.52</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+  <tr><td>11:00</td><td>spx_ibfly_0dte_30w_ok_kaity_paper</td><td>kaity</td><td>20.275 (lim 20.25)</td><td>20.00</td><td>2.08</td><td><span class="badge-ok">SUBMITTED</span> &#183; OMS-A6B75654A4C0 &#183; TG 1476</td></tr>
+  <tr><td>14:32</td><td>es_ibfly_0dte_30w_paper</td><td>szagar</td><td>8.650 (lim 8.50)</td><td>5.00</td><td>0.41</td><td><span class="badge-ok">SUBMITTED</span> &#183; OMS-23BE3F2DA555 &#183; TG 1520</td></tr>
+</table>
+<p style="color:#777;font-size:12px">Wing width = 30 pts on all four. Floor hit rate today: 2 of 4 priced flies passed. The two <code>_ok_</code> ES 30-wide flies priced ~18.1&#8211;18.2 vs a 20.00 floor and were correctly held.</p>
+
+<h2>Orders</h2>
+<p style="color:#777;font-size:12px;margin-top:0">85 orders, 100% FILLED, no rejections. Entry orders (with limits) shown; the 15:55 EOD batch and mid-day profit-exits fill at market (no limit). Representative sample below.</p>
+<table>
+  <tr><th>Time (ET)</th><th>Order ID</th><th>Account</th><th>Strategy</th><th>Status</th><th>Limit</th><th>Fill</th><th>Qty</th></tr>
+  <tr><td>10:00:07</td><td>OMS-ED035E2FD023</td><td>kaity_paper</td><td>MEIC entry (5)</td><td><span class="badge-ok">FILLED</span></td><td>7.95</td><td>7.85</td><td>1</td></tr>
+  <tr><td>10:00:07</td><td>OMS-EE7CA4FCA838</td><td>tommyboy_paper</td><td>MEIC entry (4)</td><td><span class="badge-ok">FILLED</span></td><td>7.95</td><td>7.85</td><td>1</td></tr>
+  <tr><td>10:45:01</td><td>OMS-CFF1D0C9DBF8</td><td>szagar_paper</td><td>es_ic_45dte (15)</td><td><span class="badge-ok">FILLED</span></td><td>26.50</td><td>26.50</td><td>1</td></tr>
+  <tr><td>11:00:02</td><td>OMS-A6B75654A4C0</td><td>kaity_paper</td><td>spx_ibfly (18)</td><td><span class="badge-ok">FILLED</span></td><td>20.25</td><td>20.28</td><td>1</td></tr>
+  <tr><td>13:34:00</td><td>OMS-5D6FF79E31DD</td><td>kaity_paper</td><td>ibfly profit-exit (19)</td><td><span class="badge-ok">FILLED</span></td><td>&#8212;</td><td>-16.40</td><td>1</td></tr>
+  <tr><td>14:32:11</td><td>OMS-23BE3F2DA555</td><td>szagar_paper</td><td>es_ibfly (13)</td><td><span class="badge-ok">FILLED</span></td><td>8.50</td><td>8.58</td><td>2</td></tr>
+  <tr><td>15:55&#8211;16:00</td><td>&#215;60 EOD closes</td><td>squid / tommyboy / kaity</td><td>MEIC EOD close (10/11/12)</td><td><span class="badge-ok">FILLED</span></td><td>market</td><td>~0.00</td><td>1</td></tr>
+</table>
+
+<h2>P&amp;L &#8212; Closed Positions</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Closed (ET)</th><th>Hold</th><th>Max Profit</th><th>Realized P&amp;L</th></tr>
+  <tr><td>/ESU6</td><td>calendar <em>(live)</em></td><td>individual</td><td>09:45</td><td>02:00</td><td>16.3h</td><td>&#8212;</td><td class="profit">+$129.06</td></tr>
+  <tr><td>SPXW</td><td>iron_fly</td><td>kaity_paper</td><td>11:00</td><td>13:34</td><td>2.6h</td><td>$2,025</td><td class="profit">+$387.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>10:00</td><td>15:55</td><td>5.9h</td><td>$795</td><td class="profit">+$230.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>10:00</td><td>15:55</td><td>5.9h</td><td>$795</td><td class="profit">+$230.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>squid_paper</td><td>11:00</td><td>15:55</td><td>4.9h</td><td>$210</td><td class="profit">+$210.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>squid_paper</td><td>11:30</td><td>15:55</td><td>4.4h</td><td>$210</td><td class="loss">-$27.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>10:30</td><td>15:55</td><td>5.4h</td><td>$180</td><td class="profit">+$180.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>10:30</td><td>15:55</td><td>5.4h</td><td>$175</td><td class="profit">+$177.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>11:00</td><td>15:55</td><td>4.9h</td><td>$210</td><td class="profit">+$80.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>11:00</td><td>15:55</td><td>4.9h</td><td>$210</td><td class="profit">+$80.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>squid_paper</td><td>12:00</td><td>15:55</td><td>3.9h</td><td>$280</td><td class="profit">+$275.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>squid_paper</td><td>12:30</td><td>15:55</td><td>3.4h</td><td>$240</td><td class="loss">-$12.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>11:30</td><td>15:55</td><td>4.4h</td><td>$210</td><td class="loss">-$27.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>11:30</td><td>15:55</td><td>4.4h</td><td>$210</td><td class="loss">-$27.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>squid_paper</td><td>13:00</td><td>15:55</td><td>2.9h</td><td>$325</td><td class="profit">+$315.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>12:00</td><td>15:55</td><td>3.9h</td><td>$280</td><td class="profit">+$275.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>12:00</td><td>15:55</td><td>3.9h</td><td>$280</td><td class="profit">+$275.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>squid_paper</td><td>13:30</td><td>15:55</td><td>2.4h</td><td>$230</td><td class="profit">+$220.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>12:30</td><td>15:55</td><td>3.4h</td><td>$240</td><td class="loss">-$12.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>12:30</td><td>15:55</td><td>3.4h</td><td>$240</td><td class="loss">-$12.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>squid_paper</td><td>14:00</td><td>15:55</td><td>1.9h</td><td>$265</td><td class="profit">+$255.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>13:00</td><td>15:55</td><td>2.9h</td><td>$325</td><td class="profit">+$320.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>13:00</td><td>15:55</td><td>2.9h</td><td>$325</td><td class="profit">+$320.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>13:30</td><td>15:55</td><td>2.4h</td><td>$230</td><td class="profit">+$225.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>13:30</td><td>15:55</td><td>2.4h</td><td>$230</td><td class="profit">+$227.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>14:00</td><td>15:55</td><td>1.9h</td><td>$265</td><td class="profit">+$260.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>14:00</td><td>15:55</td><td>1.9h</td><td>$265</td><td class="profit">+$260.00</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>kaity_paper</td><td>14:30</td><td>15:55</td><td>1.4h</td><td>$235</td><td class="loss">-$32.50</td></tr>
+  <tr><td>SPXW</td><td>iron_condor</td><td>tommyboy_paper</td><td>14:30</td><td>15:55</td><td>1.4h</td><td>$235</td><td class="loss">-$32.50</td></tr>
+</table>
+<p>
+  <strong>Day Total:</strong>
+  <span class="profit">+$4,746.56</span>
+  &nbsp;|&nbsp; Winners: 21 &nbsp;|&nbsp; Losers: 8 &nbsp;|&nbsp; Scratch: 0
+</p>
+
+<h2>Open Positions (entered today)</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Max Profit</th><th>Max Loss</th></tr>
+  <tr><td>/ESU6</td><td>calendar <em>(live)</em></td><td>individual</td><td>09:45</td><td>&#8212;</td><td>&#8212;</td></tr>
+  <tr><td>EW3U6 (/ES)</td><td>iron_condor</td><td>szagar_paper</td><td>10:45</td><td>$1,325</td><td>$3,675</td></tr>
+  <tr><td>E2BN6 (/ES)</td><td>iron_fly</td><td>szagar_paper</td><td>14:32</td><td>$850</td><td>$2,150</td></tr>
+</table>
+
+<h2>MDS Performance</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Uptime window</td><td>00:00 &#8211; 16:33 ET (3 instances: szagar / sydney / tommyboy)</td></tr>
+  <tr><td>DXLink reconnects</td><td>3 (1 per instance, graceful at 08:00 ET restart; max recovery ~2s)</td></tr>
+  <tr><td>Peak subscriptions</td><td>1,133 quotes / 82 greeks (szagar 395q/0g &#183; sydney 345q/28g &#183; tommyboy 393q/54g)</td></tr>
+  <tr><td>Quote latency P50 / P95 / max</td><td>N/A &#8212; quote reads are Redis-direct (not gRPC-instrumented). Massive chain-snapshot: 408ms / 3.2s / 12.0s</td></tr>
+  <tr><td>Errors</td><td>4 (tommyboy &#8212; stale /ESU6 expiration 2026-07-13 lookup at startup)</td></tr>
+  <tr><td>Warnings</td><td>~457k (szagar 183k &#183; sydney 125k &#183; tommyboy 149k) &#8212; ~99.99% <code>derived.shadow.mismatch</code> (16&#916; band strike-selection shadow); 3 graceful <code>dxlink_disconnected</code></td></tr>
+</table>
+
+<h2>Issues &amp; Anomalies</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Service</th><th>Issue</th><th>Trace / Signal ID</th></tr>
+  <tr><td>08:00:06&#8211;08:00:13</td><td>MDS (tommyboy)</td><td><span class="badge-err">ERROR &#215;4</span> <code>fetch_option_chain_error</code> (mds.futures.option_resolver): "Expiration 2026-07-13 not found for /ESU6" &#8212; a Sunday date requested at the 08:00 restart. Low impact: ES bots resolved &amp; submitted normally later.</td><td>none (trace_id null)</td></tr>
+  <tr><td>15:30</td><td>greeks-shadow</td><td><span class="badge-warn">note</span> Snapshot roots empty (no SPXW pairs). Expected post-2026-07-09 Massive greeks cutover &#8212; DXLink greeks subscriptions were dropped for stock/ETF/index, so there is nothing to shadow. Not a delivery fault.</td><td>&#8212;</td></tr>
+</table>
+
+<h2>&#128269; Smells &amp; Next Steps</h2>
+<table>
+  <tr><th>Category</th><th>Observation</th><th>Suggested Next Step</th></tr>
+  <tr><td>Infrastructure</td><td><span class="badge-warn">log flood</span> <code>derived.shadow.mismatch</code> (logger <code>mds.greeks.refresher</code>) emits ~457k WARNING lines/day across the 3 MDS instances &#8212; one per option per refresh cycle where the 16&#916; band strike (e.g. LQD 109C) differs from the requested strike (108C) by one increment. This is 99.99% of all MDS warnings.</td><td>Downgrade to DEBUG or sample it (it is a measurement, not a fault), or tighten the band-vs-request tolerance in <code>mds.greeks.refresher</code> so a &#177;1-strike selection isn't logged as a mismatch. Grep: <code>action="derived.shadow.mismatch"</code>.</td></tr>
+  <tr><td>Infrastructure</td><td><span class="badge-warn">latency</span> The two live/paper <code>es_ibfly_0dte_30w_ok</code> fires took 17.0s / 19.2s to price a /ES 0DTE fly before floor-skipping; the entry <code>es_ibfly_0dte_30w_paper</code> took 12.2s. Massive greeks-cycle p50 is 8.9s (max 31.9s) for the futures-option chain.</td><td>Expected for the dxfeed/Massive futures-option path (futures greeks stay on dxfeed). Monitor that fly pricing stays inside the fire window; if it grows, review the /ES chain snapshot cost. Grep sig-20260714-150000-es_ibfly_0dte_30w_ok_individual.</td></tr>
+  <tr><td>Risk</td><td><span class="badge-warn">no defined risk</span> Open live calendar TG 1464 (/ESU6, individual) has NULL max_profit / max_loss recorded (same as the closed calendar TG 1359). Calendars have no static defined risk, so the risk read is blank for this position.</td><td>Cosmetic for calendars, but confirm the cockpit/portfolio risk view degrades gracefully (doesn't treat NULL as $0 risk) for TG 1464. No backfill needed &#8212; risk is genuinely undefined for a calendar.</td></tr>
+</table>
+
+<hr style="border:none;border-top:1px solid #e0e0e0;margin-top:32px">
+<p style="color:#999;font-size:11px">Generated by zts-massive daily-report.sh &#183; 2026-07-14</p>
+</body>
+</html>

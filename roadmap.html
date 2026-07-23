@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIP Report — 2026-07-19</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1a1a1a; --muted:#666; --line:#e2e2e2;
+          --accent:#0b6bcb; --warn:#b45309; --card:#f7f7f8;
+          --ok:#0ca30c; --flight:#2a78d6; --todo:#c3c2b7; --todo-ink:#6b6a60; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131316; --fg:#e8e8ea; --muted:#9a9aa2; --line:#2c2c31;
+            --accent:#6cb2ff; --warn:#f0a24b; --card:#1c1c21;
+            --ok:#0ca30c; --flight:#3987e5; --todo:#52514e; --todo-ink:#a9a8a2; } }
+  body { margin:0 auto; max-width:56rem; padding:2rem 1.25rem;
+         background:var(--bg); color:var(--fg);
+         font:16px/1.6 -apple-system, "Segoe UI", sans-serif; }
+  h1 { font-size:1.5rem; margin-bottom:.25rem; }
+  h2 { font-size:1.15rem; margin-top:2rem; border-bottom:1px solid var(--line);
+       padding-bottom:.3rem; }
+  .meta { color:var(--muted); font-size:.9rem; }
+  .card { background:var(--card); border:1px solid var(--line);
+          border-radius:8px; padding:.75rem 1rem; margin:.75rem 0; }
+  .warn { color:var(--warn); }
+  table { border-collapse:collapse; width:100%; }
+  .tablewrap { overflow-x:auto; }
+  th,td { text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--line);
+          vertical-align:top; font-size:.94rem; }
+  th { font-weight:600; }
+  code { background:var(--card); padding:.1em .35em; border-radius:4px; font-size:.9em; }
+  /* progress chart */
+  .viz { margin:1rem 0 .5rem; }
+  .legend { display:flex; gap:1.2rem; font-size:.82rem; color:var(--muted);
+            margin-bottom:.6rem; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:.35rem; }
+  .swatch { width:11px; height:11px; border-radius:3px; display:inline-block; }
+  .row { display:grid; grid-template-columns:11rem 1fr; align-items:center;
+         gap:.6rem; margin:.3rem 0; }
+  .rowlabel { font-size:.86rem; color:var(--fg); }
+  .bar { display:flex; gap:2px; height:22px; }
+  .seg { display:flex; align-items:center; justify-content:center;
+         font-size:.72rem; font-weight:600; color:#fff; border-radius:3px;
+         min-width:0; overflow:hidden; }
+  .seg.todo { color:var(--todo-ink); }
+  .ticks { display:grid; grid-template-columns:11rem 1fr; gap:.6rem;
+           font-size:.7rem; color:var(--muted); margin-top:.3rem; }
+  .tickscale { display:flex; justify-content:space-between; }
+  .svgwrap { overflow-x:auto; }
+</style></head><body>
+<p style="font-size:.85rem"><a href="index.html">&larr; back to overview</a></p>
+
+<h1>WIP Report — 2026-07-19</h1>
+<p class="meta">Generated 2026-07-19 15:10 ET · zts-massive @ <code>fac13da</code> (master) · clean working tree</p>
+
+<h2>Roadmap position</h2>
+<p>The July platform program's in-flight cutovers (Track&nbsp;0) have largely
+landed — the durable event-stream flip and the Massive-greeks cutover are both
+done — and the measurement foundation (Track&nbsp;1 / M4) is <em>code-complete
+and accruing paper data</em>. The headline of the last two days is a different
+body of work sitting <em>on top</em> of that data: the <strong>Bot Intelligence
+cockpit layer</strong> — all five linked screens are now live
+(Performance · Lineage Map · Regimes · Idea Pipeline · Exit Lab), capped by a
+<strong>cohort/promotion audit log</strong>. Together they turn the raw
+forward-test ledger into a decision surface: how each strategy performs, how the
+arms tie together, what regime they were designed for versus measured in, and
+where the next bot comes from. The next frontier is Track&nbsp;3 (regime +
+sizing): the market-regime producers are deployed and their gates are soaking
+log-only, while position sizing (M6) stays gated on M4's 60-trade SQN windows
+filling — which is also the gate for live-readiness (Track&nbsp;4).</p>
+
+<div class="viz">
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--ok)"></span>Done</span>
+    <span><span class="swatch" style="background:var(--flight)"></span>In flight</span>
+    <span><span class="swatch" style="background:var(--todo)"></span>Not started</span>
+    <span style="color:var(--muted)">— units = enumerated roadmap items; hover a segment for names</span>
+  </div>
+
+  <div class="row">
+    <div class="rowlabel">Track 0 — Cutovers</div>
+    <div class="bar">
+      <div class="seg" style="flex:2;background:var(--ok)" title="Done: event-stream flip (3f); Massive-greeks cutover (4d)">2</div>
+      <div class="seg" style="flex:1;background:var(--flight)" title="In flight: skew stage-4 shadow→live flip (gate met, not executed)">1</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="rowlabel">Track 1 — M4 measurement</div>
+    <div class="bar">
+      <div class="seg" style="flex:3;background:var(--ok)" title="Done: M4-ledger plan; trade_groups.initial_risk + guardrail; metrics module + bot_metrics rollup. (Data soak in progress — a gate, not a build item.)">3</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="rowlabel">Track 2 — Enablers</div>
+    <div class="bar">
+      <div class="seg" style="flex:3;background:var(--ok)" title="Done: breadth-watchlist expansion; DXLink startup-auth fix; public status site">3</div>
+      <div class="seg" style="flex:1;background:var(--flight)" title="In flight: first live TradingView fire (pipeline proven; awaits enabling the bot)">1</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="rowlabel">Track 3 — Regime + sizing</div>
+    <div class="bar">
+      <div class="seg" style="flex:3;background:var(--ok)" title="Done: regime producers + classifier; trend-state producer; regime hysteresis + transition events">3</div>
+      <div class="seg" style="flex:1;background:var(--flight)" title="In flight: regime gates running log-only, soaking toward enforcement">1</div>
+      <div class="seg todo" style="flex:4;background:var(--todo)" title="Not started: M6 position sizer; R-based trade management; VRP as an always-on ambient field; R-by-regime analysis cut">4</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="rowlabel">Track 4 — Live-readiness</div>
+    <div class="bar">
+      <div class="seg todo" style="flex:5;background:var(--todo)" title="Not started (gated on a bot reaching SQN &gt; 2.0): criteria runbook, sizing shadow-validation, risk-config review, kill-switch drill, incident-runbook currency">5</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="rowlabel">Bot Intelligence</div>
+    <div class="bar">
+      <div class="seg" style="flex:6;background:var(--ok)" title="Done: Performance, Lineage Map, Regime Matrix, Idea Pipeline, Exit Lab, cohort/promotion audit log">6</div>
+    </div>
+  </div>
+
+  <div class="ticks">
+    <div></div>
+    <div class="tickscale"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span></div>
+  </div>
+</div>
+
+<h2>Active work in other agents</h2>
+<p>No concurrent agent is writing the tree right now — <code>git status</code> is
+clean and every Bot Intelligence commit is pushed to <code>master</code>. The
+signals of parallel / parked work are branches and a sibling repo:</p>
+<div class="card">
+  <strong>Pushed-but-unmerged branches (7)</strong> — each an independent line of
+  work waiting to land or be reconciled:
+  <ul>
+    <li><code>feat/pw-decision-epoch</code> — decision epoch + context watermark on <code>bot_runs</code> (measurement plumbing).</li>
+    <li><code>feat/market-context-program</code> — the ambient-context / regime subsystem line (much of it already deployed separately).</li>
+    <li><code>feat/cockpit-fire-panel</code> — bot-control panel: enable-cascade + manual fire dialog.</li>
+    <li><code>feat/xsp-meic-stefano</code> — a 0DTE XSP MEIC arm with a resting profit-target.</li>
+    <li><code>feat/mds-futures-gating</code> — gate futures routing keys onto futures-enabled logins only.</li>
+    <li><code>fix/cockpit-portfolio-live-legs</code> — survive pub/sub loss; revalidate group detail on expand.</li>
+    <li><code>docs/resting-gtc-and-reference-data-plans</code> — a living resting-GTC checklist.</li>
+  </ul>
+</div>
+<div class="card">
+  <strong>Sibling repos (ours, edit mode)</strong> — <code>tt-ledger</code>,
+  <code>dxlink-client</code>, <code>contract-resolver</code>, and
+  <code>security-universe</code> are clean at their pins. <code>bot-engine</code>
+  (a separate research-platform repo) has <em>uncommitted</em> work — a new
+  <code>contrib/</code> module and a managed-exit test — active development there.
+</div>
+
+<h2>Tracks</h2>
+<div class="tablewrap"><table>
+  <thead><tr><th>Track</th><th>State</th><th>Evidence (verified, not header-trusted)</th></tr></thead>
+  <tbody>
+    <tr><td>0 — Land in-flight cutovers</td><td>Mostly done</td>
+      <td>Event-stream flip + Massive-greeks cutover done; skew stage-4 gate met but the flip is still un-executed.</td></tr>
+    <tr><td>1 — M4 measurement (ledger)</td><td>Code-complete, data-gated</td>
+      <td>Frozen 1R + guardrail, metrics module, and the <code>bot_metrics</code> rollup all shipped; the 60-trade SQN windows fill over months — the clock is running, not the code.</td></tr>
+    <tr><td>2 — Cheap enablers</td><td>Nearly done</td>
+      <td>Breadth expansion, DXLink startup-auth fix, and the public status site all shipped; first live TradingView fire is one bot-enable away.</td></tr>
+    <tr><td>3 — Regime + sizing</td><td>Started</td>
+      <td>Regime producers + classifier, trend-state, and hysteresis deployed; gates soak log-only. M6 sizing, R-based trade management, and the R-by-regime cut are unbuilt (sizing is gated on M4 data).</td></tr>
+    <tr><td>4 — Live-readiness</td><td>Not started</td>
+      <td>No go-live checklist exists yet; gated on a bot showing SQN&nbsp;&gt;&nbsp;2.0 in M4 data.</td></tr>
+    <tr><td>Bot Intelligence (cockpit)</td><td>Complete</td>
+      <td>All five screens live + the cohort/promotion audit log; verified via plan headers and the section README (five screens marked LIVE).</td></tr>
+  </tbody>
+</table></div>
+
+<h2>Dependency map — what gates what</h2>
+<div class="svgwrap">
+<svg viewBox="0 0 840 300" width="100%" role="img" aria-label="Dependency map: M4 data soak gates M6 sizing, which gates live-readiness">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6 Z" fill="var(--muted)"/>
+    </marker>
+  </defs>
+  <!-- column headers -->
+  <text x="110" y="16" text-anchor="middle" font-size="11" fill="var(--muted)">NOW</text>
+  <text x="330" y="16" text-anchor="middle" font-size="11" fill="var(--muted)">SOAKING</text>
+  <text x="560" y="16" text-anchor="middle" font-size="11" fill="var(--muted)">GATED ON SQN DATA</text>
+  <text x="770" y="16" text-anchor="middle" font-size="11" fill="var(--muted)">LIVE</text>
+
+  <!-- Column 1: NOW -->
+  <g font-size="12" fill="var(--fg)">
+    <rect x="20" y="28" width="180" height="46" rx="6" fill="var(--card)" stroke="var(--ok)" stroke-width="2"><title>Bot Intelligence — five cockpit screens + audit log, shipped</title></rect>
+    <text x="110" y="47" text-anchor="middle">Bot Intelligence ✓</text>
+    <text x="110" y="63" text-anchor="middle" font-size="10" fill="var(--muted)">5 screens + audit log</text>
+
+    <rect x="20" y="92" width="180" height="46" rx="6" fill="var(--card)" stroke="var(--ok)" stroke-width="2"><title>M4 measurement — code-complete; ledger metrics + bot_metrics rollup shipped</title></rect>
+    <text x="110" y="111" text-anchor="middle">M4 measurement ✓</text>
+    <text x="110" y="127" text-anchor="middle" font-size="10" fill="var(--muted)">code-complete</text>
+
+    <rect x="20" y="156" width="180" height="40" rx="6" fill="var(--card)" stroke="var(--flight)" stroke-width="2"><title>Skew stage-4 shadow→live flip — gate met, not yet executed</title></rect>
+    <text x="110" y="181" text-anchor="middle">Skew stage-4 flip ◐</text>
+
+    <rect x="20" y="212" width="180" height="40" rx="6" fill="var(--card)" stroke="var(--flight)" stroke-width="2"><title>First live TradingView fire — pipeline proven; awaits enabling the bot</title></rect>
+    <text x="110" y="237" text-anchor="middle">First live TV fire ◐</text>
+  </g>
+
+  <!-- Column 2: SOAKING -->
+  <g font-size="12" fill="var(--fg)">
+    <rect x="240" y="92" width="180" height="46" rx="6" fill="var(--card)" stroke="var(--todo)" stroke-width="2"><title>M4 bot_metrics — 60-trade SQN windows filling over months (data gate)</title></rect>
+    <text x="330" y="111" text-anchor="middle">M4 SQN soak ⧗</text>
+    <text x="330" y="127" text-anchor="middle" font-size="10" fill="var(--muted)">60-trade windows</text>
+
+    <rect x="240" y="156" width="180" height="46" rx="6" fill="var(--card)" stroke="var(--flight)" stroke-width="2"><title>Regime gates running log-only, soaking toward enforcement</title></rect>
+    <text x="330" y="175" text-anchor="middle">Regime gates ◐</text>
+    <text x="330" y="191" text-anchor="middle" font-size="10" fill="var(--muted)">log-only → enforce</text>
+  </g>
+
+  <!-- Column 3: GATED -->
+  <g font-size="12" fill="var(--fg)">
+    <rect x="470" y="92" width="170" height="46" rx="6" fill="var(--card)" stroke="var(--todo)" stroke-width="2"><title>M6 position sizer — PercentRiskSizer waits on M4 SQN data by design</title></rect>
+    <text x="555" y="111" text-anchor="middle">M6 sizing ○</text>
+    <text x="555" y="127" text-anchor="middle" font-size="10" fill="var(--muted)">shadow-first</text>
+  </g>
+
+  <!-- Column 4: LIVE -->
+  <g font-size="12" fill="var(--fg)">
+    <rect x="680" y="92" width="150" height="46" rx="6" fill="var(--card)" stroke="var(--todo)" stroke-width="2"><title>Track 4 live-readiness — go-live checklist, gated on SQN &gt; 2.0</title></rect>
+    <text x="755" y="111" text-anchor="middle">Go-live ○</text>
+    <text x="755" y="127" text-anchor="middle" font-size="10" fill="var(--muted)">Track 4</text>
+  </g>
+
+  <!-- hard-dependency arrows (horizontal chain at y≈115) -->
+  <line x1="200" y1="115" x2="238" y2="115" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="420" y1="115" x2="468" y2="115" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="640" y1="115" x2="678" y2="115" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+</svg>
+</div>
+<p class="meta">Solid arrows are hard dependencies: M4's SQN data gates M6 sizing,
+which gates live-readiness. Bot Intelligence (top-left) is the read surface over
+M4's data — a consumer, not a blocker, so it ships ahead of the soak.</p>
+
+<h2>Loose ends</h2>
+<ul>
+  <li><strong>Skew stage-4 flip</strong> — the gate is met but the shadow→live
+    flip is still un-executed; fold the registry band-loop retirement into the
+    same window.</li>
+  <li><strong>First live TradingView fire</strong> — the webhook→trigger→executor
+    chain is proven end-to-end; it just needs the bot enabled + one alert to walk
+    the audit trail.</li>
+  <li><strong>Stale plan header</strong> — <code>cockpit-bot-intelligence-performance-view.md</code>
+    still reads "no work items started," but Performance is live (its
+    exit-attribution and per-side-PnL sub-features shipped 07-18/07-19). Header
+    rot, not missing work.</li>
+  <li><strong>4e rollback rehearsal</strong> — the Massive-greeks rollback runbook
+    is written but never drilled.</li>
+  <li><strong>Seven unmerged branches</strong> — parked lines of work to land or
+    close; <code>bot-engine</code> has uncommitted <code>contrib/</code> work.</li>
+</ul>
+
+</body></html>
