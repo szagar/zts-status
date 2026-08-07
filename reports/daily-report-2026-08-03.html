@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body{font-family:Arial,sans-serif;font-size:14px;color:#222;max-width:900px;margin:0 auto;padding:16px}
+h1{color:#1a237e;border-bottom:2px solid #1a237e;padding-bottom:6px}
+h2{color:#283593;margin-top:24px;margin-bottom:8px}
+table{border-collapse:collapse;width:100%;margin-bottom:16px}
+th{background:#e8eaf6;color:#1a237e;text-align:left;padding:8px 10px;font-size:13px}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;font-size:13px;vertical-align:top}
+tr:hover td{background:#f5f5f5}
+.profit{color:#2e7d32;font-weight:bold}
+.loss{color:#c62828;font-weight:bold}
+.badge-ok{background:#e8f5e9;color:#2e7d32;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-warn{background:#fff8e1;color:#f57f17;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-err{background:#ffebee;color:#c62828;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-skip{background:#f3f3f3;color:#777;padding:2px 7px;border-radius:10px;font-size:12px}
+.box-ok{background:#f1f8e9;border-left:4px solid #66bb6a;padding:8px 12px;margin-bottom:12px}
+.box-warn{background:#fffde7;border-left:4px solid #ffca28;padding:8px 12px;margin-bottom:12px}
+.box-err{background:#ffebee;border-left:4px solid #ef5350;padding:8px 12px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<p style="font-size:.85rem"><a href="../index.html">&larr; back to overview</a></p>
+
+<h1>ZTS Daily Report &#8212; 2026-08-03</h1>
+
+<div class="box-warn">
+  <strong>Summary:</strong>
+  <ul>
+    <li>Day P&amp;L <span class="loss">&#8722;$531.25</span> across 15 closed trade groups (6 winners / 9 losers). The MEIC family drove the red: szagar_paper arm &#8722;$397.50 (5 groups), squid_paper &#8722;$220.00 (3 closed, 4 still open awaiting 0DTE expiration), stefano XSP live arm +$5.00.</li>
+    <li>5,675 bot runs, 20 entry submissions, <strong>0 errored fires, 0 stuck runs</strong>. Iron-fly OK-trio: all 5 arms priced 12.88&#8211;13.15 against the 20.00 credit floor &#8212; clean floor skips, no trade.</li>
+    <li>MDS fleet (3 instances) up the whole session; one planned 08:00 ET token-rotation reconnect each (recovery &#8804;1.7&nbsp;s); 3 TT REST rate-limit errors (one per instance); warning log flooded by <code>derived.shadow.mismatch</code> (~289k lines).</li>
+    <li><strong>Needs attention:</strong> all four strategy engines lost their MarketDataManager alert-listener task at 08:00 ET on a Redis timeout and it never restarted; skip-streaks snapshot missing (scanner didn&#8217;t run); 7 SILENT MDS subscriptions since the 08:00 reset incl. <code>future:ES:Z6</code>.</li>
+    <li>Broad low-premium day: <code>credit.below_min</code> fired across 8+ distinct bots/arms; IV-rank reads 17.7&#8211;21.4 vs minimums of 30&#8211;40.</li>
+  </ul>
+</div>
+
+<h2>Bot Fires</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Bot</th><th>Login</th><th>Result</th><th>ms</th><th>Detail</th></tr>
+  <tr><td>08:26</td><td>meic_resting_target</td><td>tommyboy</td><td><span class="badge-skip">cycles</span></td><td>400</td><td>83 cycles &#8212; resting-target management (55 no-action, 28 hold); target OMS-9CA744A5500B filled 0.15 @15:55 closing TG-2720; earlier OMS-DBE6BA667226 cancelled (EOD supersede)</td></tr>
+  <tr><td>09:00</td><td>bwb_spx_put_1000_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">cycles</span></td><td>27</td><td>84 cycles; resting target filled 10:05 (OMS-05A6B4FC94CF) closing TG-2692</td></tr>
+  <tr><td>09:00</td><td>bwb_spx_put_1030/1130/mc1/mc2/pt50/base_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>~27</td><td>6 sibling target bots &#215; ~84 cycles each &#8212; no open entries</td></tr>
+  <tr><td>09:00</td><td>iron_man_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>54</td><td>84 cycles &#8212; no open entries</td></tr>
+  <tr><td>09:31</td><td>pead / pead_abs / pead_p7 / pead_r4 _call_spread_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>~25</td><td>Watchlist 'earnings_play' is empty (4 entry bots)</td></tr>
+  <tr><td>09:31</td><td>earnings_bear_call / bull_put / ic _exit_paper, neglected_strangle_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>~130</td><td>No open entries (4 exit bots)</td></tr>
+  <tr><td>09:32</td><td>iron_man_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1791</td><td>Debit 8.25 exceeds maximum 7.50</td></tr>
+  <tr><td>09:35</td><td>ic_0dte_em_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>4671</td><td>short_put delta 0.262 exceeds box-edge threshold 0.120 &#8212; EM compressed; skip the day</td></tr>
+  <tr><td>09:35</td><td>ic_0dte_em_paper</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>4265</td><td>short_put delta 0.262 exceeds box-edge threshold 0.120 &#8212; EM compressed; skip the day</td></tr>
+  <tr><td>09:35</td><td>bwb_rsi_call / bwb_rsi_put _kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>~20</td><td>gate.feature: rsi_state neutral not in allowed set (both RSI arms)</td></tr>
+  <tr><td>09:35</td><td>pead* _dte_exit_paper (4 bots)</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>~160</td><td>No open entries</td></tr>
+  <tr><td>09:45</td><td>dbl_cal_fut_stop/target/expiry_individual</td><td>szagar</td><td><span class="badge-skip">cycles</span></td><td>~700</td><td>73 stop cycles hold + 73 target no-action + 2 expiry hold (live /ES calendar above thresholds)</td></tr>
+  <tr><td>09:45</td><td>fut_ibfly_0dte_30w_ok exits (individual)</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>~40</td><td>profit_exit 151 + resting_target 73 + eod cycles &#8212; no open entries</td></tr>
+  <tr><td>09:45</td><td>idx_ic_45dte_5w_21dte_exit / _resting_target</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>~190</td><td>75 cycles &#8212; no open entries; earnings_ic_exit idle</td></tr>
+  <tr><td>10:00</td><td>bwb_spx_put_1000_kaity_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>4953</td><td>SPX &#183; OMS-4DD4CCBACF1A &#183; TG-2692</td></tr>
+  <tr><td>10:00</td><td>sniper_ic</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>3070</td><td>SPX &#183; OMS-FD1176EB5074 &#183; TG-2693</td></tr>
+  <tr><td>10:00</td><td>sniper_ir</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>5433</td><td>12 cycles &#8212; Credit 1.40 below minimum 1.75</td></tr>
+  <tr><td>10:00</td><td>meic</td><td>tommyboy</td><td><span class="badge-ok">mixed</span></td><td>4554</td><td>Submitted 12:00 &#8212; XSP &#183; OMS-6FFA33777DE2 &#183; TG-2720. Skips: 4 &#215; per-side credit below min 0.10; 1 &#215; leg conflict on short/long call (existing position at strikes)</td></tr>
+  <tr><td>10:00</td><td>tom_call_spread_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1394</td><td>Debit 9.05 exceeds maximum 3.00</td></tr>
+  <tr><td>10:00</td><td>vol_pairs_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>138</td><td>IWM IV rank 17.7 below min 40.0</td></tr>
+  <tr><td>10:00</td><td>batman_es_call/put_target + _touch sweeps</td><td>szagar</td><td><span class="badge-skip">cycles</span></td><td>~360</td><td>~72 cycles each; call_target placed resting OMS-A084FCE2D317 (working EOD); put_target resting filled &#8722;0.625 (OMS-C293CC889D5B) closing TG-2699 +$31.25</td></tr>
+  <tr><td>10:00</td><td>batman_spx_call/put_target + _touch sweeps</td><td>kaity</td><td><span class="badge-skip">cycles</span></td><td>~630</td><td>~72 cycles each; put_target resting filled &#8722;0.55 (OMS-62A0A0979ED9) closing TG-2705 +$60.00; call_target resting OMS-367E3F49454F working into EOD</td></tr>
+  <tr><td>10:00</td><td>bwb_rsi_* touch/target sweeps (4 bots)</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>~700</td><td>72 cycles each &#8212; no open entries</td></tr>
+  <tr><td>10:00</td><td>dbl_cal_etf/idx stop + target sweeps (incl. weekly)</td><td>kaity</td><td><span class="badge-skip">cycles</span></td><td>~1000</td><td>72 cycles each &#8212; entries above stop threshold / target no-action</td></tr>
+  <tr><td>10:00</td><td>sniper_ic_target</td><td>kaity</td><td><span class="badge-skip">cycles</span></td><td>809</td><td>70 no-action cycles; resting target OMS-DC99BB3ADFD4 cancelled 10:05 (superseded later by EOD close)</td></tr>
+  <tr><td>10:00</td><td>sniper_ir_stop/target, sniper_tv_stop/target</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>~100</td><td>180 stop + 72 target cycles each &#8212; no open entries (sniper_tv entry: no TV signal today)</td></tr>
+  <tr><td>10:00</td><td>systest_meic_kaity / _tommyboy (+stops)</td><td>kaity/tommyboy</td><td><span class="badge-skip">skipped</span></td><td>~100</td><td>Entries disabled (gate.enablement, 10 cycles each); stop sweeps 360 cycles each &#8212; no entries</td></tr>
+  <tr><td>10:00</td><td>put_spreads_exit</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>187</td><td>72 cycles &#8212; no open entries</td></tr>
+  <tr><td>10:00</td><td>idx_ic_45dte / fut_ic_45dte / pead* / tom / sosnoff / vol_pairs profit-exit sweeps</td><td>szagar</td><td><span class="badge-skip">cycles</span></td><td>~900</td><td>12&#8211;72 cycles each &#8212; hold or no entries; idx_ic_45dte_resting_target 72 no-action cycles</td></tr>
+  <tr><td>10:05</td><td>sosnoff_put_spread_21dte_exit / fut_ic_45dte_21dte_exit / idx_ic_45dte_21dte_exit</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>~400</td><td>Entries above DTE threshold (21) or none open</td></tr>
+  <tr><td>10:30</td><td>batman_es_call_szagar_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>7853</td><td>/ES &#183; OMS-C29F803E2B66 &#183; TG-2698</td></tr>
+  <tr><td>10:30</td><td>batman_es_put_szagar_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>7601</td><td>/ES &#183; OMS-2F03470EA64A &#183; TG-2699</td></tr>
+  <tr><td>10:30</td><td>batman_spx_call_kaity_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>8284</td><td>SPX &#183; OMS-7EDC367065DA &#183; TG-2704</td></tr>
+  <tr><td>10:30</td><td>batman_spx_put_kaity_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>8283</td><td>SPX &#183; OMS-956D007C5093 &#183; TG-2705</td></tr>
+  <tr><td>10:30</td><td>bwb_spx_put_1030_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>517</td><td>Net credit &#8722;0.08 below minimum 0.10</td></tr>
+  <tr><td>10:30</td><td>idx_ic_45dte_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>23</td><td>IV rank 21.4 below minimum 30.0</td></tr>
+  <tr><td>10:30</td><td>sosnoff_put_spread_paper</td><td>szagar</td><td><span class="badge-warn">skipped</span></td><td>19035</td><td>SPY: cannot resolve put spread &#8212; short_put no_greeks (no greeks delivered for candidates) &#8212; data-path failure, see Issues</td></tr>
+  <tr><td>10:30</td><td>put_spreads</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>26</td><td>Watchlist 'put-spreads' is empty</td></tr>
+  <tr><td>10:45</td><td>fut_ic_45dte_paper</td><td>szagar</td><td><span class="badge-ok">mixed</span></td><td>10704</td><td>Submitted &#8212; /ES &#183; OMS-A0CD79FAF8B4 &#183; TG-2711; then 5 cycles &#8212; already entered /ES today</td></tr>
+  <tr><td>10:45</td><td>batman_es_put_touch_szagar_paper</td><td>szagar</td><td><span class="badge-ok">mixed</span></td><td>1851</td><td>Touch-exit submitted (no separate order &#8212; put fly closed via target fill); 71 other cycles hold/no-entries</td></tr>
+  <tr><td>11:00</td><td>meic_paper</td><td>szagar</td><td><span class="badge-ok">mixed</span></td><td>6733</td><td>5 submitted (12:30&#8211;14:30): OMS-CE0ED74BD082/TG-2724, OMS-0D52F85A0627/TG-2728, OMS-B73490466F02/TG-2732, OMS-A99D582DCBE1/TG-2736, OMS-FFAC5710A434/TG-2739; 3 skips &#8212; per-side credit below min 1.00</td></tr>
+  <tr><td>11:00</td><td>meic_squid_paper</td><td>sydney</td><td><span class="badge-ok">mixed</span></td><td>7850</td><td>7 submitted (11:00&#8211;14:00): TG-2713/2716/2718/2722/2726/2730/2734; 1 skip &#8212; daily entry cap reached for SPX (7/7)</td></tr>
+  <tr><td>11:00</td><td>meic_stop_paper</td><td>szagar</td><td><span class="badge-skip">cycles</span></td><td>401</td><td>300 stop-management cycles; 5 stop closes filled (13:23, 13:35, 13:56, 14:06, 15:02 &#8212; debits 2.775&#8211;4.125)</td></tr>
+  <tr><td>11:00</td><td>meic_stop_squid_paper</td><td>sydney</td><td><span class="badge-skip">cycles</span></td><td>475</td><td>300 stop-management cycles; 7 stop closes filled (11:47&#8211;14:06 &#8212; debits 2.65&#8211;4.125)</td></tr>
+  <tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_paper / _kaity_paper / _squid_paper</td><td>szagar/kaity/sydney</td><td><span class="badge-skip">skipped</span></td><td>~31000</td><td>Credit floor: net credit 13.15 / 13.15 / 12.90 below minimum 20.00 (see Iron-Fly table)</td></tr>
+  <tr><td>11:00</td><td>fut_ibfly_0dte_30w_ok_individual / _paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>~63000</td><td>Credit floor: net credit 12.88 / 13.05 below minimum 20.00 (see Iron-Fly table)</td></tr>
+  <tr><td>11:00</td><td>bwb_spx_put / _mc1 / _mc2 / _pt50 _kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>~33600</td><td>Net credit &#8722;0.38 below minimums 0.10 / 1.00 / 2.00 / 0.10 (structure priced as a debit)</td></tr>
+  <tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_profit_exit_* (3 arms)</td><td>szagar/kaity/sydney</td><td><span class="badge-skip">skipped</span></td><td>~32</td><td>150 cycles each &#8212; no open entries</td></tr>
+  <tr><td>11:30</td><td>bwb_spx_put_1130_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1779</td><td>Net credit &#8722;0.92 below minimum 0.10</td></tr>
+  <tr><td>13:45</td><td>dbl_cal_fut_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>34</td><td>1 entry still open for /ES (max: 1)</td></tr>
+  <tr><td>13:45</td><td>dbl_cal_etf_kaity_paper / dbl_cal_idx_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>~22</td><td>1 entry still open for QQQ / SPX (max: 1)</td></tr>
+  <tr><td>14:00</td><td>ibfly_0dte_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>98</td><td>30 cycles &#8212; no open entries</td></tr>
+  <tr><td>14:10</td><td>idx_ic_45dte_5w</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>Bot disabled (flag_undefined, entry role default OFF)</td></tr>
+  <tr><td>14:32</td><td>ibfly_0dte_30w_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>4</td><td>Bot disabled (flag_undefined, entry role default OFF)</td></tr>
+  <tr><td>14:40</td><td>ic_16d_5w_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1728</td><td>Net credit 1.30 below minimum 1.50</td></tr>
+  <tr><td>15:30</td><td>ibfly_0dte_eod_exit_paper; dbl_cal_etf/idx expiry bots</td><td>szagar/kaity</td><td><span class="badge-skip">skipped</span></td><td>~300</td><td>No entries / all entries above DTE threshold (0)</td></tr>
+  <tr><td>15:45</td><td>sniper_ic_eod</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>1575</td><td>Forced close of TG-2693 &#183; OMS-3794186D9CDE filled 5.20 debit (superseded resting target)</td></tr>
+  <tr><td>15:45</td><td>earnings_* / neglected_strangle entry bots (4)</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>~70</td><td>Watchlists 'earnings_play' / 'neglected_play' empty</td></tr>
+  <tr><td>15:45</td><td>batman/bwb/sniper/iron_man EOD sweeps (12 bots)</td><td>kaity/szagar</td><td><span class="badge-skip">skipped</span></td><td>~150</td><td>1 cycle each &#8212; no entries, or open flies above DTE threshold (0) held overnight</td></tr>
+  <tr><td>15:50</td><td>tom_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>66</td><td>No open entries</td></tr>
+  <tr><td>15:55</td><td>meic_eod_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>17589</td><td>Closed all 5 open MEIC groups (TG-2724/2728/2732/2736/2739) &#8212; 5 orders, fills 0.00 to &#8722;0.05</td></tr>
+  <tr><td>15:55</td><td>meic_eod_squid_paper</td><td>sydney</td><td><span class="badge-ok">submitted</span></td><td>13116</td><td>Closed 3 groups (TG-2713/2716/2730) &#8212; 3 orders filled 0.00; 4 groups left to expiration (see Open Positions)</td></tr>
+  <tr><td>15:55</td><td>meic_eod</td><td>tommyboy</td><td><span class="badge-skip">skipped</span></td><td>693</td><td>All 3 entries expire after today &#8212; nothing to close</td></tr>
+  <tr><td>15:55</td><td>remaining EOD exits (systest, ibfly OK trio, ic_0dte_em)</td><td>all</td><td><span class="badge-skip">skipped</span></td><td>~150</td><td>1 cycle each &#8212; no entries / already fully closed</td></tr>
+</table>
+
+<h2>Iron-Fly Credit Floor</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Bot</th><th>Login</th><th>Priced</th><th>Floor</th><th>R:R @ price</th><th>Outcome</th></tr>
+  <tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_squid_paper</td><td>sydney</td><td>12.90</td><td>20.00</td><td>0.75</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+  <tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_paper</td><td>szagar</td><td>13.15</td><td>20.00</td><td>0.78</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+  <tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_kaity_paper</td><td>kaity</td><td>13.15</td><td>20.00</td><td>0.78</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+  <tr><td>11:01</td><td>fut_ibfly_0dte_30w_ok_individual</td><td>szagar</td><td>12.875 (limit 12.75)</td><td>20.00</td><td>0.75</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+  <tr><td>11:01</td><td>fut_ibfly_0dte_30w_ok_paper</td><td>szagar</td><td>13.05 (limit 13.00)</td><td>20.00</td><td>0.77</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+</table>
+<p style="font-size:12px;color:#777">All five OK-trio arms priced (wing width 30). Credits came in at 64&#8211;66% of the floor &#8212; a uniform low-premium read, consistent with the day&#8217;s broad <code>credit.below_min</code> pattern. (ibfly_0dte_30w_paper did not price &#8212; bot disabled via enablement gate, not a data failure.)</p>
+
+<h2>Orders</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Order ID</th><th>Account</th><th>Strategy</th><th>Status</th><th>Limit</th><th>Fill</th><th>Qty</th></tr>
+  <tr><td>10:00:02</td><td>OMS-4DD4CCBACF1A</td><td>kaity_paper</td><td>bwb_spx_put_1000</td><td><span class="badge-ok">FILLED</span></td><td>0.10</td><td>0.10</td><td>1</td></tr>
+  <tr><td>10:00:03</td><td>OMS-FD1176EB5074</td><td>sniper_paper</td><td>sniper_ic</td><td><span class="badge-ok">FILLED</span></td><td>3.20</td><td>3.20</td><td>1</td></tr>
+  <tr><td>10:05:01</td><td>OMS-DC99BB3ADFD4</td><td>sniper_paper</td><td>sniper_ic_target</td><td><span class="badge-skip">CANCELLED</span></td><td>1.75</td><td>&#8212;</td><td>&#8212;</td></tr>
+  <tr><td>10:05:01</td><td>OMS-05A6B4FC94CF</td><td>kaity_paper</td><td>bwb_spx_put_1000_target</td><td><span class="badge-ok">FILLED</span></td><td>0.05</td><td>&#8722;0.05</td><td>1</td></tr>
+  <tr><td>10:30:04</td><td>OMS-C29F803E2B66</td><td>szagar_paper</td><td>batman_es_call</td><td><span class="badge-ok">FILLED</span></td><td>1.25</td><td>1.25</td><td>1</td></tr>
+  <tr><td>10:30:04</td><td>OMS-2F03470EA64A</td><td>szagar_paper</td><td>batman_es_put</td><td><span class="badge-ok">FILLED</span></td><td>1.25</td><td>1.25</td><td>1</td></tr>
+  <tr><td>10:30:05</td><td>OMS-956D007C5093</td><td>kaity_paper</td><td>batman_spx_put</td><td><span class="badge-ok">FILLED</span></td><td>1.15</td><td>1.15</td><td>1</td></tr>
+  <tr><td>10:30:05</td><td>OMS-7EDC367065DA</td><td>kaity_paper</td><td>batman_spx_call</td><td><span class="badge-ok">FILLED</span></td><td>1.65</td><td>1.65</td><td>1</td></tr>
+  <tr><td>10:35:02</td><td>OMS-A084FCE2D317</td><td>szagar_paper</td><td>batman_es_call_target</td><td><span class="badge-warn">SUBMITTED</span></td><td>0.60</td><td>&#8212;</td><td>&#8212;</td></tr>
+  <tr><td>10:35:02</td><td>OMS-C293CC889D5B</td><td>szagar_paper</td><td>batman_es_put_target</td><td><span class="badge-ok">FILLED</span></td><td>0.60</td><td>&#8722;0.625</td><td>1</td></tr>
+  <tr><td>10:35:05</td><td>OMS-62A0A0979ED9</td><td>kaity_paper</td><td>batman_spx_put_target</td><td><span class="badge-ok">FILLED</span></td><td>0.55</td><td>&#8722;0.55</td><td>1</td></tr>
+  <tr><td>10:35:05</td><td>OMS-367E3F49454F</td><td>kaity_paper</td><td>batman_spx_call_target</td><td><span class="badge-warn">SUBMITTED</span></td><td>0.80</td><td>&#8212;</td><td>&#8212;</td></tr>
+  <tr><td>10:45:12</td><td>OMS-A0CD79FAF8B4</td><td>szagar_paper</td><td>fut_ic_45dte</td><td><span class="badge-ok">FILLED</span></td><td>8.90</td><td>8.90</td><td>1</td></tr>
+  <tr><td>11:00:15</td><td>OMS-64E2D4A3B599</td><td>squid_paper</td><td>meic_squid</td><td><span class="badge-ok">FILLED</span></td><td>2.05</td><td>2.05</td><td>1</td></tr>
+  <tr><td>11:30:03</td><td>OMS-7FF79CE7E0E0</td><td>squid_paper</td><td>meic_squid</td><td><span class="badge-ok">FILLED</span></td><td>2.25</td><td>2.25</td><td>1</td></tr>
+  <tr><td>11:47:00</td><td>OMS-F7F420C1ABE8</td><td>squid_paper</td><td>meic_stop_squid</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;3.075</td><td>1</td></tr>
+  <tr><td>12:00:02</td><td>OMS-8863CB10B475</td><td>squid_paper</td><td>meic_squid</td><td><span class="badge-ok">FILLED</span></td><td>2.80</td><td>2.80</td><td>1</td></tr>
+  <tr><td>12:00:04</td><td>OMS-6FFA33777DE2</td><td>stefano</td><td>meic (live XSP)</td><td><span class="badge-ok">FILLED</span></td><td>0.20</td><td>&#8212;*</td><td>&#8212;*</td></tr>
+  <tr><td>12:00:50</td><td>OMS-DBE6BA667226</td><td>stefano</td><td>meic_resting_target</td><td><span class="badge-skip">CANCELLED</span></td><td>0.15</td><td>&#8212;</td><td>&#8212;</td></tr>
+  <tr><td>12:28:03</td><td>OMS-20C2A76BDBE7</td><td>squid_paper</td><td>meic_stop_squid</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;2.65</td><td>1</td></tr>
+  <tr><td>12:30:05</td><td>OMS-E4356DDA8B60</td><td>squid_paper</td><td>meic_squid</td><td><span class="badge-ok">FILLED</span></td><td>2.80</td><td>2.80</td><td>1</td></tr>
+  <tr><td>12:30:06</td><td>OMS-CE0ED74BD082</td><td>szagar_paper</td><td>meic</td><td><span class="badge-ok">FILLED</span></td><td>2.80</td><td>2.80</td><td>1</td></tr>
+  <tr><td>13:00:02</td><td>OMS-C662E5F59774</td><td>squid_paper</td><td>meic_squid</td><td><span class="badge-ok">FILLED</span></td><td>3.20</td><td>3.20</td><td>1</td></tr>
+  <tr><td>13:00:03</td><td>OMS-0D52F85A0627</td><td>szagar_paper</td><td>meic</td><td><span class="badge-ok">FILLED</span></td><td>3.20</td><td>3.20</td><td>1</td></tr>
+  <tr><td>13:23:00</td><td>OMS-35F1783B1C24</td><td>squid_paper</td><td>meic_stop_squid</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;4.125</td><td>1</td></tr>
+  <tr><td>13:23:00</td><td>OMS-9B434686F6E6</td><td>szagar_paper</td><td>meic_stop</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;4.125</td><td>1</td></tr>
+  <tr><td>13:23:04</td><td>OMS-D1605BEF643E</td><td>squid_paper</td><td>meic_stop_squid</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;4.125</td><td>1</td></tr>
+  <tr><td>13:30:04</td><td>OMS-5A59988CB7D6</td><td>squid_paper</td><td>meic_squid</td><td><span class="badge-ok">FILLED</span></td><td>2.90</td><td>2.90</td><td>1</td></tr>
+  <tr><td>13:30:04</td><td>OMS-B73490466F02</td><td>szagar_paper</td><td>meic</td><td><span class="badge-ok">FILLED</span></td><td>2.90</td><td>2.90</td><td>1</td></tr>
+  <tr><td>13:35:00</td><td>OMS-7926F9675B6B</td><td>squid_paper</td><td>meic_stop_squid</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;4.125</td><td>1</td></tr>
+  <tr><td>13:35:01</td><td>OMS-7F980306FA65</td><td>szagar_paper</td><td>meic_stop</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;4.125</td><td>1</td></tr>
+  <tr><td>13:56:00</td><td>OMS-6D1E673D84D0</td><td>szagar_paper</td><td>meic_stop</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;3.675</td><td>1</td></tr>
+  <tr><td>13:56:00</td><td>OMS-B678E41790D1</td><td>squid_paper</td><td>meic_stop_squid</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;3.675</td><td>1</td></tr>
+  <tr><td>14:00:04</td><td>OMS-B0475270DBFA</td><td>squid_paper</td><td>meic_squid</td><td><span class="badge-ok">FILLED</span></td><td>2.60</td><td>2.60</td><td>1</td></tr>
+  <tr><td>14:00:04</td><td>OMS-A99D582DCBE1</td><td>szagar_paper</td><td>meic</td><td><span class="badge-ok">FILLED</span></td><td>2.55</td><td>2.55</td><td>1</td></tr>
+  <tr><td>14:06:00</td><td>OMS-7577578B4B28</td><td>squid_paper</td><td>meic_stop_squid</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;2.775</td><td>1</td></tr>
+  <tr><td>14:06:00</td><td>OMS-9A3B22C49D0F</td><td>szagar_paper</td><td>meic_stop</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;2.775</td><td>1</td></tr>
+  <tr><td>14:30:02</td><td>OMS-FFAC5710A434</td><td>szagar_paper</td><td>meic</td><td><span class="badge-ok">FILLED</span></td><td>3.00</td><td>3.00</td><td>1</td></tr>
+  <tr><td>15:02:00</td><td>OMS-26C40D8555A8</td><td>szagar_paper</td><td>meic_stop</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>&#8722;3.625</td><td>1</td></tr>
+  <tr><td>15:45:02</td><td>OMS-3794186D9CDE</td><td>sniper_paper</td><td>sniper_ic_eod</td><td><span class="badge-ok">FILLED</span></td><td>5.20</td><td>&#8722;5.20</td><td>1</td></tr>
+  <tr><td>15:55:02</td><td>OMS-9CA744A5500B</td><td>stefano</td><td>meic_resting_target</td><td><span class="badge-ok">FILLED</span></td><td>0.15</td><td>&#8212;*</td><td>&#8212;*</td></tr>
+  <tr><td>15:55:02&#8211;16</td><td>OMS-9A13614FCFE2, -6B57DACA6B96, -1E655D5B71C1, -66E005AA3B4E, -28BC52E09304</td><td>szagar_paper</td><td>meic_eod (5 orders)</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>0.00 / 0.00 / 0.00 / &#8722;0.05 / &#8722;0.05</td><td>1 ea</td></tr>
+  <tr><td>15:55:02&#8211;10</td><td>OMS-6A5F182E6767, -150AA5C6B9B0, -7D1638BAD84E</td><td>squid_paper</td><td>meic_eod_squid (3 orders)</td><td><span class="badge-ok">FILLED</span></td><td>mkt</td><td>0.00 ea</td><td>1 ea</td></tr>
+</table>
+<p style="font-size:12px;color:#777">* Live stefano orders show FILLED with no fill detail in the OMS workflow store; fills are recorded in the ledger (TG-2720 realized +$5.00). No REJECTED or FAILED orders today; both CANCELLED orders are benign EOD-supersede cancels of resting targets.</p>
+
+<h2>P&amp;L &#8212; Closed Positions</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Closed (ET)</th><th>Hold</th><th>Max Profit</th><th>Realized P&amp;L</th></tr>
+  <tr><td>SPXW</td><td>bwb_spx_put_1000 (TG-2692)</td><td>kaity_paper</td><td>08-03 10:00</td><td>10:05</td><td>0.1h</td><td>$10.00</td><td class="profit">+$5.00</td></tr>
+  <tr><td>EWU6 (/ES)</td><td>batman_es_put fly (TG-2699)</td><td>szagar_paper</td><td>08-03 10:30</td><td>10:42</td><td>0.2h</td><td>$62.50</td><td class="profit">+$31.25</td></tr>
+  <tr><td>SPXW</td><td>batman_spx_put fly (TG-2705)</td><td>kaity_paper</td><td>08-03 10:30</td><td>11:25</td><td>0.9h</td><td>$115.00</td><td class="profit">+$60.00</td></tr>
+  <tr><td>QQQ</td><td>diagonal, manual (TG-2633)</td><td>stefano</td><td>07-31 13:30</td><td>13:55</td><td>72.4h</td><td>&#8212;</td><td class="profit">+$150.00</td></tr>
+  <tr><td>SPX</td><td>vertical, manual (TG-2437)</td><td>stefano</td><td>07-29 10:00</td><td>14:21</td><td>124.4h</td><td>&#8212;</td><td class="profit">+$35.00</td></tr>
+  <tr><td>SPXW</td><td>sniper_ic (TG-2693)</td><td>sniper_paper</td><td>08-03 10:00</td><td>15:45</td><td>5.7h</td><td>$320.00</td><td class="loss">&#8722;$200.00</td></tr>
+  <tr><td>SPXW</td><td>meic (TG-2724)</td><td>szagar_paper</td><td>08-03 12:30</td><td>15:55</td><td>3.4h</td><td>$280.00</td><td class="loss">&#8722;$132.50</td></tr>
+  <tr><td>SPXW</td><td>meic (TG-2713)</td><td>squid_paper</td><td>08-03 11:00</td><td>15:55</td><td>4.9h</td><td>$205.00</td><td class="loss">&#8722;$60.00</td></tr>
+  <tr><td>SPXW</td><td>meic (TG-2728)</td><td>szagar_paper</td><td>08-03 13:00</td><td>15:55</td><td>2.9h</td><td>$320.00</td><td class="loss">&#8722;$92.50</td></tr>
+  <tr><td>SPXW</td><td>meic (TG-2716)</td><td>squid_paper</td><td>08-03 11:30</td><td>15:55</td><td>4.4h</td><td>$225.00</td><td class="loss">&#8722;$82.50</td></tr>
+  <tr><td>SPXW</td><td>meic (TG-2732)</td><td>szagar_paper</td><td>08-03 13:30</td><td>15:55</td><td>2.4h</td><td>$290.00</td><td class="loss">&#8722;$77.50</td></tr>
+  <tr><td>SPXW</td><td>meic (TG-2730)</td><td>squid_paper</td><td>08-03 13:30</td><td>15:55</td><td>2.4h</td><td>$290.00</td><td class="loss">&#8722;$77.50</td></tr>
+  <tr><td>SPXW</td><td>meic (TG-2736)</td><td>szagar_paper</td><td>08-03 14:00</td><td>15:55</td><td>1.9h</td><td>$255.00</td><td class="loss">&#8722;$27.50</td></tr>
+  <tr><td>SPXW</td><td>meic (TG-2739)</td><td>szagar_paper</td><td>08-03 14:30</td><td>15:55</td><td>1.4h</td><td>$300.00</td><td class="loss">&#8722;$67.50</td></tr>
+  <tr><td>XSP</td><td>meic, live (TG-2720)</td><td>stefano</td><td>08-03 12:00</td><td>15:59</td><td>4.0h</td><td>$20.00</td><td class="profit">+$5.00</td></tr>
+</table>
+<p>
+  <strong>Day Total:</strong>
+  <span class="loss">&#8722;$531.25</span>
+  &nbsp;|&nbsp; Winners: 6 &nbsp;|&nbsp; Losers: 9
+</p>
+
+<h2>Open Positions (entered today)</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Max Profit</th><th>Max Loss</th></tr>
+  <tr><td>/ESU6</td><td>calendar (TG-2691, unattributed)</td><td>individual</td><td>09:45</td><td>&#8212;</td><td><span class="badge-warn">NULL</span></td></tr>
+  <tr><td>SPX</td><td>vertical (TG-2696, unattributed)</td><td>stefano</td><td>10:00</td><td>&#8212;</td><td><span class="badge-warn">NULL</span></td></tr>
+  <tr><td>EWU6 (/ES)</td><td>batman_es_call fly (TG-2698)</td><td>szagar_paper</td><td>10:30</td><td>$62.50</td><td>$1,187.50</td></tr>
+  <tr><td>SPXW</td><td>batman_spx_call fly (TG-2704)</td><td>kaity_paper</td><td>10:30</td><td>$165.00</td><td>$2,335.00</td></tr>
+  <tr><td>EWU6 (/ES)</td><td>fut_ic_45dte (TG-2711)</td><td>szagar_paper</td><td>10:45</td><td>$445.00</td><td>$4,555.00</td></tr>
+  <tr><td>SPXW</td><td>meic_squid (TG-2718)</td><td>squid_paper</td><td>12:00</td><td>$280.00</td><td>$2,220.00</td></tr>
+  <tr><td>SPXW</td><td>meic_squid (TG-2722)</td><td>squid_paper</td><td>12:30</td><td>$280.00</td><td>$2,220.00</td></tr>
+  <tr><td>SPXW</td><td>meic_squid (TG-2726)</td><td>squid_paper</td><td>13:00</td><td>$320.00</td><td>$2,180.00</td></tr>
+  <tr><td>SPXW</td><td>meic_squid (TG-2734)</td><td>squid_paper</td><td>14:00</td><td>$260.00</td><td>$2,240.00</td></tr>
+</table>
+<p style="font-size:12px;color:#777">The four squid_paper MEIC groups hold 0DTE SPXW remnants past the EOD sweep (stops closed one side; meic_eod closed only 3 of 7 groups) &#8212; expected to resolve via tonight&#8217;s expiration processing. Verify they close; see Issues.</p>
+
+<!--BOT-METRICS-->
+
+<h2>MDS Performance</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Uptime window</td><td>00:00 &#8211; 16:32+ ET (all 3 instances: szagar, sydney, tommyboy &#8212; running at report time; log windows are the midnight rotation)</td></tr>
+  <tr><td>DXLink reconnects</td><td>1 per instance &#8212; planned 08:00 ET token rotation ("graceful shutdown"); recovery 1.3s / 1.4s / 1.7s</td></tr>
+  <tr><td>Peak subscriptions</td><td>625 (szagar) + 548 (sydney) + 647 (tommyboy) quote subs = 1,820 fleet-wide; greeks published via Massive producer: 15,198 / 6,055 / 797</td></tr>
+  <tr><td>Quote latency P50 / P95 / max</td><td>n/a &#8212; no GetQuoteOrSubscribe calls today; latency counters at 0 (quotes published: ~8.4M fleet-wide)</td></tr>
+  <tr><td>Errors</td><td>3 (one per instance): TT REST "Rate limit exceeded after all retries" on /option-chains VIX9D (06:25), VIX3M (08:30), XSP (15:35)</td></tr>
+  <tr><td>Warnings</td><td>295,079 total &#8212; szagar 65,022 / sydney 34,552 / tommyboy 195,505. Breakdown: derived.shadow.mismatch 289,053 (98%); data_req.reconcile.cap_block 5,544 (szagar); api_request retries 492; dxlink_disconnected 3 (the planned reconnect)</td></tr>
+  <tr><td>Subscription health (15:30 ET RTH tick)</td><td>OK=1,613 &#183; SILENT=7 &#183; STALE=200. SILENT since the 08:00 reset: future:ES:Z6, VIX3M, SKEW, VVIX (szagar) / VXD, VIX9D, index:SPXW (sydney); NVDA 08-05 options SILENT on tommyboy late-day</td></tr>
+</table>
+
+<h2>Health Snapshots</h2>
+<ul style="font-size:13px">
+  <li><strong>Ledger health:</strong> today&#8217;s snapshot writes ~18:47 ET (after this report). Yesterday&#8217;s (08-02): all 12 accounts positions-OK and balance-OK; zts:events consumer groups all lag 0, no lagging groups. Review backlog: 378 stale needs-review groups on individual (chronic), 25 each squid/stefano.</li>
+  <li><strong>Policy sweep:</strong> no verdict changes (K=20 candidates, all INSUFFICIENT_DATA, latest snapshot 07-31; tonight&#8217;s runs 18:40 ET).</li>
+  <li><strong>Econ calendar:</strong> coverage OK &#8212; FOMC/CPI/NFP horizon to 2026-12-04 (123 days, no warning).</li>
+  <li><strong>Greeks shadow:</strong> snapshot present but empty (see Issues). <strong>Subscription health:</strong> see MDS table. <strong>Skip-streaks / bot-metrics:</strong> see Issues / Bot Metrics.</li>
+</ul>
+
+<h2>Issues &amp; Anomalies</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Service</th><th>Issue</th><th>Trace / Signal ID</th></tr>
+  <tr><td>08:00:09&#8211;33</td><td>strategy-engine (&#215;4)</td><td><span class="badge-err">ERROR</span> MarketDataManager._alert_listener_loop died with redis TimeoutError ("Timeout reading from data-host:<port>") in ALL FOUR engines and was never restarted &#8212; md:alert pub/sub listener dead for the rest of the session. Coincides with the MDS 08:00 token-rotation reconnect (brief Redis stall). Fix: supervised restart around manager.py:1358.</td><td>&#8212; (background task)</td></tr>
+  <tr><td>06:25 / 08:30 / 15:35</td><td>mds-sydney / -szagar / -tommyboy</td><td><span class="badge-err">ERROR</span> TT REST rate limit exhausted on /option-chains/{VIX9D, VIX3M, XSP}/nested (1&#215; each; 492 retry warnings fleet-wide)</td><td>&#8212;</td></tr>
+  <tr><td>10:30</td><td>strategy-engine-szagar</td><td><span class="badge-warn">WARN</span> sosnoff_put_spread_paper: SPY short_put no_greeks &#8212; no Massive greeks delivered for candidates; data-path failure masquerading as a watchlist skip</td><td>sig-20260803-143000&#8230;sosnoff (10:30 fire)</td></tr>
+  <tr><td>08:00&#8594;16:30</td><td>mds (szagar/sydney)</td><td><span class="badge-warn">WARN</span> 7 subscriptions SILENT since the 08:00 reset incl. future:ES:Z6 and the vol-complex indices (VIX3M/VIX9D/VXD/SKEW/VVIX) &#8212; known reset-silent class; verify md:quote freshness, kickstart owning instance if frozen tomorrow</td><td>&#8212;</td></tr>
+  <tr><td>16:30</td><td>daily pipeline</td><td><span class="badge-err">MISSING</span> skip-streaks-2026-08-03.json was not written before this report &#8212; the streak scanner didn&#8217;t run; ic_0dte_em-class streaks unmonitored today</td><td>&#8212;</td></tr>
+  <tr><td>15:30</td><td>greeks-shadow</td><td><span class="badge-warn">EMPTY</span> greeks-shadow-2026-08-03.json has "roots": {} (07-31 likewise) &#8212; no SPXW gate row; consistent with Phase-4d scope-drop leaving nothing to pair. Retire or fix the snapshot.</td><td>&#8212;</td></tr>
+  <tr><td>15:45</td><td>ledger / sniper_paper</td><td><span class="badge-warn">WARN</span> TG-2693 realized &#8722;$200 exceeds recorded max_loss $180 &#8212; EOD forced close paid 5.20 vs 3.20 entry credit; check fees/slippage handling in max_loss</td><td>sig-20260803-194500-sniper_ic_eod-ANY-142bc77f</td></tr>
+  <tr><td>15:55</td><td>ledger / squid_paper</td><td><span class="badge-warn">WATCH</span> 4 MEIC groups (TG-2718/2722/2726/2734) still open post-EOD with 0DTE SPXW remnants &#8212; should close via tonight&#8217;s expiration processing; investigate if open tomorrow</td><td>&#8212;</td></tr>
+</table>
+
+<h2>&#128269; Smells &amp; Next Steps</h2>
+<table>
+  <tr><th>Category</th><th>Observation</th><th>Suggested Next Step</th></tr>
+  <tr><td><span class="badge-err">Infrastructure</span></td><td>All four engines silently lost the md:alert listener at 08:00 ET; the asyncio task died on a transient Redis timeout and nothing restarts it.</td><td>Wrap <code>MarketDataManager._alert_listener_loop</code> (packages/shared/shared/market_data/manager.py:1358) in a supervised reconnect/retry loop and log a WARNING on each restart; add a liveness counter so daily-eval can see listener death.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td><code>derived.shadow.mismatch</code> produced 289k WARNING lines today (195k on tommyboy alone) &#8212; 98% of all MDS warnings, drowning the log; meanwhile greeks-shadow-*.json is empty.</td><td>Sample/throttle the mismatch warning (or drop to DEBUG) in the MDS derived-greeks shadow path, and decide whether the shadow comparison is still needed post-Phase-4d &#8212; its daily snapshot has been empty since at least 07-31.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td>future:ES:Z6 + VIX3M/SKEW/VVIX (szagar) and VXD/VIX9D (sydney) went SILENT at the 08:00 reset and stayed dark all session &#8212; the known reset-silent delivery class.</td><td>Check <code>md:quote:future:ES:Z6</code> timestamp tomorrow morning; if frozen at ~08:00, <code>launchctl kickstart -k gui/$(id -u)/com.zts.mds.szagar</code> on data-host. Consider adding the post-reset tick-verification step from .claude/rules/mds-multi-instance.md history.</td></tr>
+  <tr><td><span class="badge-err">Config/Param</span></td><td>skip-streaks-2026-08-03.json missing &#8212; the pre-report streak scanner didn&#8217;t run, so multi-day same-reason skip streaks (the ic_0dte_em class) went unmonitored today.</td><td>Check the launchd job that writes ~/logs/trading/skip-streaks-YYYY-MM-DD.json (last successful date, stderr log) and re-arm it.</td></tr>
+  <tr><td><span class="badge-warn">Config/Param</span></td><td>tom_call_spread_entry_paper skipped with debit 9.05 vs maximum 3.00 &#8212; 3&#215; over the cap; a threshold that far off suggests the cap or the strike-width no longer matches the underlying&#8217;s price level.</td><td>Review <code>max_debit</code> (and strike selection width) for tom_call_spread_entry_paper in services/strategy-engine/config/bots/szagar/; check the last 5 trading days&#8217; skip values in bot_runs to pick a realistic cap.</td></tr>
+  <tr><td><span class="badge-warn">Config/Param</span></td><td>sniper_ir skipped all 12 cycles with "Credit 1.40 below minimum 1.75"; iron_man_kaity_paper missed by 10% ("Debit 8.25 &gt; max 7.50").</td><td>If the sniper_ir floor keeps missing this week, consider min_credit 1.75 &#8594; ~1.50 (today&#8217;s priced value 1.40); for iron_man, max_debit 7.50 &#8594; 8.50 would have fired today &#8212; check R:R at that debit first.</td></tr>
+  <tr><td><span class="badge-warn">Config/Param</span></td><td>The 'earnings_play' watchlist is empty &#8212; 8 bots (earnings_* + pead_*) no-op&#8217;d on watchlist.empty; 'neglected_play' and 'put-spreads' are empty too. earnings_events is manually fed.</td><td>Refresh earnings_events (debug order per memory: flags &#8594; events &#8594; watchlist &#8594; bot_runs); confirm the earnings-watchlist launchd job output in ~/logs/trading/earnings-watchlist.log.</td></tr>
+  <tr><td><span class="badge-warn">Execution</span></td><td>sniper_ic&#8217;s forced EOD close (OMS-3794186D9CDE) filled at 5.20 debit against a 3.20 entry credit, realizing &#8722;$200 &#8212; beyond the recorded $180 max_loss and &#8722;0.63&#215; max_profit.</td><td>Grep sig-20260803-194500-sniper_ic_eod-ANY-142bc77f across OMS/EMS logs: was 5.20 the NBBO at 15:45 (wide spread) or a stale mark? If structural, close earlier or use a limit ladder for the EOD close.</td></tr>
+  <tr><td><span class="badge-warn">Risk</span></td><td>TG-2691 (/ESU6 calendar, individual &#8212; live) and TG-2696 (SPX vertical, stefano &#8212; live) opened today with NULL max_profit/max_loss and no bot attribution (broker-synced manual trades).</td><td>Attribute both groups via the ledger review flow and backfill risk fields from leg fills; these are live positions with unrecorded risk.</td></tr>
+  <tr><td><span class="badge-warn">Coverage</span></td><td><code>credit.below_min</code> fired on 8+ distinct bots/arms (bwb family, OK ibfly trio &#215;5 at 64&#8211;66% of floor, meic per-side floors on 2 engines, ic_16d_5w, sniper_ir), with IV-rank reads 17.7&#8211;21.4 &#8212; a broad low-premium regime day, not per-bot misconfig.</td><td>No per-bot retuning off one day. If this persists this week, the floor hit-rate tables (this report&#8217;s Iron-Fly section + bot_runs skip values) are the dataset for a deliberate floor review.</td></tr>
+</table>
+
+<hr style="border:none;border-top:1px solid #e0e0e0;margin-top:32px">
+<p style="color:#999;font-size:11px">Generated by zts-massive daily-report.sh &#183; 2026-08-03</p>
+</body>
+</html>
