@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIP Report — 2026-07-26</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1a1a1a; --muted:#666; --line:#e2e2e2;
+          --accent:#0b6bcb; --warn:#b45309; --card:#f7f7f8;
+          --ok:#0ca30c; --flight:#2a78d6; --todo:#c3c2b7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131316; --fg:#e8e8ea; --muted:#9a9aa2; --line:#2c2c31;
+            --accent:#6cb2ff; --warn:#f0a24b; --card:#1c1c21;
+            --ok:#0ca30c; --flight:#3987e5; --todo:#52514e; } }
+  body { margin:0 auto; max-width:56rem; padding:2rem 1.25rem;
+         background:var(--bg); color:var(--fg);
+         font:16px/1.6 -apple-system, "Segoe UI", sans-serif; }
+  h1 { font-size:1.5rem; margin-bottom:.25rem; }
+  h2 { font-size:1.15rem; margin-top:2rem; border-bottom:1px solid var(--line);
+       padding-bottom:.3rem; }
+  .meta { color:var(--muted); font-size:.9rem; }
+  .card { background:var(--card); border:1px solid var(--line);
+          border-radius:8px; padding:.75rem 1rem; margin:.75rem 0; }
+  .warn { color:var(--warn); }
+  table { border-collapse:collapse; width:100%; font-size:.92rem; }
+  .tablewrap { overflow-x:auto; }
+  th,td { text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--line);
+          vertical-align:top; }
+  code { background:var(--card); padding:.1em .35em; border-radius:4px; font-size:.9em; }
+  ul { padding-left:1.2rem; }
+  li { margin:.35rem 0; }
+  /* ---- track progress chart ---- */
+  .viz { background:var(--card); border:1px solid var(--line); border-radius:8px;
+         padding:.9rem 1rem 1rem; margin:.9rem 0; }
+  .legend { display:flex; gap:1.1rem; font-size:.8rem; color:var(--muted); margin-bottom:.6rem; }
+  .legend span { display:flex; align-items:center; gap:.35rem; }
+  .sw { width:12px; height:12px; border-radius:3px; display:inline-block; }
+  .trackrow { display:flex; align-items:center; gap:.6rem; margin:.35rem 0; }
+  .tlabel { width:11.5rem; flex-shrink:0; font-size:.8rem; text-align:right;
+            color:var(--fg); line-height:1.25; }
+  .bar { display:flex; gap:2px; flex:1; height:22px; }
+  .seg { border-radius:4px; display:flex; align-items:center; justify-content:center;
+         font-size:.75rem; font-weight:600; color:#fff; min-width:1.1rem; }
+  .seg.todo { color:var(--fg); }
+  .ticks { display:flex; margin-left:12.1rem; font-size:.7rem; color:var(--muted);
+           justify-content:space-between; max-width:calc(100% - 12.1rem); }
+</style></head><body>
+<p style="font-size:.85rem"><a href="index.html">&larr; back to overview</a></p>
+
+<h1>WIP Report — 2026-07-26</h1>
+<p class="meta">Generated 2026-07-26 08:30 ET (Sunday) · zts-massive @ <code>1052003</code> (master, clean, pushed)</p>
+
+<h2>Roadmap position</h2>
+<p><code>roadmap-2026-07.md</code> (authored 07-05, last updated 07-12) is now
+<strong>executed through Track 2 and structurally superseded in Track 3</strong>:
+that track's regime/sizing chain was delivered via the Market Context program
+(P2–P5 deployed 07-16) and has since grown its operational descendant — the
+<strong>Policy Lab program</strong> (07-25/26): PL0–PL1 shipped and
+live-verified, the nightly sweep scheduled (<code>com.zts.policy-sweep</code>,
+18:40&nbsp;ET), the PL2 thin slice + Screen C counterfactual rewire live in the
+cockpit, and four screens mocked. There is <strong>no dated gate on the
+calendar</strong> — every open front is data-gated (M4's 60-trade SQN windows
+fill through ~September; Policy Lab verdicts wait on adverse-regime samples;
+history is ~90% neutral) or decision-gated (Track 4's live-readiness runbook
+still doesn't exist). The two oldest executable residuals are Track 0's skew
+shadow→live flip (gate met since 07-12, still <code>shadow</code> on all 3 MDS
+instances) and the never-run 4e rollback rehearsal.</p>
+
+<div class="viz">
+  <div class="legend">
+    <span><span class="sw" style="background:var(--ok)"></span>Done</span>
+    <span><span class="sw" style="background:var(--flight)"></span>In flight</span>
+    <span><span class="sw" style="background:var(--todo)"></span>Not started</span>
+  </div>
+  <!-- shared scale: longest track = 8 items = full width -->
+  <div class="trackrow"><div class="tlabel">Track 0 — cutovers</div>
+    <div class="bar" style="max-width:37.5%">
+      <div class="seg" style="background:var(--ok); flex:2" title="3f zts:events flip (07-06) · 4d Massive greeks cutover (07-09)">2</div>
+      <div class="seg" style="background:var(--flight); flex:1" title="skew stage-4 shadow→live — gate met 07-12, flip unexecuted (shadow on all 3 MDS)">1</div>
+    </div></div>
+  <div class="trackrow"><div class="tlabel">Track 1 — M4 measurement</div>
+    <div class="bar" style="max-width:37.5%">
+      <div class="seg" style="background:var(--ok); flex:3" title="plan rewrite · initial_risk + guardrail · metrics/rollup/surfaces — code-complete 07-05; SOAKING (nightly bot-metrics), windows fill ~Sept">3</div>
+    </div></div>
+  <div class="trackrow"><div class="tlabel">Track 2 — enablers</div>
+    <div class="bar" style="max-width:50%">
+      <div class="seg" style="background:var(--ok); flex:3" title="M2 breadth watchlist · DXLink AUTH fix · public status site">3</div>
+      <div class="seg" style="background:var(--flight); flex:1" title="first live TradingView fire — pipeline proven E2E; remaining: enable bot + one webhook + audit walk">1</div>
+    </div></div>
+  <div class="trackrow"><div class="tlabel">Track 3 — regime + sizing</div>
+    <div class="bar" style="max-width:100%">
+      <div class="seg" style="background:var(--ok); flex:6" title="M3 producer framework (P2) · M5 regime dial + RegimeGate log-only (P3) · trend_state · VRP ambient · hysteresis + transition events · R-by-regime (regime matrix + Policy Lab)">6</div>
+      <div class="seg todo" style="background:var(--todo); flex:2" title="M6 sizing (read layer only; shadow rule binds on arrival) · R-based trade management (stop_at_r / exit_at_r)">2</div>
+    </div></div>
+  <div class="trackrow"><div class="tlabel">Policy Lab (new, 07-25)</div>
+    <div class="bar" style="max-width:75%">
+      <div class="seg" style="background:var(--ok); flex:2" title="PL0 foundations (coverage epoch resolved) · PL1 sweep engine (day-clustered, nightly, live-verified)">2</div>
+      <div class="seg" style="background:var(--flight); flex:1" title="PL2 — thin slice + Screen C counterfactuals LIVE; builder/timeline/catalog mocked, gated on regime contrast">1</div>
+      <div class="seg todo" style="background:var(--todo); flex:3" title="PL3 sizing curves (needs M4/M6) · PL4 policy-scout skill · PL5 enforcement ladder (needs first RECOMMEND)">3</div>
+    </div></div>
+  <div class="trackrow"><div class="tlabel">Track 4 — live-readiness</div>
+    <div class="bar" style="max-width:12.5%">
+      <div class="seg todo" style="background:var(--todo); flex:1" title="live-readiness.md runbook — does not exist (verified today)">1</div>
+    </div></div>
+  <div class="ticks"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span></div>
+</div>
+
+<h2>Active work in other agents</h2>
+<div class="card">
+<ul>
+<li><strong>bot-engine sibling — active right now.</strong> Untracked
+  <code>src/bot_engine/contrib/managed_exit.py</code> +
+  <code>tests/test_contrib_managed_exit.py</code> (bot-engine is also in this
+  session's additional working dirs — a concurrent session is building a
+  contrib managed-exit module on top of the 3-commit-old repo).</li>
+<li><strong>A concurrent zts-massive session landed three commits today/yesterday:</strong>
+  <code>ba1ecbd</code> structure-cost exit P/L off quote mids + fill-truth close
+  sizing (strategy-engine, large), <code>6b82de8</code> cockpit open-groups
+  detail-rail fallback, <code>9b0a35a</code> data-change-log entries (EM-IC dark
+  period, far-dated greeks epoch — it is using the new change-log discipline).
+  Its cockpit-api/dbschema work was also partially swept into
+  <code>8a997f0</code> (see Loose ends).</li>
+<li><strong>Sibling repos, recent heads</strong> (pin freshness unverified):
+  tt-ledger <code>74f0d25</code> closed_positions.trade_group_id backfill;
+  contract-resolver <code>60a81ed</code> calendar-aware parent selection
+  (StrikeListedConstraint); security-universe <code>81768a0</code> micro-root
+  future-option parsing.</li>
+<li><strong>This session</strong> (Policy Lab arc, 07-24→26): everything
+  committed and pushed — the zts-massive tree is <strong>clean</strong>, a rare
+  snapshot. No background agents running.</li>
+</ul>
+</div>
+
+<h2>Tracks</h2>
+<div class="tablewrap"><table>
+<tr><th>Track</th><th>State</th><th>Evidence (observed, not header-trust)</th></tr>
+<tr><td>0 — cutovers</td><td>2/3 done</td><td>3f + 4d confirmed done in roadmap+memory; <code>MDS_SKEW_REQUESTS_MODE: "shadow"</code> ×3 in <code>config/hosts/data-host.yaml</code> today — flip still pending; 4e rollback rehearsal never run.</td></tr>
+<tr><td>1 — M4 measurement</td><td>code-complete, soaking</td><td><code>bot-metrics</code> nightly 16:45 ET in SERVICES; R windows filling; Policy Lab plans R-multiples as its outcome metric when soaked.</td></tr>
+<tr><td>2 — enablers</td><td>3/4 done</td><td>TV emitter fixes merged (PR #46 <code>d804d72</code>); the one remaining item is the ceremonial first live TV fire (enable + webhook + audit walk).</td></tr>
+<tr><td>3 — regime + sizing</td><td>superseded &amp; 6/8 delivered</td><td>Market Context P2–P5 deployed 07-16 (memory + program doc); regime dial live, gates log-only; M6 + R-based management the two open stubs.</td></tr>
+<tr><td>Policy Lab (post-roadmap)</td><td>PL0–PL1 done; PL2 partially live</td><td>This session: engine (22 tests, live-verified vs SQL), nightly sweep + report ingestion, POLICY LAB tab + Screen C counterfactuals live at :<port>, 4 Figma mocks; commits <code>82ab5c4</code>…<code>1052003</code>.</td></tr>
+<tr><td>4 — live-readiness</td><td>not started</td><td><code>live-readiness.md</code> absent (checked today); gate criteria still undefined anywhere.</td></tr>
+</table></div>
+
+<h2>Dependency map — what gates what</h2>
+<div class="tablewrap">
+<svg viewBox="0 0 850 430" width="850" height="430" role="img" aria-label="Dependency map" style="font-family:-apple-system,'Segoe UI',sans-serif">
+  <style>
+    .col { font-size:12px; font-weight:700; fill:var(--muted); letter-spacing:.08em; }
+    .box { rx:8; fill:var(--card); }
+    .bl { font-size:12px; fill:var(--fg); }
+    .bs { font-size:10px; fill:var(--muted); }
+    .done { stroke:var(--ok); stroke-width:2; }
+    .fly { stroke:var(--flight); stroke-width:2; }
+    .todo { stroke:var(--todo); stroke-width:2; }
+    .arrow { stroke:var(--muted); stroke-width:1.5; fill:none; marker-end:url(#ah); }
+  </style>
+  <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+    <path d="M0,0 L7,3 L0,6 Z" fill="var(--muted)"/></marker></defs>
+
+  <text x="20" y="24" class="col">NOW — EXECUTABLE</text>
+  <rect x="20" y="38" width="240" height="46" class="box fly"/>
+  <text x="32" y="57" class="bl">Skew shadow→live flip</text>
+  <text x="32" y="73" class="bs">gate met 07-12 · + registry stages 5–6</text>
+  <rect x="20" y="94" width="240" height="46" class="box todo"/>
+  <text x="32" y="113" class="bl">4e rollback rehearsal</text>
+  <text x="32" y="129" class="bs">runbook written, never run</text>
+  <rect x="20" y="150" width="240" height="46" class="box fly"/>
+  <text x="32" y="169" class="bl">First live TV fire</text>
+  <text x="32" y="185" class="bs">enable bot · one webhook · audit walk</text>
+  <rect x="20" y="206" width="240" height="46" class="box todo"/>
+  <text x="32" y="225" class="bl">live-readiness.md (Track 4)</text>
+  <text x="32" y="241" class="bs">pure writing; unblocks the go-live debate</text>
+  <rect x="20" y="262" width="240" height="46" class="box todo"/>
+  <text x="32" y="281" class="bl">Catalog registry + view (PL2#6)</text>
+  <text x="32" y="297" class="bs">context_catalog.yaml ⊇ ALLOWED_FIELDS</text>
+
+  <text x="310" y="24" class="col">GATED ON DATA</text>
+  <rect x="310" y="38" width="240" height="46" class="box fly"/>
+  <text x="322" y="57" class="bl">M4 soak → SQN windows</text>
+  <text x="322" y="73" class="bs">60-trade windows fill ~Sept</text>
+  <rect x="310" y="108" width="240" height="46" class="box todo"/>
+  <text x="322" y="127" class="bl">R-multiples into the sweep</text>
+  <text x="322" y="143" class="bs">outcome metric swap (PL1 config)</text>
+  <rect x="310" y="178" width="240" height="46" class="box fly"/>
+  <text x="322" y="197" class="bl">Adverse-regime samples</text>
+  <text x="322" y="213" class="bs">history ~90% neutral · readiness gauge</text>
+  <rect x="310" y="248" width="240" height="46" class="box todo"/>
+  <text x="322" y="267" class="bl">PL2 Builder + Timeline views</text>
+  <text x="322" y="283" class="bs">mocked; need regime contrast to matter</text>
+  <rect x="310" y="318" width="240" height="46" class="box todo"/>
+  <text x="322" y="337" class="bl">First RECOMMEND verdict</text>
+  <text x="322" y="353" class="bs">needs N_min in an affected bucket</text>
+
+  <text x="600" y="24" class="col">DOWNSTREAM</text>
+  <rect x="600" y="68" width="230" height="46" class="box todo"/>
+  <text x="612" y="87" class="bl">M6 sizing (+ PL3 curves)</text>
+  <text x="612" y="103" class="bs">shadow-mode rule binds on arrival</text>
+  <rect x="600" y="248" width="230" height="46" class="box todo"/>
+  <text x="612" y="267" class="bl">PL4 policy-scout skill</text>
+  <text x="612" y="283" class="bs">memo-writer once verdicts move</text>
+  <rect x="600" y="318" width="230" height="46" class="box todo"/>
+  <text x="612" y="337" class="bl">PL5 enforcement ladder</text>
+  <text x="612" y="353" class="bs">smoke-test → enforce + paper twin</text>
+
+  <!-- arrows: within-column verticals + short elbows in corridors -->
+  <path class="arrow" d="M430 84 L430 104"/>
+  <path class="arrow" d="M430 224 L430 244"/>
+  <path class="arrow" d="M430 294 L430 314"/>
+  <path class="arrow" d="M550 61 L575 61 L575 91 L596 91"/>
+  <path class="arrow" d="M550 131 L575 131 L575 97 L596 97"/>
+  <path class="arrow" d="M550 341 L596 341"/>
+  <path class="arrow" d="M550 271 L596 271"/>
+</svg>
+</div>
+<p class="meta">Boxes: blue stroke = in flight, green = done, neutral = not started.
+Long-range note: PL5 also depends on the PL4/nightly-diff machinery; the catalog
+view (NOW column) has no upstream gates — it is purely a build decision.</p>
+
+<h2>Loose ends</h2>
+<div class="card">
+<ul>
+<li class="warn"><strong>Skew flip</strong> — the oldest met-gate-unexecuted item
+  on the board (since 07-12). One clean-session <code>derived:*</code> read, flip
+  to <code>live</code>, fold registry stages 5–6 into the same window.</li>
+<li class="warn"><strong>4e rollback rehearsal</strong> — never run; the Massive
+  greeks cutover has no rehearsed undo.</li>
+<li><strong><code>roadmap-2026-07.md</code> is stale</strong> — Track 3 executed
+  via programs it doesn't reference (Market Context P-phases, Policy Lab). An
+  August roadmap refresh would restore it as the single sequencing surface.</li>
+<li><strong>Track 4 not started</strong> — no <code>live-readiness.md</code>;
+  M4 data will start answering "which bot deserves live capital" before the
+  gate criteria exist to act on it.</li>
+<li><strong>Commit-history note</strong> — <code>8a997f0</code> ("PL1 sweep
+  engine…") also carries ~60 files of the concurrent session's cockpit/dbschema
+  work under a message that doesn't describe them ("commit all changes" sweep;
+  recorded here for future readers).</li>
+<li><strong>Branch hygiene</strong> — <code>fix/tv-emitter-vold-sentinel…</code>
+  merged as PR #46 but the branch remains; 4 other pushed branches
+  (<code>feat/pw-decision-epoch</code>, <code>feat/market-context-program</code>,
+  <code>fix/cockpit-portfolio-live-legs</code>, <code>feat/xsp-meic-stefano</code>)
+  look merged-or-stale — verify and prune.</li>
+<li><strong>Open monitor question</strong> (data change log, 07-25) — why didn't
+  <code>ambient-context-health</code> flag the 07-20 fallback-only day?</li>
+<li><strong>bot-engine contrib work uncommitted</strong> in the sibling —
+  belongs to the concurrent session; nothing to do here beyond awareness.</li>
+</ul>
+</div>
+
+</body></html>

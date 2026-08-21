@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body{font-family:Arial,sans-serif;font-size:14px;color:#222;max-width:900px;margin:0 auto;padding:16px}
+h1{color:#1a237e;border-bottom:2px solid #1a237e;padding-bottom:6px}
+h2{color:#283593;margin-top:24px;margin-bottom:8px}
+table{border-collapse:collapse;width:100%;margin-bottom:16px}
+th{background:#e8eaf6;color:#1a237e;text-align:left;padding:8px 10px;font-size:13px}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;font-size:13px;vertical-align:top}
+tr:hover td{background:#f5f5f5}
+.profit{color:#2e7d32;font-weight:bold}
+.loss{color:#c62828;font-weight:bold}
+.badge-ok{background:#e8f5e9;color:#2e7d32;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-warn{background:#fff8e1;color:#f57f17;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-err{background:#ffebee;color:#c62828;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-skip{background:#f3f3f3;color:#777;padding:2px 7px;border-radius:10px;font-size:12px}
+.box-ok{background:#f1f8e9;border-left:4px solid #66bb6a;padding:8px 12px;margin-bottom:12px}
+.box-warn{background:#fffde7;border-left:4px solid #ffca28;padding:8px 12px;margin-bottom:12px}
+.box-err{background:#ffebee;border-left:4px solid #ef5350;padding:8px 12px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<p style="font-size:.85rem"><a href="../index.html">&larr; back to overview</a></p>
+
+<h1>ZTS Daily Report &#8212; 2026-08-12</h1>
+
+<div class="box-warn">
+  <strong>Summary:</strong>
+
+  <ul>
+    <li><strong>+$3,395.25 realized</strong> across 26 closed groups &mdash; 24 winners, 2 losers. The MEIC family carried the day (12 SPXW groups closed at the 15:55 flatten for +$2,362.50 across szagar_paper / squid_paper / sniper_paper); the two discretionary /ES flies added +$518.75.</li>
+    <li>The only material loser was <strong>TG-3292</strong> (atlas_ic_calibrated_entry, CRWV IC, &minus;$215.00 &mdash; 1.16&times; its $185 max profit) after an overnight hold.</li>
+    <li><strong>9,383 bot fires</strong> across 217 (bot, login) pairs: 934 submitted, 8,012 skipped, 437 no-action, <strong>0 errored</strong>. 87 orders &mdash; 79 filled, 6 rejected, 2 cancelled (both intentional: EOD flatten superseding a resting target).</li>
+    <li><strong>Needs attention:</strong> (1) a platform-wide TastyTrade connectivity drop at 08:33&ndash;08:35 ET &mdash; MDS-sydney took 113 s to get DXLink back and all four ASS streamers cycled; (2) earnings_ic_exit_paper failed 6 straight attempts to close its USAR condor on an unusable book and is still holding into an 08-14 expiry; (3) the parity-forward stale-greeks guard tripped for the first time, blocking two /ES entries.</li>
+    <li><strong>Monitoring gap:</strong> the <code>skip-streaks</code> snapshot this report consumes has never been written &mdash; the script exists but is in no service catalog or LaunchAgent. Substituted a read-only SQL equivalent today; it found 8 live streaks.</li>
+  </ul>
+</div>
+
+<h2>Bot Fires</h2>
+<p style="color:#777;font-size:12px;margin-top:-6px">One row per (bot, login) per result class; repeated cycles collapsed. 217 pairs, 9,383 fires.</p>
+<table>
+  <tr><th>Time (ET)</th><th>Bot</th><th>Login</th><th>Result</th><th>Cycles</th><th>Detail</th></tr>
+  <tr><td>10:05</td><td>meic_resting_target</td><td>tommyboy</td><td><span class="badge-skip">no_action</span></td><td>47</td><td>47 cycles &mdash; no action</td></tr>
+<tr><td>08:28</td><td>meic_resting_target</td><td>tommyboy</td><td><span class="badge-skip">skipped</span></td><td>39</td><td>39 cycles &mdash; <code>exit.hold</code> All 3 entries held — no resting target to place</td></tr>
+<tr><td>09:00</td><td>disc_iron_man_spx_target</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>84</td><td>84 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_iron_man_spx&#x27;</td></tr>
+<tr><td>09:00</td><td>disc_bwb_put_spx_target</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>84</td><td>84 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_bwb_put_spx&#x27;</td></tr>
+<tr><td>11:24</td><td>disc_ibfly_es_pt</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>2</td><td>2 submissions &mdash; /ES</td></tr>
+<tr><td>09:00</td><td>disc_ibfly_es_pt</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>423</td><td>423 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_ibfly_es&#x27;</td></tr>
+<tr><td>09:00</td><td>disc_ibfly_spx_pt</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>210</td><td>210 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_ibfly_spx&#x27;</td></tr>
+<tr><td>10:05</td><td>bwb_spx_put_1000_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>2</td><td>2 cycles &mdash; no action</td></tr>
+<tr><td>09:00</td><td>bwb_spx_put_1000_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>82</td><td>82 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_1000_kaity_paper&#x27;</td></tr>
+<tr><td>09:00</td><td>bwb_spx_put_mc2_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>84</td><td>84 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_mc2_kaity_paper&#x27;</td></tr>
+<tr><td>09:00</td><td>bwb_spx_put_mc1_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>84</td><td>84 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_mc1_kaity_paper&#x27;</td></tr>
+<tr><td>09:00</td><td>bwb_spx_put_1030_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>84</td><td>84 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_1030_kaity_paper&#x27;</td></tr>
+<tr><td>09:00</td><td>iron_man_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>84</td><td>84 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;iron_man_kaity_paper&#x27;</td></tr>
+<tr><td>09:00</td><td>bwb_spx_put_1130_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>84</td><td>84 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_1130_kaity_paper&#x27;</td></tr>
+<tr><td>11:05</td><td>bwb_spx_put_pt50_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>2</td><td>2 cycles &mdash; no action</td></tr>
+<tr><td>09:00</td><td>bwb_spx_put_pt50_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>82</td><td>82 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_pt50_kaity_paper&#x27;</td></tr>
+<tr><td>11:05</td><td>bwb_spx_put_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>2</td><td>2 cycles &mdash; no action</td></tr>
+<tr><td>09:00</td><td>bwb_spx_put_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>82</td><td>82 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_kaity_paper&#x27;</td></tr>
+<tr><td>09:31</td><td>earnings_bear_call_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;earnings_bear_call_entry_paper&#x27;</td></tr>
+<tr><td>09:31</td><td>earnings_bull_put_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;earnings_bull_put_entry_paper&#x27;</td></tr>
+<tr><td>09:31</td><td>pead_abs_call_spread_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.all_skipped</code> All 1 symbol(s) skipped: CRWV: n_quarters 5 &lt; min 6</td></tr>
+<tr><td>09:31</td><td>neglected_strangle_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;neglected_strangle_entry_paper&#x27;</td></tr>
+<tr><td>09:31</td><td>pead_call_spread_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.all_skipped</code> All 1 symbol(s) skipped: CRWV: n_quarters 5 &lt; min 6</td></tr>
+<tr><td>09:31</td><td>atlas_breakout_exit</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;atlas_breakout_entry&#x27;</td></tr>
+<tr><td>09:31</td><td>atlas_bull_put_strict_exit</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;atlas_bull_put_strict_entry&#x27;</td></tr>
+<tr><td>09:31</td><td>atlas_ic_strict_exit</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.hold</code> 2 entries held (positions_absent x2)</td></tr>
+<tr><td>09:31</td><td>atlas_ic_calibrated_exit</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>&mdash;</td></tr>
+<tr><td>09:31</td><td>atlas_bear_call_strict_exit</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;atlas_bear_call_strict_entry&#x27;</td></tr>
+<tr><td>09:31</td><td>pead_r4_call_spread_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.all_skipped</code> All 1 symbol(s) skipped: CRWV: n_quarters 5 &lt; min 6</td></tr>
+<tr><td>09:31</td><td>pead_p7_call_spread_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.all_skipped</code> All 1 symbol(s) skipped: CRWV: n_quarters 5 &lt; min 6</td></tr>
+<tr><td>09:32</td><td>earnings_ic_exit_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>&mdash;</td></tr>
+<tr><td>09:33</td><td>earnings_ic_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.submit_failed</code> 1 exit order(s) rejected — TG-3188: Unusable book for fill: USAR  260814P00018000: spread too wide for a fill (bid 0.41 / ask 0.69, 50.9% of mid, ceil</td></tr>
+<tr><td>09:32</td><td>iron_man_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>structure.unresolvable</code> Cannot resolve structure: long_call_inner: no_greeks (greeks surface inconsistent with fresh parity_forward reference (delta-implied ATM 7730.0 vs par</td></tr>
+<tr><td>09:35</td><td>jade_lizard_0dte_atm_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>structure.unresolvable</code> Cannot resolve structure: short_put: no_greeks (greeks surface inconsistent with fresh parity_forward reference (delta-implied ATM 7730.0 vs parity_fo</td></tr>
+<tr><td>09:35</td><td>ic_0dte_em_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>gate.blackout</code> event_blackout:cpi</td></tr>
+<tr><td>09:35</td><td>pead_p7_dte_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;pead_p7_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>09:35</td><td>pead_dte_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;pead_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>09:35</td><td>pead_abs_dte_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;pead_abs_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>09:35</td><td>pead_r4_dte_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;pead_r4_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>09:35</td><td>ic_0dte_em_paper</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>gate.blackout</code> event_blackout:cpi</td></tr>
+<tr><td>09:35</td><td>bwb_rsi_put_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>gate.feature</code> feature:rsi_state:neutral_not_in_allowed</td></tr>
+<tr><td>09:35</td><td>bwb_rsi_call_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>gate.feature</code> feature:rsi_state:neutral_not_in_allowed</td></tr>
+<tr><td>09:38</td><td>disc_dbl_cal_es_target</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>149</td><td>149 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_es&#x27;</td></tr>
+<tr><td>09:38</td><td>earnings_ic_exit</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;earnings_ic_entry&#x27;</td></tr>
+<tr><td>09:38</td><td>disc_dbl_cal_es_stop</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>149</td><td>149 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_es&#x27;</td></tr>
+<tr><td>09:38</td><td>disc_dbl_cal_es_expiry</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>27</td><td>27 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_es&#x27;</td></tr>
+<tr><td>09:38</td><td>idx_ic_45dte_5w_21dte_exit</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>6</td><td>6 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ic_45dte_5w&#x27;</td></tr>
+<tr><td>09:38</td><td>dbl_cal_fut_target_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>77</td><td>77 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_fut_individual&#x27;</td></tr>
+<tr><td>09:38</td><td>dbl_cal_fut_stop_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>77</td><td>77 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_fut_individual&#x27;</td></tr>
+<tr><td>09:38</td><td>dbl_cal_fut_expiry_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>16</td><td>16 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_fut_individual&#x27;</td></tr>
+<tr><td>09:38</td><td>fut_ibfly_0dte_30w_ok_resting_target_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>77</td><td>77 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;fut_ibfly_0dte_30w_ok_individual&#x27;</td></tr>
+<tr><td>09:38</td><td>fut_ibfly_0dte_30w_ok_profit_exit_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>155</td><td>155 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;fut_ibfly_0dte_30w_ok_individual&#x27;</td></tr>
+<tr><td>09:38</td><td>idx_ic_45dte_5w_resting_target</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>77</td><td>77 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ic_45dte_5w&#x27;</td></tr>
+<tr><td>10:00</td><td>put_spreads_exit</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;put_spreads&#x27;</td></tr>
+<tr><td>10:00</td><td>systest_meic_stop_tommyboy</td><td>tommyboy</td><td><span class="badge-skip">skipped</span></td><td>360</td><td>360 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;systest_meic_tommyboy&#x27;</td></tr>
+<tr><td>10:00</td><td>batman_spx_call_touch_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_spx_call_kaity_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>systest_meic_tommyboy</td><td>tommyboy</td><td><span class="badge-skip">skipped</span></td><td>10</td><td>10 cycles &mdash; <code>gate.enablement</code> bot disabled (flag_undefined role=entry fallback=disabled)</td></tr>
+<tr><td>10:00</td><td>bwb_rsi_call_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_rsi_call_kaity_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>meic</td><td>tommyboy</td><td><span class="badge-ok">submitted</span></td><td>4</td><td>4 submissions &mdash; XSP &middot; OMS-1239FCE76855 +3 more &middot; TG-3328 +3 more</td></tr>
+<tr><td>11:30</td><td>meic</td><td>tommyboy</td><td><span class="badge-skip">skipped</span></td><td>2</td><td>2 cycles &mdash; <code>entry.leg_conflict</code> Leg conflict on short_call, long_call: existing position(s) at those strikes</td></tr>
+<tr><td>10:00</td><td>batman_spx_call_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_spx_call_kaity_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>batman_spx_put_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_spx_put_kaity_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>batman_spx_put_touch_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_spx_put_kaity_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>batman_es_call_touch_szagar_paper</td><td>szagar</td><td><span class="badge-skip">no_action</span></td><td>1</td><td>1 cycle &mdash; no action</td></tr>
+<tr><td>10:05</td><td>batman_es_call_touch_szagar_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>71</td><td>71 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_es_call_szagar_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>batman_es_call_target_szagar_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_es_call_szagar_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>bwb_rsi_call_touch_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_rsi_call_kaity_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>bwb_spx_put_1000_kaity_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>SPX &middot; OMS-F1BF034A6A42 &middot; TG-3323</td></tr>
+<tr><td>10:00</td><td>bwb_rsi_put_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_rsi_put_kaity_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>bwb_rsi_put_touch_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;bwb_rsi_put_kaity_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>batman_es_put_target_szagar_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_es_put_szagar_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>batman_es_put_touch_szagar_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_es_put_szagar_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>dbl_cal_fut_ext_stop_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_fut_ext_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>dbl_cal_fut_ext_target_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_fut_ext_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>disc_dbl_cal_qqq_target</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_qqq&#x27;</td></tr>
+<tr><td>10:00</td><td>disc_dbl_cal_qqq_stop</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_qqq&#x27;</td></tr>
+<tr><td>10:00</td><td>disc_dbl_cal_spx_stop</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_spx&#x27;</td></tr>
+<tr><td>10:00</td><td>dbl_cal_etf_ext_stop_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.hold</code> All 1 entries above the stop threshold</td></tr>
+<tr><td>10:00</td><td>dbl_cal_etf_ext_stop_kaity_paper_weekly</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_etf_ext_kaity_paper_weekly&#x27;</td></tr>
+<tr><td>10:00</td><td>fut_ic_45dte_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.hold</code> No entries at profit target</td></tr>
+<tr><td>10:00</td><td>disc_dbl_cal_spx_target</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_spx&#x27;</td></tr>
+<tr><td>10:00</td><td>dbl_cal_etf_ext_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>72</td><td>72 cycles &mdash; no action</td></tr>
+<tr><td>10:00</td><td>idx_ic_45dte_21dte_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;idx_ic_45dte_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>idx_ic_45dte_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ic_45dte_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>idx_ic_45dte_estwin_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.hold</code> No entries at profit target</td></tr>
+<tr><td>10:00</td><td>dbl_cal_etf_ext_target_kaity_paper_weekly</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_etf_ext_kaity_paper_weekly&#x27;</td></tr>
+<tr><td>10:00</td><td>idx_ic_45dte_resting_target_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ic_45dte_paper&#x27;</td></tr>
+<tr><td>14:35</td><td>ibfly_0dte_30w_resting_target_paper</td><td>szagar</td><td><span class="badge-skip">no_action</span></td><td>13</td><td>13 cycles &mdash; no action</td></tr>
+<tr><td>10:00</td><td>ibfly_0dte_30w_resting_target_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>59</td><td>59 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;ibfly_0dte_30w_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>jade_lizard_0dte_atm_target_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;jade_lizard_0dte_atm_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>dbl_cal_idx_stop_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.hold</code> All 1 entries above the stop threshold</td></tr>
+<tr><td>10:00</td><td>dbl_cal_etf_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>72</td><td>72 cycles &mdash; no action</td></tr>
+<tr><td>10:00</td><td>dbl_cal_etf_stop_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.hold</code> All 1 entries above the stop threshold</td></tr>
+<tr><td>10:00</td><td>dbl_cal_etf_stop_kaity_paper_weekly</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.hold</code> All 1 entries above the stop threshold</td></tr>
+<tr><td>10:00</td><td>dbl_cal_idx_ext_stop_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.hold</code> All 1 entries above the stop threshold</td></tr>
+<tr><td>10:00</td><td>dbl_cal_etf_target_kaity_paper_weekly</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>72</td><td>72 cycles &mdash; no action</td></tr>
+<tr><td>10:00</td><td>systest_meic_kaity</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>10</td><td>10 cycles &mdash; <code>gate.enablement</code> bot disabled (flag_undefined role=entry fallback=disabled)</td></tr>
+<tr><td>10:00</td><td>pead_abs_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>12</td><td>12 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;pead_abs_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>pead_r4_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>12</td><td>12 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;pead_r4_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>pead_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>12</td><td>12 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;pead_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>pead_p7_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>12</td><td>12 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;pead_p7_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>dbl_cal_idx_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>72</td><td>72 cycles &mdash; no action</td></tr>
+<tr><td>10:00</td><td>dbl_cal_idx_ext_target_kaity_paper</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>72</td><td>72 cycles &mdash; no action</td></tr>
+<tr><td>10:00</td><td>sosnoff_put_spread_target_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;sosnoff_put_spread_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>smb_momo_atr_v1</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>60</td><td>60 cycles &mdash; <code>signal.absent</code> no fresh TICK internals signal</td></tr>
+<tr><td>10:00</td><td>systest_meic_stop_kaity</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>360</td><td>360 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;systest_meic_kaity&#x27;</td></tr>
+<tr><td>10:00</td><td>smb_momo_atr_trail</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>180</td><td>180 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;smb_momo_atr_v1&#x27;</td></tr>
+<tr><td>10:00</td><td>smb_momo_qqq_atr_trail</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>180</td><td>180 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;smb_momo_qqq_atr_v1&#x27;</td></tr>
+<tr><td>10:00</td><td>smb_momo_qqq_atr_v1</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>60</td><td>60 cycles &mdash; <code>signal.absent</code> no fresh TICK internals signal</td></tr>
+<tr><td>10:00</td><td>tom_call_spread_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>entry.window_closed</code> 2026-08-12 is not a TOM entry day (not last-2 or first-3 of month)</td></tr>
+<tr><td>10:00</td><td>tom_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>12</td><td>12 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;tom_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>vol_pairs_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>filter.threshold</code> IWM IV rank 1.9 below min 40.0</td></tr>
+<tr><td>10:00</td><td>smb_momo_qqq_v1</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>60</td><td>60 cycles &mdash; <code>signal.absent</code> no fresh TICK internals signal</td></tr>
+<tr><td>10:00</td><td>vol_pairs_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>12</td><td>12 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;vol_pairs_entry_paper&#x27;</td></tr>
+<tr><td>10:00</td><td>smb_momo_trail</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>180</td><td>180 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;smb_momo_v1&#x27;</td></tr>
+<tr><td>10:00</td><td>sniper_ir</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>SPX &middot; OMS-358A0F1D208D &middot; TG-3322</td></tr>
+<tr><td>10:15</td><td>sniper_ir</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>signal.absent</code> position_in_range=0.90 is mid-range (0.1-0.9); no directional edge</td></tr>
+<tr><td>10:00</td><td>smb_momo_qqq_trail</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>180</td><td>180 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;smb_momo_qqq_v1&#x27;</td></tr>
+<tr><td>10:20</td><td>sniper_ir_stop</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>1</td><td>1 cycle &mdash; no action</td></tr>
+<tr><td>10:00</td><td>sniper_ir_stop</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>179</td><td>179 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;sniper_ir&#x27;</td></tr>
+<tr><td>10:00</td><td>smb_momo_v1</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>60</td><td>60 cycles &mdash; <code>signal.absent</code> no fresh TICK internals signal</td></tr>
+<tr><td>10:05</td><td>sniper_ic_target</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>4</td><td>4 cycles &mdash; no action</td></tr>
+<tr><td>10:00</td><td>sniper_ic_target</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>68</td><td>68 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;sniper_ic&#x27;</td></tr>
+<tr><td>10:00</td><td>sniper_tv_stop</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>180</td><td>180 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;sniper_tv&#x27;</td></tr>
+<tr><td>10:00</td><td>sniper_ic</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>SPX &middot; OMS-175D4EF4EA20 &middot; TG-3324</td></tr>
+<tr><td>10:00</td><td>sniper_tv_target</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>72</td><td>72 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;sniper_tv&#x27;</td></tr>
+<tr><td>10:05</td><td>sniper_ir_target</td><td>kaity</td><td><span class="badge-skip">no_action</span></td><td>3</td><td>3 cycles &mdash; no action</td></tr>
+<tr><td>10:00</td><td>sniper_ir_target</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>69</td><td>69 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;sniper_ir&#x27;</td></tr>
+<tr><td>10:05</td><td>idx_ic_45dte_estwin_21dte_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.hold</code> All 1 entries above DTE threshold (21)</td></tr>
+<tr><td>10:05</td><td>sosnoff_put_spread_21dte_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;sosnoff_put_spread_paper&#x27;</td></tr>
+<tr><td>10:15</td><td>fut_ic_45dte_21dte_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.hold</code> All 17 entries above DTE threshold (21)</td></tr>
+<tr><td>10:30</td><td>put_spreads</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;put-spreads&#x27; is empty</td></tr>
+<tr><td>10:30</td><td>bwb_spx_put_1030_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>credit.below_min</code> Net credit -0.38 below minimum 0.10</td></tr>
+<tr><td>10:30</td><td>idx_ic_45dte_estwin_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>SPX &middot; OMS-9971B9A6955A &middot; TG-3336</td></tr>
+<tr><td>11:30</td><td>idx_ic_45dte_estwin_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>entry.duplicate_day</code> Already entered SPX today</td></tr>
+<tr><td>10:30</td><td>idx_ic_45dte_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>filter.threshold</code> IV rank 14.2 below minimum 30.0</td></tr>
+<tr><td>10:30</td><td>sosnoff_put_spread_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.all_skipped</code> All 1 symbol(s) skipped: SPY: Cannot resolve put spread: short_put: no_greeks (no greeks delivered for candidates); long_put: sibling_unresolved (pare</td></tr>
+<tr><td>10:30</td><td>tp_0dte_put_spread_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>SPX</td></tr>
+<tr><td>10:45</td><td>fut_ic_45dte_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>/ES &middot; OMS-73827F51EEBC &middot; TG-3341</td></tr>
+<tr><td>11:45</td><td>fut_ic_45dte_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>entry.duplicate_day</code> Already entered /ES today</td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_squid_paper</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>credit.below_min</code> Net credit 16.78 below minimum 20.00</td></tr>
+<tr><td>11:00</td><td>meic_squid_paper</td><td>sydney</td><td><span class="badge-ok">submitted</span></td><td>7</td><td>7 submissions &mdash; SPX &middot; OMS-12F8A5567E3B +6 more &middot; TG-3345 +6 more</td></tr>
+<tr><td>14:30</td><td>meic_squid_paper</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>entry.max_daily</code> Daily entry cap reached for SPX (7/7)</td></tr>
+<tr><td>11:00</td><td>meic_stop_squid_paper</td><td>sydney</td><td><span class="badge-ok">submitted</span></td><td>297</td><td>297 submissions &mdash; &mdash;</td></tr>
+<tr><td>15:57</td><td>meic_stop_squid_paper</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>3</td><td>3 cycles &mdash; <code>exit.no_entries</code> No open MEIC sides to evaluate</td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_profit_exit_squid_paper</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>150</td><td>150 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ibfly_0dte_30w_ok_squid_paper&#x27;</td></tr>
+<tr><td>11:00</td><td>fut_ibfly_0dte_30w_ok_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>gate.enablement</code> bot disabled (flag=0)</td></tr>
+<tr><td>11:00</td><td>bwb_spx_put_kaity_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>SPX &middot; OMS-1CC39FF06652 &middot; TG-3350</td></tr>
+<tr><td>11:00</td><td>bwb_spx_put_mc1_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>credit.below_min</code> Net credit 0.42 below minimum 1.00</td></tr>
+<tr><td>11:00</td><td>bwb_spx_put_mc2_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>credit.below_min</code> Net credit 0.42 below minimum 2.00</td></tr>
+<tr><td>11:00</td><td>bwb_spx_put_pt50_kaity_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>SPX &middot; OMS-5BBD865D73E3 &middot; TG-3349</td></tr>
+<tr><td>11:00</td><td>fut_ibfly_0dte_30w_ok_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>credit.below_min</code> Net credit 16.85 below minimum 20.00</td></tr>
+<tr><td>11:00</td><td>fut_ibfly_0dte_30w_ok_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>150</td><td>150 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;fut_ibfly_0dte_30w_ok_paper&#x27;</td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>credit.below_min</code> Net credit 16.68 below minimum 20.00</td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>credit.below_min</code> Net credit 16.68 below minimum 20.00</td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>150</td><td>150 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ibfly_0dte_30w_ok_paper&#x27;</td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_profit_exit_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>150</td><td>150 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ibfly_0dte_30w_ok_kaity_paper&#x27;</td></tr>
+<tr><td>11:00</td><td>meic_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>7</td><td>7 submissions &mdash; SPX &middot; OMS-04B16B5D7BF6 +6 more &middot; TG-3347 +6 more</td></tr>
+<tr><td>14:30</td><td>meic_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>entry.max_daily</code> Daily entry cap reached for SPX (7/7)</td></tr>
+<tr><td>11:00</td><td>meic_sl3_stop_sniper_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>297</td><td>297 submissions &mdash; &mdash;</td></tr>
+<tr><td>15:57</td><td>meic_sl3_stop_sniper_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>3</td><td>3 cycles &mdash; <code>exit.no_entries</code> No open MEIC sides to evaluate</td></tr>
+<tr><td>11:00</td><td>meic_sl3_sniper_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>7</td><td>7 submissions &mdash; SPX &middot; OMS-4B2B8DEADEA7 +6 more &middot; TG-3351 +6 more</td></tr>
+<tr><td>14:30</td><td>meic_sl3_sniper_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>entry.max_daily</code> Daily entry cap reached for SPX (7/7)</td></tr>
+<tr><td>11:00</td><td>meic_stop_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>297</td><td>297 submissions &mdash; &mdash;</td></tr>
+<tr><td>15:57</td><td>meic_stop_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>3</td><td>3 cycles &mdash; <code>exit.no_entries</code> No open MEIC sides to evaluate</td></tr>
+<tr><td>11:30</td><td>bwb_spx_put_1130_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>credit.below_min</code> Net credit -0.32 below minimum 0.10</td></tr>
+<tr><td>13:45</td><td>dbl_cal_fut_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>gate.enablement</code> bot disabled (flag=0)</td></tr>
+<tr><td>13:45</td><td>dbl_cal_fut_ext_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>structure.unresolvable</code> Cannot resolve structure: short_put: no_greeks (no greeks delivered for candidates); long_put_back: sibling_unresolved (parent &#x27;short_put&#x27; unresolved)</td></tr>
+<tr><td>13:45</td><td>dbl_cal_etf_ext_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>entry.max_concurrent</code> 1 entry(s) still open for QQQ (max: 1)</td></tr>
+<tr><td>13:45</td><td>dbl_cal_etf_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>entry.max_concurrent</code> 1 entry(s) still open for QQQ (max: 1)</td></tr>
+<tr><td>13:45</td><td>dbl_cal_idx_ext_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>entry.max_concurrent</code> 1 entry(s) still open for SPX (max: 1)</td></tr>
+<tr><td>13:45</td><td>dbl_cal_idx_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>entry.max_concurrent</code> 1 entry(s) still open for SPX (max: 1)</td></tr>
+<tr><td>14:00</td><td>ibfly_0dte_profit_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>30</td><td>30 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;ibfly_0dte_30w_paper&#x27;</td></tr>
+<tr><td>14:10</td><td>idx_ic_45dte_5w</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>gate.enablement</code> bot disabled (flag_undefined role=entry fallback=disabled)</td></tr>
+<tr><td>14:32</td><td>ibfly_0dte_30w_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>/ES &middot; OMS-E94947A2C1EB &middot; TG-3400</td></tr>
+<tr><td>14:40</td><td>ic_16d_5w_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>structure.unresolvable</code> Cannot resolve structure: long_call: no_strike_in_tolerance (no match for offset_from (strike 8205.0 not listed in this expiration))</td></tr>
+<tr><td>15:30</td><td>disc_ibfly_es_eod</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>22</td><td>22 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_ibfly_es&#x27;</td></tr>
+<tr><td>15:30</td><td>fut_ibfly_0dte_30w_ok_eod_exit_individual</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;fut_ibfly_0dte_30w_ok_individual&#x27;</td></tr>
+<tr><td>15:30</td><td>ic_16d_50w_expiry_exit</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;ic_16d_50w&#x27;</td></tr>
+<tr><td>15:30</td><td>batman_es_call_eod_szagar_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_es_call_szagar_paper&#x27;</td></tr>
+<tr><td>15:30</td><td>dbl_cal_etf_expiry_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.hold</code> All 1 entries above DTE threshold (0)</td></tr>
+<tr><td>15:30</td><td>dbl_cal_etf_expiry_kaity_paper_weekly</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.hold</code> All 1 entries above DTE threshold (0)</td></tr>
+<tr><td>15:30</td><td>dbl_cal_etf_ext_expiry_kaity_paper_weekly</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_etf_ext_kaity_paper_weekly&#x27;</td></tr>
+<tr><td>15:30</td><td>dbl_cal_etf_ext_expiry_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.hold</code> All 1 entries above DTE threshold (0)</td></tr>
+<tr><td>15:30</td><td>batman_es_put_eod_szagar_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;batman_es_put_szagar_paper&#x27;</td></tr>
+<tr><td>15:30</td><td>dbl_cal_fut_ext_expiry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;dbl_cal_fut_ext_paper&#x27;</td></tr>
+<tr><td>15:30</td><td>dbl_cal_idx_expiry_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.hold</code> All 1 entries above DTE threshold (0)</td></tr>
+<tr><td>15:30</td><td>dbl_cal_idx_ext_expiry_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.hold</code> All 1 entries above DTE threshold (0)</td></tr>
+<tr><td>15:30</td><td>disc_dbl_cal_qqq_expiry</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_qqq&#x27;</td></tr>
+<tr><td>15:30</td><td>disc_dbl_cal_spx_expiry</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_dbl_cal_spx&#x27;</td></tr>
+<tr><td>15:30</td><td>fut_ic_45dte_expiry_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.hold</code> All 18 entries expire after today — nothing to close</td></tr>
+<tr><td>15:30</td><td>fut_ibfly_0dte_30w_ok_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>11</td><td>11 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;fut_ibfly_0dte_30w_ok_paper&#x27;</td></tr>
+<tr><td>15:35</td><td>ibfly_0dte_eod_exit_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>/ES</td></tr>
+<tr><td>15:36</td><td>ibfly_0dte_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">no_action</span></td><td>1</td><td>1 cycle &mdash; no action</td></tr>
+<tr><td>15:30</td><td>ibfly_0dte_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>9</td><td>9 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;ibfly_0dte_30w_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>atlas_ic_strict_entry</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;earnings_play&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>batman_spx_call_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;batman_spx_call_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>atlas_ic_calibrated_entry</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;earnings_play&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>atlas_bear_call_strict_entry</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;earnings_play&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>atlas_breakout_entry</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;earnings_breakout&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>batman_spx_put_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;batman_spx_put_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>atlas_bull_put_strict_entry</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;earnings_play&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>bwb_rsi_call_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_rsi_call_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>bwb_rsi_put_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_rsi_put_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>bwb_spx_put_1000_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_1000_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>bwb_spx_put_1030_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_1030_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>disc_bwb_put_spx_eod</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;disc_bwb_put_spx&#x27;</td></tr>
+<tr><td>15:45</td><td>bwb_spx_put_1130_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_1130_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>bwb_spx_put_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>bwb_spx_put_mc1_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_mc1_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>bwb_spx_put_pt50_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_pt50_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>disc_iron_man_spx_eod</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;disc_iron_man_spx&#x27;</td></tr>
+<tr><td>15:45</td><td>bwb_spx_put_mc2_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;bwb_spx_put_mc2_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>earnings_bear_call_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;earnings_play&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>earnings_ic_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;earnings_play&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>earnings_bull_put_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;earnings_play&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>neglected_strangle_entry_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>watchlist.empty</code> Watchlist &#x27;neglected_play&#x27; is empty</td></tr>
+<tr><td>15:45</td><td>iron_man_eod_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;iron_man_kaity_paper&#x27;</td></tr>
+<tr><td>15:45</td><td>smb_momo_eod</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;smb_momo_v1&#x27;</td></tr>
+<tr><td>15:45</td><td>smb_momo_atr_eod</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;smb_momo_atr_v1&#x27;</td></tr>
+<tr><td>15:45</td><td>smb_momo_qqq_atr_eod</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;smb_momo_qqq_atr_v1&#x27;</td></tr>
+<tr><td>15:45</td><td>smb_momo_qqq_eod</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;smb_momo_qqq_v1&#x27;</td></tr>
+<tr><td>15:45</td><td>sniper_ic_eod</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;sniper_ic&#x27;</td></tr>
+<tr><td>15:45</td><td>sniper_ir_eod</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;sniper_ir&#x27;</td></tr>
+<tr><td>15:45</td><td>sniper_tv_eod</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;sniper_tv&#x27;</td></tr>
+<tr><td>15:50</td><td>tom_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;tom_call_spread_entry_paper&#x27;</td></tr>
+<tr><td>15:55</td><td>idx_ibfly_0dte_30w_ok_eod_exit_squid_paper</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ibfly_0dte_30w_ok_squid_paper&#x27;</td></tr>
+<tr><td>15:55</td><td>meic_eod_squid_paper</td><td>sydney</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>&mdash;</td></tr>
+<tr><td>15:55</td><td>ic_0dte_em_eod_exit_paper</td><td>sydney</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;ic_0dte_em_paper&#x27;</td></tr>
+<tr><td>15:55</td><td>systest_meic_eod_tommyboy</td><td>tommyboy</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;systest_meic_tommyboy&#x27;</td></tr>
+<tr><td>15:55</td><td>meic_eod</td><td>tommyboy</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.hold</code> 2 entries held (positions_absent x2)</td></tr>
+<tr><td>15:55</td><td>disc_ibfly_spx_eod</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;disc_ibfly_spx&#x27;</td></tr>
+<tr><td>15:55</td><td>idx_ibfly_0dte_30w_ok_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ibfly_0dte_30w_ok_paper&#x27;</td></tr>
+<tr><td>15:55</td><td>ic_0dte_em_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;ic_0dte_em_paper&#x27;</td></tr>
+<tr><td>15:55</td><td>jade_lizard_0dte_atm_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;jade_lizard_0dte_atm_paper&#x27;</td></tr>
+<tr><td>15:55</td><td>idx_ibfly_0dte_30w_ok_eod_exit_kaity_paper</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>5</td><td>5 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;idx_ibfly_0dte_30w_ok_kaity_paper&#x27;</td></tr>
+<tr><td>15:55</td><td>meic_sl3_eod_sniper_paper</td><td>kaity</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>&mdash;</td></tr>
+<tr><td>15:55</td><td>systest_meic_eod_kaity</td><td>kaity</td><td><span class="badge-skip">skipped</span></td><td>1</td><td><code>exit.no_entries</code> No open entries from &#x27;systest_meic_kaity&#x27;</td></tr>
+<tr><td>15:55</td><td>tp_0dte_put_spread_eod_exit_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>&mdash;</td></tr>
+<tr><td>15:56</td><td>tp_0dte_put_spread_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">no_action</span></td><td>1</td><td>1 cycle &mdash; no action</td></tr>
+<tr><td>15:57</td><td>tp_0dte_put_spread_eod_exit_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>3</td><td>3 cycles &mdash; <code>exit.no_entries</code> No open entries from &#x27;tp_0dte_put_spread_paper&#x27;</td></tr>
+<tr><td>15:55</td><td>meic_eod_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>1</td><td>&mdash;</td></tr>
+</table>
+
+<h2>Iron-Fly Credit Floor</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Bot</th><th>Login</th><th>Priced</th><th>Floor</th><th>R:R @ price</th><th>Outcome</th></tr>
+
+<tr><td>09:35</td><td>jade_lizard_0dte_atm_paper</td><td>szagar</td><td>&mdash;</td><td>10.00</td><td>&mdash;</td>
+<td><span class="badge-warn">NO-PRICE</span> structure.unresolvable &mdash; short_put no_greeks: greeks surface inconsistent with fresh parity_forward reference (delta-implied ATM 7730.0 vs parity_forward 7754). Never reached pricing.</td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_squid_paper</td><td>sydney</td><td>16.775 (16.75)</td><td>20.00</td><td>1.27</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_paper</td><td>szagar</td><td>16.675 (16.65)</td><td>20.00</td><td>1.25</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+<tr><td>11:00</td><td>idx_ibfly_0dte_30w_ok_kaity_paper</td><td>kaity</td><td>16.675 (16.65)</td><td>20.00</td><td>1.25</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+<tr><td>11:00</td><td>fut_ibfly_0dte_30w_ok_paper</td><td>szagar</td><td>16.85 (16.75)</td><td>20.00</td><td>1.28</td><td><span class="badge-skip">FLOOR SKIP</span></td></tr>
+<tr><td>14:32</td><td>ibfly_0dte_30w_paper</td><td>szagar</td><td>7.825 (7.75)</td><td>5.00</td><td>0.35</td><td><span class="badge-ok">SUBMITTED</span> /ES &middot; OMS-E94947A2C1EB &middot; TG-3400 (2 contracts, closed &minus;$10.00)</td></tr>
+</table>
+<p style="color:#777;font-size:12px;margin-top:-8px">Hit rate today: 1 of 6 (the one arm with a 5.00 floor). The four 30-wide arms all priced 16.67&ndash;16.85 against a 20.00 floor &mdash; a 7th consecutive session below the floor.</p>
+
+<h2>Orders</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Order ID</th><th>Account</th><th>Strategy</th><th>Status</th><th>Limit</th><th>Fill</th><th>Qty</th></tr>
+  <tr><td>09:31:00</td><td><code>OMS-6897EAC2293F</code></td><td>atlas_paper</td><td>98</td><td><span class="badge-ok">FILLED</span></td><td>4.00</td><td>-4.00</td><td>1</td></tr>
+<tr><td>09:32:00</td><td><code>OMS-25833F654989</code></td><td>szagar_paper</td><td>102</td><td><span class="badge-ok">FILLED</span></td><td>0.25</td><td>-0.25</td><td>1</td></tr>
+<tr><td>09:32:03</td><td><code>OMS-F83C332949BB</code></td><td>szagar_paper</td><td>102</td><td><span class="badge-err">REJECTED</span></td><td>0.45</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>09:33:00</td><td><code>OMS-917BAAA6D7B5</code></td><td>szagar_paper</td><td>102</td><td><span class="badge-err">REJECTED</span></td><td>0.50</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>09:34:00</td><td><code>OMS-AC017AD2243F</code></td><td>szagar_paper</td><td>102</td><td><span class="badge-err">REJECTED</span></td><td>0.40</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>09:35:00</td><td><code>OMS-66FF31704C0C</code></td><td>szagar_paper</td><td>102</td><td><span class="badge-err">REJECTED</span></td><td>0.55</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>09:36:00</td><td><code>OMS-E993C6C0FE46</code></td><td>szagar_paper</td><td>102</td><td><span class="badge-err">REJECTED</span></td><td>0.55</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>09:37:00</td><td><code>OMS-8585D6A155C0</code></td><td>szagar_paper</td><td>102</td><td><span class="badge-err">REJECTED</span></td><td>0.55</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>10:00:02</td><td><code>OMS-358A0F1D208D</code></td><td>sniper_paper</td><td>53</td><td><span class="badge-ok">FILLED</span></td><td>2.30</td><td>2.30</td><td>1</td></tr>
+<tr><td>10:00:02</td><td><code>OMS-F1BF034A6A42</code></td><td>kaity_paper</td><td>70</td><td><span class="badge-ok">FILLED</span></td><td>0.45</td><td>0.45</td><td>1</td></tr>
+<tr><td>10:00:02</td><td><code>OMS-175D4EF4EA20</code></td><td>sniper_paper</td><td>32</td><td><span class="badge-ok">FILLED</span></td><td>2.60</td><td>2.60</td><td>1</td></tr>
+<tr><td>10:00:05</td><td><code>OMS-BF0AB96C6B1A</code></td><td>stefano</td><td>33</td><td><span class="badge-ok">FILLED</span></td><td>0.25</td><td>0.26</td><td>1</td></tr>
+<tr><td>10:05:00</td><td><code>OMS-6C2C1B31841A</code></td><td>stefano</td><td>34</td><td><span class="badge-ok">FILLED</span></td><td>0.18</td><td>0.18</td><td>1</td></tr>
+<tr><td>10:05:00</td><td><code>OMS-241EE9B70BC6</code></td><td>kaity_paper</td><td>93</td><td><span class="badge-ok">FILLED</span></td><td>0.30</td><td>-0.30</td><td>1</td></tr>
+<tr><td>10:05:00</td><td><code>OMS-D30172F02D49</code></td><td>sniper_paper</td><td>54</td><td><span class="badge-ok">FILLED</span></td><td>1.25</td><td>-1.25</td><td>1</td></tr>
+<tr><td>10:05:00</td><td><code>OMS-48DB4C1EB4A2</code></td><td>sniper_paper</td><td>35</td><td><span class="badge-ok">FILLED</span></td><td>1.40</td><td>-1.40</td><td>1</td></tr>
+<tr><td>10:30:01</td><td><code>OMS-129614142DA2</code></td><td>szagar_paper</td><td>117</td><td><span class="badge-ok">FILLED</span></td><td>0.40</td><td>0.40</td><td>1</td></tr>
+<tr><td>10:30:02</td><td><code>OMS-9971B9A6955A</code></td><td>szagar_paper</td><td>128</td><td><span class="badge-ok">FILLED</span></td><td>21.80</td><td>21.80</td><td>1</td></tr>
+<tr><td>10:30:06</td><td><code>OMS-DB0FE16F6FB5</code></td><td>stefano</td><td>33</td><td><span class="badge-ok">FILLED</span></td><td>0.30</td><td>0.30</td><td>1</td></tr>
+<tr><td>10:30:07</td><td><code>OMS-32683E03DC8B</code></td><td>stefano</td><td>34</td><td><span class="badge-ok">FILLED</span></td><td>0.22</td><td>0.22</td><td>1</td></tr>
+<tr><td>10:45:03</td><td><code>OMS-73827F51EEBC</code></td><td>szagar_paper</td><td>36</td><td><span class="badge-ok">FILLED</span></td><td>53.50</td><td>53.50</td><td>1</td></tr>
+<tr><td>11:00:01</td><td><code>OMS-9340C4F0FC0B</code></td><td>stefano</td><td>33</td><td><span class="badge-ok">FILLED</span></td><td>0.25</td><td>0.27</td><td>1</td></tr>
+<tr><td>11:00:01</td><td><code>OMS-1F1CEA4FF960</code></td><td>squid_paper</td><td>37</td><td><span class="badge-ok">FILLED</span></td><td>2.65</td><td>2.65</td><td>1</td></tr>
+<tr><td>11:00:02</td><td><code>OMS-04B16B5D7BF6</code></td><td>szagar_paper</td><td>38</td><td><span class="badge-ok">FILLED</span></td><td>2.60</td><td>2.60</td><td>1</td></tr>
+<tr><td>11:00:03</td><td><code>OMS-5BBD865D73E3</code></td><td>kaity_paper</td><td>79</td><td><span class="badge-ok">FILLED</span></td><td>0.40</td><td>0.40</td><td>1</td></tr>
+<tr><td>11:00:03</td><td><code>OMS-1CC39FF06652</code></td><td>kaity_paper</td><td>78</td><td><span class="badge-ok">FILLED</span></td><td>0.40</td><td>0.40</td><td>1</td></tr>
+<tr><td>11:00:03</td><td><code>OMS-577C44EDAFEB</code></td><td>sniper_paper</td><td>118</td><td><span class="badge-ok">FILLED</span></td><td>2.60</td><td>2.60</td><td>1</td></tr>
+<tr><td>11:05:00</td><td><code>OMS-E459BE953C77</code></td><td>stefano</td><td>34</td><td><span class="badge-ok">FILLED</span></td><td>0.18</td><td>0.18</td><td>1</td></tr>
+<tr><td>11:05:00</td><td><code>OMS-A656CA406074</code></td><td>kaity_paper</td><td>82</td><td><span class="badge-ok">FILLED</span></td><td>0.30</td><td>-0.30</td><td>1</td></tr>
+<tr><td>11:05:00</td><td><code>OMS-1995F24D1CCE</code></td><td>kaity_paper</td><td>81</td><td><span class="badge-ok">FILLED</span></td><td>0.20</td><td>-0.20</td><td>1</td></tr>
+<tr><td>11:24:00</td><td><code>OMS-3698D497D30E</code></td><td>szagar_paper</td><td>135</td><td><span class="badge-ok">FILLED</span></td><td>18.70</td><td>-18.70</td><td>1</td></tr>
+<tr><td>11:28:00</td><td><code>OMS-3AFE4C04AE22</code></td><td>individual</td><td>135</td><td><span class="badge-ok">FILLED</span></td><td>18.10</td><td>18.10</td><td>1</td></tr>
+<tr><td>11:30:01</td><td><code>OMS-67D74578A739</code></td><td>squid_paper</td><td>37</td><td><span class="badge-ok">FILLED</span></td><td>2.50</td><td>2.50</td><td>1</td></tr>
+<tr><td>11:30:01</td><td><code>OMS-29B76671A77C</code></td><td>szagar_paper</td><td>38</td><td><span class="badge-ok">FILLED</span></td><td>2.50</td><td>2.45</td><td>1</td></tr>
+<tr><td>11:30:02</td><td><code>OMS-4B2B8DEADEA7</code></td><td>sniper_paper</td><td>118</td><td><span class="badge-ok">FILLED</span></td><td>2.45</td><td>2.45</td><td>1</td></tr>
+<tr><td>12:00:01</td><td><code>OMS-1239FCE76855</code></td><td>stefano</td><td>33</td><td><span class="badge-ok">FILLED</span></td><td>0.25</td><td>0.27</td><td>1</td></tr>
+<tr><td>12:00:01</td><td><code>OMS-3CBA135AE706</code></td><td>squid_paper</td><td>37</td><td><span class="badge-ok">FILLED</span></td><td>2.65</td><td>2.65</td><td>1</td></tr>
+<tr><td>12:00:01</td><td><code>OMS-E715DBF5BA7F</code></td><td>sniper_paper</td><td>118</td><td><span class="badge-ok">FILLED</span></td><td>2.65</td><td>2.65</td><td>1</td></tr>
+<tr><td>12:00:01</td><td><code>OMS-DF680A130EC7</code></td><td>szagar_paper</td><td>38</td><td><span class="badge-ok">FILLED</span></td><td>2.65</td><td>2.65</td><td>1</td></tr>
+<tr><td>12:00:02</td><td><code>OMS-5F05D402241D</code></td><td>stefano</td><td>34</td><td><span class="badge-ok">FILLED</span></td><td>0.18</td><td>0.18</td><td>1</td></tr>
+<tr><td>12:30:01</td><td><code>OMS-12F8A5567E3B</code></td><td>squid_paper</td><td>37</td><td><span class="badge-ok">FILLED</span></td><td>3.10</td><td>3.10</td><td>1</td></tr>
+<tr><td>12:30:01</td><td><code>OMS-D527E3E805A1</code></td><td>sniper_paper</td><td>118</td><td><span class="badge-ok">FILLED</span></td><td>3.10</td><td>3.10</td><td>1</td></tr>
+<tr><td>12:30:01</td><td><code>OMS-4B901BB773AD</code></td><td>szagar_paper</td><td>38</td><td><span class="badge-ok">FILLED</span></td><td>3.10</td><td>3.10</td><td>1</td></tr>
+<tr><td>12:52:00</td><td><code>OMS-2A61E3F298F1</code></td><td>squid_paper</td><td>42</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-3.12</td><td>1</td></tr>
+<tr><td>12:52:00</td><td><code>OMS-624D317AAD91</code></td><td>szagar_paper</td><td>43</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-3.02</td><td>1</td></tr>
+<tr><td>13:00:01</td><td><code>OMS-D38B1CC3EABC</code></td><td>squid_paper</td><td>37</td><td><span class="badge-ok">FILLED</span></td><td>2.65</td><td>2.65</td><td>1</td></tr>
+<tr><td>13:00:01</td><td><code>OMS-BE4F1619A43E</code></td><td>szagar_paper</td><td>38</td><td><span class="badge-ok">FILLED</span></td><td>2.65</td><td>2.65</td><td>1</td></tr>
+<tr><td>13:00:01</td><td><code>OMS-7AE588537F60</code></td><td>sniper_paper</td><td>118</td><td><span class="badge-ok">FILLED</span></td><td>2.65</td><td>2.65</td><td>1</td></tr>
+<tr><td>13:30:01</td><td><code>OMS-879028658CBA</code></td><td>squid_paper</td><td>37</td><td><span class="badge-ok">FILLED</span></td><td>3.25</td><td>3.25</td><td>1</td></tr>
+<tr><td>13:30:01</td><td><code>OMS-B290DA2EA066</code></td><td>sniper_paper</td><td>118</td><td><span class="badge-ok">FILLED</span></td><td>3.25</td><td>3.25</td><td>1</td></tr>
+<tr><td>13:30:01</td><td><code>OMS-C4DAEB8C616B</code></td><td>szagar_paper</td><td>38</td><td><span class="badge-ok">FILLED</span></td><td>3.25</td><td>3.25</td><td>1</td></tr>
+<tr><td>14:00:01</td><td><code>OMS-68A7BE5429D7</code></td><td>squid_paper</td><td>37</td><td><span class="badge-ok">FILLED</span></td><td>3.00</td><td>3.00</td><td>1</td></tr>
+<tr><td>14:00:01</td><td><code>OMS-EC1AD14DCCB5</code></td><td>sniper_paper</td><td>118</td><td><span class="badge-ok">FILLED</span></td><td>3.00</td><td>3.00</td><td>1</td></tr>
+<tr><td>14:00:01</td><td><code>OMS-EE9ED227FE81</code></td><td>szagar_paper</td><td>38</td><td><span class="badge-ok">FILLED</span></td><td>3.00</td><td>3.00</td><td>1</td></tr>
+<tr><td>14:32:05</td><td><code>OMS-E94947A2C1EB</code></td><td>szagar_paper</td><td>120</td><td><span class="badge-ok">FILLED</span></td><td>7.75</td><td>7.80</td><td>2</td></tr>
+<tr><td>14:33:00</td><td><code>OMS-3DD6B69785BF</code></td><td>szagar_paper</td><td>43</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-2.52</td><td>1</td></tr>
+<tr><td>14:33:00</td><td><code>OMS-F7FF3A4CA655</code></td><td>squid_paper</td><td>42</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-2.52</td><td>1</td></tr>
+<tr><td>14:35:00</td><td><code>OMS-C79C67C7711B</code></td><td>szagar_paper</td><td>121</td><td><span class="badge-warn">CANCELLED</span></td><td>3.85</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>15:35:00</td><td><code>OMS-929C9795F452</code></td><td>szagar_paper</td><td>121</td><td><span class="badge-warn">CANCELLED</span></td><td>3.85</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>15:35:01</td><td><code>OMS-F1DFFDCC4E30</code></td><td>szagar_paper</td><td>122</td><td><span class="badge-ok">FILLED</span></td><td>7.90</td><td>-7.90</td><td>2</td></tr>
+<tr><td>15:55:00</td><td><code>OMS-3957A66203B7</code></td><td>squid_paper</td><td>49</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:00</td><td><code>OMS-6E5F5E9B4FA8</code></td><td>szagar_paper</td><td>50</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:00</td><td><code>OMS-A6079E6789EA</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:00</td><td><code>OMS-11D00BCD3654</code></td><td>szagar_paper</td><td>123</td><td><span class="badge-ok">FILLED</span></td><td>0.10</td><td>-0.10</td><td>1</td></tr>
+<tr><td>15:55:02</td><td><code>OMS-C709F6F8A0A4</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.05</td><td>1</td></tr>
+<tr><td>15:55:04</td><td><code>OMS-60F32511078F</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:06</td><td><code>OMS-E5DEB4187D7A</code></td><td>squid_paper</td><td>49</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.05</td><td>1</td></tr>
+<tr><td>15:55:06</td><td><code>OMS-D02C5E2A1441</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:07</td><td><code>OMS-76964DE52407</code></td><td>szagar_paper</td><td>50</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.05</td><td>1</td></tr>
+<tr><td>15:55:07</td><td><code>OMS-81C913276DC8</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.10</td><td>1</td></tr>
+<tr><td>15:55:08</td><td><code>OMS-290F4E69AD05</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.05</td><td>1</td></tr>
+<tr><td>15:55:10</td><td><code>OMS-929DBA40EE47</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:10</td><td><code>OMS-BFE082D82C99</code></td><td>squid_paper</td><td>49</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:11</td><td><code>OMS-A9C9A37C70A0</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.82</td><td>1</td></tr>
+<tr><td>15:55:12</td><td><code>OMS-5345B921221A</code></td><td>szagar_paper</td><td>50</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:13</td><td><code>OMS-7FD22C6EF1E0</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:14</td><td><code>OMS-04AC5156B642</code></td><td>sniper_paper</td><td>124</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:15</td><td><code>OMS-20A0C6C2CDE2</code></td><td>squid_paper</td><td>49</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.05</td><td>1</td></tr>
+<tr><td>15:55:17</td><td><code>OMS-55B16DBC36A1</code></td><td>szagar_paper</td><td>50</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.05</td><td>1</td></tr>
+<tr><td>15:55:19</td><td><code>OMS-8637DFFADA0E</code></td><td>squid_paper</td><td>49</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:22</td><td><code>OMS-E56A69DCEC85</code></td><td>szagar_paper</td><td>50</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:23</td><td><code>OMS-0B13D8D330B3</code></td><td>squid_paper</td><td>49</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:26</td><td><code>OMS-11F51E8180AF</code></td><td>szagar_paper</td><td>50</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:27</td><td><code>OMS-C814C8E93D5B</code></td><td>squid_paper</td><td>49</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.82</td><td>1</td></tr>
+<tr><td>15:55:30</td><td><code>OMS-2C291568A0B5</code></td><td>szagar_paper</td><td>50</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>-0.82</td><td>1</td></tr>
+<tr><td>15:55:31</td><td><code>OMS-6FEFC08A0369</code></td><td>squid_paper</td><td>49</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+<tr><td>15:55:35</td><td><code>OMS-6694AF901E07</code></td><td>szagar_paper</td><td>50</td><td><span class="badge-ok">FILLED</span></td><td>&mdash;</td><td>0.00</td><td>1</td></tr>
+</table>
+
+<h2>P&amp;L &#8212; Closed Positions</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Closed (ET)</th><th>Hold</th><th>Max Profit</th><th>Realized P&amp;L</th></tr>
+  <tr><td>EW3V6</td><td>butterfly_call<br><span style='color:#888;font-size:11px'>batman_es_call_szagar_paper</span></td><td>szagar_paper</td><td>08-10 10:30</td><td>08:29</td><td>46.0h</td><td>$562.50</td><td class="profit">$282.50</td></tr>
+<tr><td>CRWV</td><td>iron_condor<br><span style='color:#888;font-size:11px'>atlas_ic_calibrated_entry</span></td><td>atlas_paper</td><td>08-11 15:45</td><td>09:31</td><td>17.8h</td><td>$185.00</td><td class="loss">$-215.00</td></tr>
+<tr><td>QUBT</td><td>iron_condor<br><span style='color:#888;font-size:11px'>earnings_ic_entry_paper</span></td><td>szagar_paper</td><td>08-10 15:46</td><td>09:32</td><td>41.8h</td><td>$40.00</td><td class="profit">$15.00</td></tr>
+<tr><td>/ESU6</td><td>calendar<br><span style='color:#c62828;font-size:11px'>unattributed &mdash; needs_review</span></td><td>individual</td><td>08-11 09:45</td><td>09:39</td><td>23.9h</td><td>&mdash;</td><td class="profit">$112.50</td></tr>
+<tr><td>SPXW</td><td>butterfly_call<br><span style='color:#888;font-size:11px'>bwb_spx_put_1000_kaity_paper</span></td><td>kaity_paper</td><td>08-12 10:00</td><td>10:05</td><td>0.1h</td><td>$45.00</td><td class="profit">$15.00</td></tr>
+<tr><td>SPXW</td><td>vertical_call<br><span style='color:#888;font-size:11px'>sniper_ir</span></td><td>sniper_paper</td><td>08-12 10:00</td><td>10:19</td><td>0.3h</td><td>$230.00</td><td class="profit">$105.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>sniper_ic</span></td><td>sniper_paper</td><td>08-12 10:00</td><td>10:19</td><td>0.3h</td><td>$260.00</td><td class="profit">$120.00</td></tr>
+<tr><td>XSP</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic</span></td><td>stefano</td><td>08-12 10:00</td><td>10:28</td><td>0.5h</td><td>$25.00</td><td class="profit">$8.00</td></tr>
+<tr><td>XSP</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic</span></td><td>stefano</td><td>08-12 10:30</td><td>10:54</td><td>0.4h</td><td>$30.00</td><td class="profit">$8.00</td></tr>
+<tr><td>SPXW</td><td>butterfly_call<br><span style='color:#888;font-size:11px'>bwb_spx_put_pt50_kaity_paper</span></td><td>kaity_paper</td><td>08-12 11:00</td><td>11:06</td><td>0.1h</td><td>$40.00</td><td class="profit">$20.00</td></tr>
+<tr><td>SPXW</td><td>butterfly_call<br><span style='color:#888;font-size:11px'>bwb_spx_put_kaity_paper</span></td><td>kaity_paper</td><td>08-12 11:00</td><td>11:06</td><td>0.1h</td><td>$40.00</td><td class="profit">$10.00</td></tr>
+<tr><td>E2CQ6</td><td>iron_fly<br><span style='color:#888;font-size:11px'>disc_ibfly_es</span></td><td>szagar_paper</td><td>08-11 21:28</td><td>11:24</td><td>13.9h</td><td>$1,200.00</td><td class="profit">$248.75</td></tr>
+<tr><td>E2CQ6</td><td>iron_fly<br><span style='color:#888;font-size:11px'>disc_ibfly_es</span></td><td>individual</td><td>08-11 21:41</td><td>11:33</td><td>13.9h</td><td>$1,175.00</td><td class="profit">$270.00</td></tr>
+<tr><td>XSP</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic</span></td><td>stefano</td><td>08-12 11:00</td><td>11:37</td><td>0.6h</td><td>$25.00</td><td class="profit">$9.00</td></tr>
+<tr><td>XSP</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic</span></td><td>stefano</td><td>08-12 12:00</td><td>13:39</td><td>1.7h</td><td>$25.00</td><td class="profit">$9.00</td></tr>
+<tr><td>E2CQ6</td><td>iron_fly<br><span style='color:#888;font-size:11px'>ibfly_0dte_30w_paper</span></td><td>szagar_paper</td><td>08-12 14:32</td><td>15:35</td><td>1.0h</td><td>$775.00</td><td class="loss">$-10.00</td></tr>
+<tr><td>SPXW</td><td>vertical_call<br><span style='color:#888;font-size:11px'>tp_0dte_put_spread_paper</span></td><td>szagar_paper</td><td>08-12 10:30</td><td>15:55</td><td>5.4h</td><td>$40.00</td><td class="profit">$30.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_sl3_sniper_paper</span></td><td>sniper_paper</td><td>08-12 11:30</td><td>15:55</td><td>4.4h</td><td>$245.00</td><td class="profit">$240.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_sl3_sniper_paper</span></td><td>sniper_paper</td><td>08-12 12:30</td><td>15:55</td><td>3.4h</td><td>$310.00</td><td class="profit">$295.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_squid_paper</span></td><td>squid_paper</td><td>08-12 11:30</td><td>15:55</td><td>4.4h</td><td>$250.00</td><td class="profit">$245.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_paper</span></td><td>szagar_paper</td><td>08-12 11:30</td><td>15:55</td><td>4.4h</td><td>$250.00</td><td class="profit">$240.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_sl3_sniper_paper</span></td><td>sniper_paper</td><td>08-12 13:30</td><td>15:55</td><td>2.4h</td><td>$325.00</td><td class="profit">$242.50</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_squid_paper</span></td><td>squid_paper</td><td>08-12 12:30</td><td>15:55</td><td>3.4h</td><td>$310.00</td><td class="profit">$305.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_paper</span></td><td>szagar_paper</td><td>08-12 12:30</td><td>15:55</td><td>3.4h</td><td>$310.00</td><td class="profit">$305.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_squid_paper</span></td><td>squid_paper</td><td>08-12 13:30</td><td>15:55</td><td>2.4h</td><td>$325.00</td><td class="profit">$242.50</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_paper</span></td><td>szagar_paper</td><td>08-12 13:30</td><td>15:55</td><td>2.4h</td><td>$325.00</td><td class="profit">$242.50</td></tr>
+</table>
+<p>
+  <strong>Day Total:</strong>
+  <span class="profit">+$3,395.25</span>
+  &nbsp;|&nbsp; Winners: 24 &nbsp;|&nbsp; Losers: 2
+</p>
+
+<h2>Open Positions (entered today)</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Max Profit</th><th>Max Loss</th></tr>
+  <tr><td>/ESU6</td><td>calendar<br><span style='color:#c62828;font-size:11px'>unattributed &mdash; needs_review</span></td><td>individual</td><td>09:45</td><td><span class="badge-warn">not recorded</span></td><td><span class="badge-warn">not recorded</span></td></tr>
+<tr><td>SPX</td><td>vertical<br><span style='color:#c62828;font-size:11px'>unattributed &mdash; needs_review</span></td><td>stefano</td><td>10:00</td><td><span class="badge-warn">not recorded</span></td><td><span class="badge-warn">not recorded</span></td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>idx_ic_45dte_estwin_paper</span></td><td>szagar_paper</td><td>10:30</td><td>$2,180.00</td><td>$7,820.00</td></tr>
+<tr><td>EW3V6</td><td>iron_condor<br><span style='color:#888;font-size:11px'>fut_ic_45dte_paper</span></td><td>szagar_paper</td><td>10:45</td><td>$2,675.00</td><td>$2,325.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_squid_paper</span></td><td>squid_paper</td><td>11:00</td><td>$265.00</td><td>$2,235.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_paper</span></td><td>szagar_paper</td><td>11:00</td><td>$260.00</td><td>$2,240.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_sl3_sniper_paper</span></td><td>sniper_paper</td><td>11:00</td><td>$260.00</td><td>$2,240.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_squid_paper</span></td><td>squid_paper</td><td>12:00</td><td>$265.00</td><td>$2,235.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_sl3_sniper_paper</span></td><td>sniper_paper</td><td>12:00</td><td>$265.00</td><td>$2,235.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_paper</span></td><td>szagar_paper</td><td>12:00</td><td>$265.00</td><td>$2,235.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_squid_paper</span></td><td>squid_paper</td><td>13:00</td><td>$265.00</td><td>$2,235.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_paper</span></td><td>szagar_paper</td><td>13:00</td><td>$265.00</td><td>$2,235.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_sl3_sniper_paper</span></td><td>sniper_paper</td><td>13:00</td><td>$265.00</td><td>$2,235.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_squid_paper</span></td><td>squid_paper</td><td>14:00</td><td>$300.00</td><td>$2,200.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_sl3_sniper_paper</span></td><td>sniper_paper</td><td>14:00</td><td>$300.00</td><td>$2,200.00</td></tr>
+<tr><td>SPXW</td><td>iron_condor<br><span style='color:#888;font-size:11px'>meic_paper</span></td><td>szagar_paper</td><td>14:00</td><td>$300.00</td><td>$2,200.00</td></tr>
+</table>
+
+<h2>Bot Metrics (R)</h2>
+<p style='color:#777;font-size:12px;margin-top:-8px'>Source: <code>bot-metrics-2026-08-11.json</code> &mdash; <strong>the 08-12 rollup had not run yet</strong> when this report was generated at 16:30 ET (it is scheduled 16:45 ET). Window = last_60_trades; SQN is null until a bot has &ge;2 measurable-R trades. 35 of 49 bots have a measurable SQN.</p>
+<table>
+  <tr><th>Account</th><th>Bot</th><th>N (60)</th><th>W-L</th><th>Exp $</th><th>Exp R</th><th>SQN</th><th>N (all)</th></tr>
+  <tr><td>szagar_paper</td><td>earnings_ic_entry_paper</td><td>2</td><td>2&ndash;0</td><td>$167.50</td><td class="profit">0.5038</td><td>44.56</td><td>2</td></tr>
+<tr><td>kaity_paper</td><td>dbl_cal_etf_kaity_paper_weekly</td><td>2</td><td>2&ndash;0</td><td>$95.25</td><td class="profit">0.2829</td><td>18.01</td><td>2</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_kaity_paper</td><td>2</td><td>2&ndash;0</td><td>$22.50</td><td class="profit">0.0117</td><td>8.60</td><td>2</td></tr>
+<tr><td>szagar_paper</td><td>idx_ic_45dte_paper</td><td>8</td><td>8&ndash;0</td><td>$484.06</td><td class="profit">0.2632</td><td>6.24</td><td>8</td></tr>
+<tr><td>sniper_paper</td><td>sniper_ir</td><td>9</td><td>9&ndash;0</td><td>$101.67</td><td class="profit">0.3823</td><td>5.90</td><td>9</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_pt50_kaity_paper</td><td>3</td><td>3&ndash;0</td><td>$28.33</td><td class="profit">0.0147</td><td>3.00</td><td>3</td></tr>
+<tr><td>kaity_paper</td><td>dbl_cal_idx_kaity_paper</td><td>6</td><td>5&ndash;1</td><td>$733.33</td><td class="profit">0.2653</td><td>2.93</td><td>6</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_1030_kaity_paper</td><td>5</td><td>5&ndash;0</td><td>$13.00</td><td class="profit">0.0068</td><td>2.59</td><td>5</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_1000_kaity_paper</td><td>5</td><td>5&ndash;0</td><td>$15.00</td><td class="profit">0.0079</td><td>2.54</td><td>5</td></tr>
+<tr><td>szagar_paper</td><td>pead_call_spread_entry_paper</td><td>2</td><td>2&ndash;0</td><td>$146.50</td><td class="profit">0.7711</td><td>2.31</td><td>2</td></tr>
+<tr><td>sniper_paper</td><td>sniper_ic</td><td>17</td><td>14&ndash;3</td><td>$97.65</td><td class="profit">0.8709</td><td>2.23</td><td>17</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_1130_kaity_paper</td><td>2</td><td>2&ndash;0</td><td>$27.50</td><td class="profit">0.0146</td><td>2.11</td><td>2</td></tr>
+<tr><td>szagar_paper</td><td>meic_paper</td><td>60</td><td>23&ndash;36</td><td>$32.83</td><td class="profit">0.0149</td><td>1.92</td><td>77</td></tr>
+<tr><td>kaity_paper</td><td>idx_ibfly_0dte_30w_ok_kaity_paper</td><td>10</td><td>8&ndash;2</td><td>$185.50</td><td class="profit">0.3087</td><td>1.50</td><td>10</td></tr>
+<tr><td>squid_paper</td><td>idx_ibfly_0dte_30w_ok_squid_paper</td><td>8</td><td>6&ndash;2</td><td>$150.00</td><td class="profit">0.3372</td><td>1.21</td><td>8</td></tr>
+<tr><td>szagar_paper</td><td>idx_ibfly_0dte_30w_ok_paper</td><td>8</td><td>6&ndash;2</td><td>$114.06</td><td class="profit">0.3152</td><td>1.09</td><td>8</td></tr>
+<tr><td>kaity_paper</td><td>dbl_cal_etf_kaity_paper</td><td>4</td><td>3&ndash;1</td><td>$182.00</td><td class="profit">0.5001</td><td>1.01</td><td>4</td></tr>
+<tr><td>kaity_paper</td><td>iron_man_kaity_paper</td><td>7</td><td>5&ndash;2</td><td>$131.07</td><td class="profit">0.2069</td><td>0.99</td><td>7</td></tr>
+<tr><td>szagar_paper</td><td>ibfly_0dte_30w_paper</td><td>11</td><td>9&ndash;2</td><td>$75.91</td><td class="profit">0.0587</td><td>0.83</td><td>11</td></tr>
+<tr><td>sniper_paper</td><td>smb_momo_qqq_v1</td><td>3</td><td>1&ndash;2</td><td>$4.83</td><td class="profit">0.7213</td><td>0.51</td><td>3</td></tr>
+<tr><td>squid_paper</td><td>meic_squid_paper</td><td>60</td><td>18&ndash;41</td><td>$8.17</td><td class="profit">0.0039</td><td>0.50</td><td>160</td></tr>
+<tr><td>sniper_paper</td><td>smb_momo_v1</td><td>3</td><td>1&ndash;2</td><td>$24.17</td><td class="profit">0.6924</td><td>0.40</td><td>3</td></tr>
+<tr><td>sniper_paper</td><td>meic_sl3_sniper_paper</td><td>9</td><td>4&ndash;5</td><td>$25.28</td><td class="profit">0.0114</td><td>0.34</td><td>9</td></tr>
+<tr><td>sniper_paper</td><td>smb_momo_qqq_atr_v1</td><td>4</td><td>1&ndash;3</td><td>$-3.62</td><td class="profit">0.0582</td><td>0.25</td><td>4</td></tr>
+<tr><td>szagar_paper</td><td>tp_0dte_put_spread_paper</td><td>2</td><td>1&ndash;1</td><td>$5.00</td><td class="profit">0.0056</td><td>0.18</td><td>2</td></tr>
+<tr><td>stefano</td><td>meic</td><td>47</td><td>44&ndash;3</td><td>$-0.06</td><td class="profit">0.0020</td><td>0.13</td><td>47</td></tr>
+<tr><td>szagar_paper</td><td>fut_ibfly_0dte_30w_ok_paper</td><td>8</td><td>4&ndash;4</td><td>$-38.75</td><td class="loss">-0.0009</td><td>-0.00</td><td>8</td></tr>
+<tr><td>kaity_paper</td><td>systest_meic_kaity</td><td>60</td><td>36&ndash;23</td><td>$7.50</td><td class="loss">-0.0023</td><td>-0.12</td><td>95</td></tr>
+<tr><td>tommyboy_paper</td><td>systest_meic_tommyboy</td><td>60</td><td>35&ndash;25</td><td>$2.71</td><td class="loss">-0.0034</td><td>-0.19</td><td>96</td></tr>
+<tr><td>szagar_paper</td><td>jade_lizard_0dte_atm_paper</td><td>2</td><td>1&ndash;1</td><td>$-392.50</td><td class="loss">-0.1826</td><td>-0.26</td><td>2</td></tr>
+<tr><td>szagar_paper</td><td>batman_es_call_szagar_paper</td><td>2</td><td>1&ndash;1</td><td>$-23.75</td><td class="loss">-0.0204</td><td>-0.43</td><td>2</td></tr>
+<tr><td>szagar_paper</td><td>batman_es_put_szagar_paper</td><td>3</td><td>2&ndash;1</td><td>$-20.83</td><td class="loss">-0.0087</td><td>-0.49</td><td>3</td></tr>
+<tr><td>individual</td><td>fut_ibfly_0dte_30w_ok_individual</td><td>13</td><td>4&ndash;8</td><td>$-86.65</td><td class="loss">-0.1270</td><td>-0.78</td><td>13</td></tr>
+<tr><td>individual</td><td>dbl_cal_fut_individual</td><td>2</td><td>0&ndash;2</td><td>$-275.63</td><td class="loss">-0.2047</td><td>-1.25</td><td>2</td></tr>
+<tr><td>sniper_paper</td><td>smb_momo_atr_v1</td><td>5</td><td>2&ndash;3</td><td>$-97.00</td><td class="loss">-0.4543</td><td>-1.50</td><td>5</td></tr>
+<tr><td>atlas_paper</td><td>atlas_ic_calibrated_entry</td><td>1</td><td>1&ndash;0</td><td>$55.00</td><td class="profit">0.1833</td><td>&mdash;</td><td>1</td></tr>
+<tr><td>atlas_paper</td><td>atlas_ic_strict_entry</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>kaity_paper</td><td>batman_spx_call_kaity_paper</td><td>1</td><td>1&ndash;0</td><td>$85.00</td><td class="profit">0.0364</td><td>&mdash;</td><td>1</td></tr>
+<tr><td>kaity_paper</td><td>batman_spx_put_kaity_paper</td><td>1</td><td>1&ndash;0</td><td>$60.00</td><td class="profit">0.0123</td><td>&mdash;</td><td>1</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_mc1_kaity_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_mc2_kaity_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>kaity_paper</td><td>dbl_cal_etf_ext_kaity_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>kaity_paper</td><td>dbl_cal_idx_ext_kaity_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>szagar_paper</td><td>fut_ic_45dte_paper</td><td>1</td><td>1&ndash;0</td><td>$93.75</td><td class="profit">0.0235</td><td>&mdash;</td><td>1</td></tr>
+<tr><td>szagar_paper</td><td>ic_16d_5w_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>szagar_paper</td><td>idx_ic_45dte_estwin_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>szagar_paper</td><td>pead_abs_call_spread_entry_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>szagar_paper</td><td>pead_p7_call_spread_entry_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr><td>szagar_paper</td><td>pead_r4_call_spread_entry_paper</td><td>0</td><td>0&ndash;0</td><td>&mdash;</td><td class="">&mdash;</td><td>&mdash;</td><td>0</td></tr>
+</table>
+
+<h2>MDS Performance</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+
+<tr><td>Uptime window</td><td>00:00 &ndash; 16:32 ET (all 3 instances: szagar, sydney, tommyboy &mdash; continuous, no restart)</td></tr>
+<tr><td>DXLink reconnects</td><td>5 disconnect events &mdash; 3 routine (~1&ndash;2 s, 08:00 ET token rotation) + <strong>2 network drops at 08:33/08:34 ET: sydney 113.1 s (5 failed handshakes), tommyboy 33.3 s</strong></td></tr>
+<tr><td>Peak subscriptions</td><td>1,774 quote / 295 greeks channels (sydney 647q&middot;54g &middot; szagar 574q&middot;224g &middot; tommyboy 553q&middot;17g); 0 expired</td></tr>
+<tr><td>Quote latency P50 / P95 / max</td><td><span class="badge-warn">not measurable today</span> &mdash; no per-RPC <code>timing_ms</code> emitted for GetQuoteOrSubscribe at the current log level (gRPC success-path logging is sampled to DEBUG)</td></tr>
+<tr><td>Errors</td><td><strong>0</strong> across all three instances (0 CRITICAL)</td></tr>
+<tr><td>Warnings</td><td>553,570 &mdash; 553,550 <code>derived.shadow.mismatch</code> (known skew-gate flood), 6 <code>md.greeks.massive_failed</code>, 5 dxlink lifecycle, 2 <code>dxlink_receive</code> (close_code 1006), 7 other</td></tr>
+</table>
+
+<h2>Scheduled Monitors</h2>
+<table>
+  <tr><th>Monitor</th><th>Status</th><th>Reading</th></tr>
+  <tr><td>econ calendar horizon</td><td><span class="badge-ok">OK</span></td><td>Core coverage (FOMC / CPI / NFP) runs to 2026-12-04 &mdash; 114 days remaining, no warning.</td></tr>
+  <tr><td>subscription-health</td><td><span class="badge-warn">21 SILENT</span></td><td>519 OK / 1,234 STALE / 21 SILENT, 0 MISSING. Snapshot taken 16:30 ET with <code>market_open: false</code>, so STALE and the 22-symbol DARK list (SPX, VIX*, sector ETFs) are post-close artifacts. The 21 SILENT (17 sydney, 4 szagar, <code>last_event_at</code> null) are not.</td></tr>
+  <tr><td>resource-health app-host</td><td><span class="badge-warn">swap_high &times;45</span></td><td>load1 avg 2.13 / peak 5.76; swap avg 1,917 MB / peak 3,520 MB (02:15 ET); mem_available avg 23.4%; zts RSS peak 794 MB (no leaking process).</td></tr>
+  <tr><td>resource-health data-host</td><td><span class="badge-ok">clean</span></td><td>load1 avg 3.17 / peak 4.96; swap 0 MB; mem_available avg 44.1%; zts RSS avg 3,026 MB across 23 processes; 0 alerts.</td></tr>
+  <tr><td>greeks-shadow</td><td><span class="badge-warn">empty</span></td><td>15:30 ET snapshot has <code>"roots": {}</code> &mdash; no SPXW row, no paired count, no IV MAE, no DX-ONLY count. No 4c gate record for today.</td></tr>
+  <tr><td>policy-sweep</td><td><span class="badge-ok">2 verdict changes</span></td><td>Latest snapshot is 08-11 (the sweep runs 18:40 ET, after this report). K=575 tested over 502 fires / 388 closed / 114 open. Verdicts: 12 REJECT, 7 NEUTRAL, 556 INSUFFICIENT_DATA. Two transitions vs 08-10, both INSUFFICIENT_DATA &rarr; REJECT: <code>bwb_spx_put / regime_strict</code> (&ldquo;affected bucket profitable, mean +$20/fire &mdash; policy removes winners&rdquo;) and <code>spx_sniper / adx_gt_20</code>.</td></tr>
+  <tr><td>ledger-health</td><td><span class="badge-skip">not yet run</span></td><td>Scheduled 17:15 ET; this report ran at 16:30 ET. Last run (08-11): <code>zts:events</code> stream healthy &mdash; all 9 consumer groups at lag 0, no lagging groups, 12 pending on cockpit-api.</td></tr>
+  <tr><td>bot-metrics</td><td><span class="badge-skip">not yet run</span></td><td>Scheduled 16:45 ET. The R table above uses the 08-11 snapshot.</td></tr>
+  <tr><td>skip-streaks</td><td><span class="badge-err">never scheduled</span></td><td>No snapshot has ever been written on either host; <code>skip-streaks</code> is absent from the SERVICES catalog and from every LaunchAgent. Substituted a read-only SQL equivalent &mdash; 8 live streaks, listed under Smells.</td></tr>
+</table>
+
+<h2>Issues &amp; Anomalies</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Service</th><th>Issue</th><th>Trace / Signal ID</th></tr>
+
+<tr><td>08:33&ndash;08:35</td><td>MDS &middot; ASS</td><td><span class="badge-err">DXLink + account-streamer drop, all logins.</span> MDS-sydney lost DXLink at 08:33:00 (close_code 1006, 24.6s since last msg) and took 5 failed &ldquo;timed out during opening handshake&rdquo; retries to recover &mdash; <strong>reconnect_gap_s 113.14</strong> (352 quotes / 28 greeks restored). MDS-tommyboy: gap 33.26s. All four ASS account streamers dropped and reconnected 08:34:37&ndash;08:34:44, with ERROR-level fetch_positions / fetch_balance failures throughout. Pre-market &mdash; no fire affected.</td><td>&mdash;</td></tr>
+<tr><td>09:32&ndash;09:37</td><td>ems-paper &middot; OMS &middot; strategy-engine</td><td><span class="badge-err">6 REJECTED orders.</span> earnings_ic_exit_paper could not close its USAR iron condor: &ldquo;Unusable book for fill: USAR 260814C00020500: spread too wide for a fill (bid 0.08 / ask 0.34, 123.8% of mid, ceiling 50.0%)&rdquo;. skip_code <code>exit.submit_failed</code> &times;5 + 6 ERROR lines. The retry window expired; the position stays open into the 08-14 expiry.</td><td>OMS-F83C332949BB &hellip; OMS-8585D6A155C0<br>sig-20260812-1332&hellip;-1337&hellip;</td></tr>
+<tr><td>09:35, 11:00</td><td>strategy-engine</td><td><span class="badge-warn">First-ever trips of the parity-forward stale-greeks guard</span>, both on /ES: jade_lizard_0dte_atm_paper (szagar) and iron_man_kaity_paper (kaity) &mdash; &ldquo;delta-implied ATM 7730.0 vs parity_forward 7754&rdquo;, a 24-point gap. Zero trips 08-05&ndash;08-11. Either the guard is correctly catching stale dxfeed /ES greeks (futures options remain on dxfeed) or it needs calibration on the /ES forward. Both entries blocked for the day.</td><td>sig-20260812-133500-jade_lizard_0dte_atm_paper-SPX-60f2812d</td></tr>
+<tr><td>all day</td><td>strategy-engine &middot; MDS</td><td><span class="badge-err">SPY greeks never delivered.</span> sosnoff_put_spread_paper has skipped <strong>9 consecutive sessions</strong> (07-31&rarr;08-12) with &ldquo;SPY: short_put: no_greeks (no greeks delivered for candidates)&rdquo;. SPY is an equity underlying and should be served by MassiveGreeksProducer since the 07-09 Phase-4d cutover. Same shape today on dbl_cal_fut_ext_paper (/ES).</td><td>&mdash;</td></tr>
+<tr><td>15:30</td><td>greeks-shadow</td><td><span class="badge-warn">Snapshot has <code>"roots": {}</code></span> &mdash; no SPXW row, no paired count, no IV MAE, no DX-ONLY count. The realtime-data 4c gate has no daily record today.</td><td>&mdash;</td></tr>
+<tr><td>n/a</td><td>monitoring</td><td><span class="badge-err">skip-streaks snapshot has never existed.</span> No <code>skip-streaks-*.json</code> on either host, <code>skip-streaks</code> is absent from the SERVICES catalog and from every LaunchAgent &mdash; <code>scripts/bot_skip_streaks.py</code> exists but nothing schedules it. The daily report has been consuming a file no job writes. A read-only SQL equivalent run today found 8 live streaks (below).</td><td>&mdash;</td></tr>
+<tr><td>all day</td><td>host app-host</td><td><span class="badge-warn">swap_high &times;45.</span> Swap peaked 3,520 MB (02:15 ET), avg 1,917 MB; mem_available averaged 23.4% on the 8 GB host. data-host clean (0 alerts, 0 swap, load1 avg 3.17 / peak 4.96).</td><td>&mdash;</td></tr>
+<tr><td>16:30</td><td>MDS subscriptions</td><td><span class="badge-warn">21 SILENT subscriptions</span> (17 sydney, 4 szagar), oldest subscribed ~8.5 h earlier with <code>last_event_at = null</code>. Post-close snapshot, so STALE/DARK verdicts are inconclusive &mdash; SILENT-with-no-event is not. Re-check on the next RTH tick.</td><td>&mdash;</td></tr>
+<tr><td>&mdash;</td><td>ledger</td><td><span class="badge-warn">3 unattributed <code>needs_review</code> groups, 2 on live accounts.</span> TG-3215 (/ESU6 calendar, individual, closed today +$112.50), TG-3321 (/ESU6 calendar, individual, opened 09:45, max_loss NULL), TG-3331 (SPX vertical, stefano, opened 10:00, max_loss NULL). Both open ones carry no recorded risk.</td><td>&mdash;</td></tr>
+</table>
+
+<h2>&#128269; Smells &amp; Next Steps</h2>
+<table>
+  <tr><th>Category</th><th>Observation</th><th>Suggested Next Step</th></tr>
+
+<tr><td>Config/Param</td><td><strong>Iron-fly credit floor never cleared on the 30-wide family.</strong> All four <code>*_ibfly_0dte_30w_ok_*</code> arms priced 16.675&ndash;16.85 against a <code>min_credit</code> of 20.00 &mdash; the 7th consecutive session of <code>credit.below_min</code>; last actual submission was 2026-08-05. R:R at today's price was 1.25&ndash;1.28.</td><td><span class="badge-warn">Tuning</span> The floor demands R:R &ge; 2.0 on a 30-wide; a week of prints says the market pays ~1.26. Lower <code>min_credit</code> to ~17.00 (R:R 1.31) in <code>config/bots/{szagar,kaity,sydney}/*.yaml</code>, or accept the arm is dormant &mdash; and bump <code>version</code> if you change it (one reason per bump).</td></tr>
+<tr><td>Config/Param</td><td><strong>8 multi-session same-reason skip streaks</strong> (SQL equivalent of the missing skip-streaks detector): put_spreads/sydney 10 days &ldquo;Watchlist 'put-spreads' is empty&rdquo;; sosnoff_put_spread_paper 9 days SPY no_greeks; vol_pairs_entry_paper 9 days &ldquo;IWM IV rank 1.9 below min 40.0&rdquo;; bwb_rsi_call/put_kaity_paper 9 days each <code>gate.feature</code> rsi_state neutral-not-allowed; earnings_bull_put / earnings_bear_call 5 days &ldquo;Watchlist 'earnings_play' is empty&rdquo;; atlas_breakout_entry 5 days &ldquo;Watchlist 'earnings_breakout' is empty&rdquo;.</td><td><span class="badge-err">Broken + tuning</span> Add <code>skip-streaks</code> to <code>scripts/services.py</code> SERVICES so this is detected automatically. Then: re-export the atlas earnings feed (export was good through 08-14 &mdash; the empty watchlists say it did not land); an IWM IV-rank floor of 40 against a realised 1.9 is unreachable in this regime &mdash; revisit <code>vol_pairs_entry_paper</code>'s threshold; the two bwb_rsi arms have never fired since 07-31 &mdash; widen the allowed <code>rsi_state</code> set or accept them as dormant.</td></tr>
+<tr><td>Config/Param</td><td><strong>idx_ic_45dte_paper</strong> skipped a 7th straight session on &ldquo;IV rank 14.2 below minimum 30.0&rdquo;; last submission 2026-08-05. Its sibling <code>idx_ic_45dte_estwin_paper</code> (expected-move sized) traded today &mdash; the fork is doing its job.</td><td><span class="badge-warn">Tuning</span> This is the control arm behaving as designed in a low-IV tape; leave it, but if the estwin arm keeps trading alone the comparison loses its denominator. Track under the lineage's <code>GROUP BY lineage, version</code> rollup rather than lowering the floor.</td></tr>
+<tr><td>Execution</td><td><strong>6 REJECTED orders</strong>, all earnings_ic_exit_paper closing USAR on a book quoted 0.08 / 0.34 (123.8% of mid vs a 50% ceiling). Every retry in the 09:32&ndash;09:37 window failed and the exit gave up.</td><td><span class="badge-err">Broken</span> Buying-power and symbol are fine &mdash; this is the ems-paper unusable-book guard on an illiquid single-name earnings book. Apply the futures-flatten remedy to forced closes on equity names too: <code>floor_unpriceable_sell_legs</code> plus a wider ceiling on the forced-close path (precedent: commit 6dbbdf4).</td></tr>
+<tr><td>Execution</td><td>Two FILLED orders exceeded the 5% limit-vs-fill band: OMS-9340C4F0FC0B and OMS-1239FCE76855 (stefano MEIC, limit 0.25 &rarr; fill 0.27, 8.0%). Both are <em>credit</em> improvements on $25-wide XSP condors &mdash; $2/contract in our favour.</td><td><span class="badge-ok">Benign</span> No action. Noted so the band's hits stay explainable; the 5% rule is noisy at 25&cent; price points.</td></tr>
+<tr><td>Coverage</td><td><strong><code>no_greeks</code> appeared across 4 distinct bots today</strong> on 3 different underlyings &mdash; sosnoff_put_spread_paper (SPY, &ldquo;no greeks delivered&rdquo;), dbl_cal_fut_ext_paper (/ES, &ldquo;no greeks delivered&rdquo;), jade_lizard_0dte_atm_paper and iron_man_kaity_paper (/ES, parity-forward guard). This is a data-layer theme, not four independent bot bugs.</td><td><span class="badge-err">Broken</span> Split the two causes: for the &ldquo;no greeks delivered&rdquo; pair, check whether the requested expirations land outside <code>MDS_MASSIVE_GREEKS_MAX_DTE</code> and whether their <code>md:data_req</code> demand entries registered (demand registers only at engine startup). For the guard pair, verify the /ES parity_forward reference against a live mark before assuming the greeks are the stale side.</td></tr>
+<tr><td>Risk</td><td>Two trade groups opened today carry <strong>NULL max_loss</strong>: TG-3321 (/ESU6 calendar, <em>live</em> individual, 09:45) and TG-3331 (SPX vertical, stefano, 10:00). Both are broker-origin with no bot attribution and sit at <code>needs_review</code>, alongside TG-3215 which closed today at +$112.50.</td><td><span class="badge-warn">Review</span> These entered via the broker/discretionary path, which does not stamp <code>bot_name</code> or structure risk. Attribute them in the cockpit ledger review queue so the open live /ES calendar has a recorded max loss.</td></tr>
+<tr><td>Risk</td><td><strong>TG-3292</strong> (atlas_ic_calibrated_entry, CRWV iron condor, atlas_paper) closed at <strong>&minus;$215.00</strong> against a max profit of $185.00 &mdash; a 1.16&times; max-profit loss, 68% of the $315 max loss, after a 17.8 h overnight hold. It is the day's only material loser.</td><td><span class="badge-warn">Review</span> A post-earnings single-name IC held overnight took most of its max loss. Check whether <code>atlas_ic_calibrated_exit</code>'s stop/DTE rules can act intraday on the entry day rather than first thing the next morning (it fired at 09:31 the following session).</td></tr>
+<tr><td>Infrastructure</td><td><strong>Two DXLink reconnects exceeded 10 s</strong> in the 08:33&ndash;08:35 window: sydney 113.1 s (5 failed handshakes) and tommyboy 33.3 s, concurrent with all four ASS account streamers dropping. MDS uptime itself is clean &mdash; all three instances ran 00:00&ndash;16:32 ET with <strong>0 ERROR lines</strong>.</td><td><span class="badge-warn">Review</span> Confirm whether this was a data-host-local network event or a TastyTrade-side outage, then re-run <code>scripts/subscription_health.py</code> during RTH to confirm nothing came back SILENT (the 08-04 dedup-set class).</td></tr>
+<tr><td>Infrastructure</td><td><strong>app-host swapped all day</strong> &mdash; swap_high alerted 45 times, peak 3,520 MB, avg 1,917 MB, mem_available avg 23.4% on 8 GB. data-host (16 GB, the exchange-facing host) is clean.</td><td><span class="badge-warn">Tuning</span> app-host runs the decision/signal/reporting layer plus desktop duty. Check <code>latest.groups</code> in <code>~/logs/trading/resource-health-app-host-2026-08-12.json</code> for the largest non-zts consumers; no single zts process is leaking (peak zts RSS 794 MB).</td></tr>
+<tr><td>Infrastructure</td><td><strong>553,550 <code>derived.shadow.mismatch</code> WARNINGs</strong> across the three MDS instances (99.996% of all 553,570 warnings). Diagnosed previously as the skew shadow gate comparing per-leg per-5s ticks against a rotten band baseline.</td><td><span class="badge-ok">Known</span> No new action &mdash; but it makes MDS logs unreadable and is the reason quote-latency percentiles are unavailable below. Consider demoting the mismatch line to DEBUG until the gate's baseline is fixed.</td></tr>
+</table>
+
+<hr style="border:none;border-top:1px solid #e0e0e0;margin-top:32px">
+<p style="color:#999;font-size:11px">Generated by zts-massive daily-report.sh &#183; 2026-08-12</p>
+</body>
+</html>
