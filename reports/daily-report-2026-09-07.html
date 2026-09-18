@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body{font-family:Arial,sans-serif;font-size:14px;color:#222;max-width:900px;margin:0 auto;padding:16px}
+h1{color:#1a237e;border-bottom:2px solid #1a237e;padding-bottom:6px}
+h2{color:#283593;margin-top:24px;margin-bottom:8px}
+table{border-collapse:collapse;width:100%;margin-bottom:16px}
+th{background:#e8eaf6;color:#1a237e;text-align:left;padding:8px 10px;font-size:13px}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;font-size:13px;vertical-align:top}
+tr:hover td{background:#f5f5f5}
+.profit{color:#2e7d32;font-weight:bold}
+.loss{color:#c62828;font-weight:bold}
+.badge-ok{background:#e8f5e9;color:#2e7d32;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-warn{background:#fff8e1;color:#f57f17;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-err{background:#ffebee;color:#c62828;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-skip{background:#f3f3f3;color:#777;padding:2px 7px;border-radius:10px;font-size:12px}
+.box-ok{background:#f1f8e9;border-left:4px solid #66bb6a;padding:8px 12px;margin-bottom:12px}
+.box-warn{background:#fffde7;border-left:4px solid #ffca28;padding:8px 12px;margin-bottom:12px}
+.box-err{background:#ffebee;border-left:4px solid #ef5350;padding:8px 12px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<p style="font-size:.85rem"><a href="../index.html">&larr; back to overview</a></p>
+
+<h1>ZTS Daily Report &#8212; 2026-09-07</h1>
+
+<div class="box-warn">
+  <strong>Summary:</strong>
+  <ul>
+    <li><strong>Labor Day &#8212; US equity/options markets closed</strong> (XNYS holiday; CME Globex open with an early close). No scheduled bot fires. The only two <code>bot_runs</code> rows are operator CLI manual test fires of the newly armed <code>vixdyn_ps_fixed</code> arms on szagar_paper: the SPX arm skipped (<code>no_greeks</code> &#8212; Massive greeks idle on a holiday), the /ES twin filled a 7465/7265 put spread (exp 09-15) for 4.05 &#8594; <strong>TG-8425</strong>.</li>
+    <li><strong>Day P&amp;L +$160.00</strong> (1 winner / 0 losers) &#8212; but the one close (TG-8070, sosnoff BWB profit target) is an <strong>off-session paper fill at 06:55 ET on a holiday</strong>. Root cause found: the ems-paper resting-fill session gate never engages (TT-format order legs carry no <code>security_id</code>, so <code>fills_allowed([])</code> allows). 6 of that arm's 13 closes are off-session fills.</li>
+    <li><strong>MDS</strong>: all three instances up all day, 0 errors, one graceful reconnect each at the 08:00 ET daily restart (max 1.7 s). Friday's channel-cap saturation reads 0 today only because demand is idle &#8212; expect it back Tuesday.</li>
+    <li><strong>app-host swap high all day</strong> (avg 12.5 GB, peak 15.3 GB; 83/83 samples alerted); data-host clean. Skip streaks unchanged (24 entry-side arms). Econ calendar covered to 2026-12-04.</li>
+    <li>Two small engine hygiene defects surfaced by the restarts: startup pre-warm is a no-op on every boot (<code>Cannot derive routing_key from security_id: 'SPX'</code>), and the Redis URL is logged with its password in the userinfo.</li>
+  </ul>
+</div>
+
+<h2>Bot Fires</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Bot</th><th>Login</th><th>Result</th><th>ms</th><th>Detail</th></tr>
+  <tr><td>08:13:38</td><td>vixdyn_ps_fixed_paper</td><td>szagar</td><td><span class="badge-skip">skipped</span></td><td>16,433</td><td>1 cycle (manual CLI fire) &#8212; <code>watchlist.all_skipped</code>: All 1 symbol(s) skipped: SPX: Cannot resolve put spread: short_put: no_greeks (no greeks delivered for candidates); long_put: sibling_unresolved. Expected on a holiday &#8212; the Massive greeks producer only runs RTH cadence.</td></tr>
+  <tr><td>08:24:21</td><td>vixdyn_ps_fixed_es_paper</td><td>szagar</td><td><span class="badge-ok">submitted</span></td><td>11,630</td><td>/ES &#183; OMS-AC724E4FD737 &#183; TG-8425 &#8212; manual CLI fire; Sell 7465P / Buy 7265P exp 2026-09-15 (8 DTE), net credit 4.075 &#8594; limit 4.05, filled 4.05 in paper.</td></tr>
+</table>
+<p style="color:#666;font-size:12px">No other bot ran today (holiday). For comparison, each of the previous five trading days recorded ~12,270 fires across ~285 (bot, login) pairs. All eight <code>vixdyn_ps_*</code> flags (SPX + /ES) read enabled in <code>se:bots:enabled</code>; their first scheduled fire is Fri 09-11 15:30 ET.</p>
+
+<h2>Orders</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Order ID</th><th>Account</th><th>Strategy</th><th>Status</th><th>Limit</th><th>Fill</th><th>Qty</th></tr>
+  <tr><td>08:24:24</td><td>OMS-AC724E4FD737</td><td>szagar_paper</td><td>191 (vixdyn_ps_fixed_es_paper)</td><td><span class="badge-ok">FILLED</span></td><td>4.05 cr</td><td>4.05</td><td>1</td></tr>
+  <tr><td>06:55:10 <span style="color:#999">(created 09-04 10:45)</span></td><td>OMS-4719494750D1</td><td>szagar_paper</td><td>145 (sosnoff_bwb_call_target_paper, GTC target)</td><td><span class="badge-warn">FILLED off-session</span></td><td>0.15 db</td><td>0.15 (raw mark 0.45 cr, clamped)</td><td>1</td></tr>
+</table>
+
+<h2>P&amp;L &#8212; Closed Positions</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Closed (ET)</th><th>Hold</th><th>Max Profit</th><th>Realized P&amp;L</th></tr>
+  <tr><td>SPXW</td><td>butterfly_call (BWB 7975/8000&#215;2/8050, exp 10-06) &#183; TG-8070 &#183; sosnoff_bwb_call_paper</td><td>szagar_paper</td><td>09-04 10:40</td><td>09-07 06:55 <span class="badge-warn">holiday, pre-market</span></td><td>68.3h</td><td>$175.00</td><td class="profit">$160.00</td></tr>
+</table>
+<p>
+  <strong>Day Total:</strong>
+  <span class="profit">$160.00</span>
+  &nbsp;|&nbsp; Winners: 1 &nbsp;|&nbsp; Losers: 0
+  &nbsp;&#8212;&nbsp; <span style="color:#c62828">the single win is a paper fill against non-tradeable holiday marks (see Issues)</span>
+</p>
+
+<h2>Open Positions (entered today)</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Max Profit</th><th>Max Loss</th></tr>
+  <tr><td>/ES (ledger says <code>E3BU6</code>)</td><td>put spread 7465/7265 exp 09-15 (ledger says <code>vertical_call</code>) &#183; TG-8425 &#183; vixdyn_ps_fixed_es_paper</td><td>szagar_paper</td><td>08:24</td><td>$202.50</td><td>$9,797.50</td></tr>
+</table>
+
+<h2>MDS Performance</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Uptime window</td><td>00:00 &#8211; 16:33 ET (all three instances still running at report time; no gaps)</td></tr>
+  <tr><td>DXLink reconnects</td><td>1 per instance (3 fleet-wide), all at the 08:00 ET scheduled daily restart, graceful. Recovery: szagar 1.3 s, sydney 1.3 s, tommyboy 1.7 s (max 1.7 s). No unscheduled disconnects.</td></tr>
+  <tr><td>Peak subscriptions</td><td>sydney 4,256 quotes / 76 greeks &#183; szagar 1,281 / 61 &#183; tommyboy 728 / 8</td></tr>
+  <tr><td>Quote latency P50 / P95 / max</td><td>n/a &#8212; 0 GetQuoteOrSubscribe calls today (holiday, no bot traffic)</td></tr>
+  <tr><td>Errors</td><td>0 (Friday's 3,291 CRITICAL <code>data_req.reconcile.cap_blocked</code> reads 0 today &#8212; demand idle, not fixed; last reconcile tick: 159 requests, 109 pending, 335 unowned, 50 served by Massive)</td></tr>
+  <tr><td>Warnings</td><td>3 (<code>dxlink_disconnected</code> "graceful shutdown" &#215;1 per instance at the daily restart)</td></tr>
+</table>
+
+<h2>Health Snapshots</h2>
+<table>
+  <tr><th>Monitor</th><th>Status</th><th>Reading</th></tr>
+  <tr><td>resource-health app-host</td><td><span class="badge-warn">swap_high &#215;83</span></td><td>83/83 samples; load1 avg 3.33 / peak 10.09 (08:00 ET restart); cpu avg 42% / peak 99%; mem_available avg 18.2%; swap avg 12,473 MB / peak 15,348 MB (15:00 ET); zts_rss avg 195 MB.</td></tr>
+  <tr><td>resource-health data-host</td><td><span class="badge-ok">clean</span></td><td>83 samples, no alerts; load1 avg 4.47 / peak 6.48; cpu avg 37%; mem_available avg 37%; swap 0; zts_rss avg 2,470 MB / peak 3,046 MB.</td></tr>
+  <tr><td>skip-streaks</td><td><span class="badge-warn">136 streaks</span></td><td>24 entry-side + 112 downstream <code>exit.no_entries</code>; identical set to 09-04 (no fires today, so nothing advanced; the 14-day window slid so the longest now read 9 days). Detail in Smells.</td></tr>
+  <tr><td>greeks-shadow (4c gate record)</td><td><span class="badge-skip">empty</span></td><td>15:30 ET snapshot has <code>roots: {}</code> &#8212; no SPXW row (no paired count / &#916;MAE / IV MAE / DX-ONLY). Expected on a holiday: no DXLink greeks and the Massive producer is RTH-only. Not counted as an issue today.</td></tr>
+  <tr><td>subscription-health</td><td><span class="badge-skip">market closed</span></td><td><code>market_open: false</code>; 922 STALE / 385 SILENT / 2 OK, 49 DARK, 0 MISSING &#8212; holiday readings, not delivery failures. Next meaningful tick is Tue 09-08 RTH.</td></tr>
+  <tr><td>ambient-context-health</td><td><span class="badge-warn">3 SIGNAL_STALE</span></td><td>TICK 5m, SPX heartbeat 15m, PCC 1h reported missing at 16:30 with <code>in_window: true</code> &#8212; TradingView emitters have no bars on a holiday, so these are calendar false positives (see Smells).</td></tr>
+  <tr><td>ledger-health</td><td><span class="badge-skip">not yet written</span></td><td>Written 17:15 ET, after this report; last snapshot 09-04 (Fri). Not an issue.</td></tr>
+  <tr><td>bot-metrics (R)</td><td><span class="badge-skip">not a trading day</span></td><td>No 09-07 snapshot at report time (rollup runs 16:45 ET); last 09-04. Section omitted; not an issue on a holiday.</td></tr>
+  <tr><td>policy sweep</td><td><span class="badge-ok">no verdict changes</span></td><td>Latest snapshot 09-04 (18:40 ET): K=864 tested, 27 candidates all INSUFFICIENT_DATA (unchanged vs 09-03), coverage 1,634 fires / 1,528 closed / 106 open since the 07-16 epoch.</td></tr>
+  <tr><td>econ calendar</td><td><span class="badge-ok">ok</span></td><td>FOMC/CPI/NFP coverage to 2026-12-04 (88 days), warn=false.</td></tr>
+  <tr><td>sod-brief</td><td><span class="badge-ok">skipped correctly</span></td><td>"2026-09-07 is not a trading day &#8212; no brief."</td></tr>
+</table>
+
+<h2>Issues &amp; Anomalies</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Service</th><th>Issue</th><th>Trace / Signal ID</th></tr>
+  <tr><td>06:55:10</td><td>ems-paper</td><td><span class="badge-err">off-session paper fill</span> Resting GTC target for TG-8070 (sosnoff BWB, SPXW calls exp 10-06) filled at 06:55 ET on a market holiday against REST-snapshot fallback marks (<code>paper_watcher.clamped</code>: raw net 0.45 <em>credit</em> clamped to the 0.15 debit limit). The session gate is inert by construction: <code>watcher.py:184</code> reads <code>leg["security_id"]</code> from the TT-format order dict, but <code>OrderLeg.to_tt_dict()</code> never emits it, so <code>fills_allowed([])</code> allows every resting order. Deployed ems-paper (running since 08-16, HEAD includes the 07-31 gate commit) logged <code>session_gate: true</code> and has never logged a <code>session_closed</code>. 6 of this arm's 13 closes are off-session (00:57, 02:07, 03:47, 06:55, 07:48, 09:25 ET) &#8212; +$1,160 of its +$2,480.</td><td>OMS-4719494750D1 &#183; PAPER-B240E0731F33 &#183; sig-20260904-144500-sosnoff_bwb_call_target_paper-ANY-d7cb802e</td></tr>
+  <tr><td>08:00 (+08:10, 08:23)</td><td>strategy-engine &#215;4</td><td><span class="badge-warn">startup pre-warm no-op</span> 18 WARNING <code>startup_prewarm</code> "Pre-warm failed for SPX / SPY / QQQ / /ES / XSP / MRVL / NVDA &#8212; Cannot derive routing_key from security_id: 'SPX'". Bare tickers are passed where a security_id is expected, so the pre-warm has silently done nothing on every restart.</td><td>action=startup_prewarm</td></tr>
+  <tr><td>08:24:24</td><td>strategy-engine (szagar)</td><td><span class="badge-warn">credential in log</span> INFO "Connected to Redis at [internal-db] &#8212; the Redis password is written in plaintext in the URL userinfo (<code>shared/market_data/client.py:198</code>, <code>manager.py:209</code>, <code>mds/server.py:294</code>). RedactionFilter masks key-named fields and inline tokens, not URL userinfo.</td><td>sig-20260907-122421-vixdyn_ps_fixed_es_paper-ES-3cfc0ec5</td></tr>
+  <tr><td>08:24:24</td><td>ledger</td><td><span class="badge-warn">misclassified group</span> TG-8425 stored as <code>strategy_type = vertical_call</code>, <code>underlying = E3BU6</code> for a /ES <strong>put</strong> spread (Sell 7465P / Buy 7265P exp 09-15).</td><td>OMS-AC724E4FD737 &#183; sig-20260907-122421-vixdyn_ps_fixed_es_paper-ES-3cfc0ec5</td></tr>
+  <tr><td>all day</td><td>host app-host</td><td><span class="badge-warn">swap_high &#215;83</span> swap avg 12,473 MB / peak 15,348 MB (15:00 ET); mem_available avg 18.2%; cpu peak 99.2% and load1 10.09 at the 08:00 restart. zts processes total only ~195 MB RSS &#8212; the pressure is non-zts desktop load. data-host clean.</td><td>resource-health-app-host-2026-09-07.json</td></tr>
+  <tr><td>&#8212;</td><td>strategy-engine</td><td><span class="badge-warn">skip streaks</span> 24 entry-side arms on multi-day same-reason skip streaks (136 total, 112 of them downstream <code>exit.no_entries</code>), unchanged from Friday. A skip is not an error; nothing else pages these.</td><td>skip-streaks-2026-09-07.json</td></tr>
+  <tr><td>carry-over</td><td>MDS &#215;3</td><td><span class="badge-warn">channel cap (Fri)</span> Friday's 3,291 CRITICAL <code>data_req.reconcile.cap_blocked</code> reads 0 today only because holiday demand is idle (159 requests / 109 pending / 335 unowned / 50 served by Massive). Expect it back at Tuesday 09:30 unless the 09-04 action item lands first.</td><td>action=data_req.reconcile.cap_blocked</td></tr>
+</table>
+
+<h2>&#128269; Smells &amp; Next Steps</h2>
+<table>
+  <tr><th>Category</th><th>Observation</th><th>Suggested Next Step</th></tr>
+  <tr><td><span class="badge-err">Execution</span></td><td>ems-paper's resting-fill session gate has never blocked anything: OMS-4719494750D1 filled Mon 06:55 ET on Labor Day, and the same arm's targets filled at 00:57, 02:07, 03:47, 07:48 and 09:25 ET over the last three weeks. <code>PaperWatcher._session_blocked</code> gets an empty id list because <code>OrderLeg.to_tt_dict()</code> emits only symbol / instrument-type / action / quantity.</td><td>In <code>services/ems-paper/ems_paper/watcher.py:184</code> derive ids with <code>security_id_for(leg["symbol"], leg["instrument-type"])</code> (or carry <code>security_id</code> onto the <code>RestingOrder</code> at <code>service.py:165</code>); make <code>fills_allowed</code> refuse rather than allow an empty id set; add a test that a 06:55 ET holiday sweep is barred; restart ems-paper on data-host before Tuesday's open.</td></tr>
+  <tr><td><span class="badge-warn">Risk</span></td><td><code>sosnoff_bwb_call_paper</code>'s paper record is contaminated: 6 of 13 closes (TG 4275, 4497, 5273, 5936, 6327, 8070) are off-session fills worth +$1,160 of the arm's +$2,480, all "profit target hit" against pre-market/holiday REST marks.</td><td>Mark those six groups <code>review_status = 'invalid'</code> (the 08-08 lapse-repair precedent) so <code>trade_facts</code> / <code>bot_metrics</code> stop counting them, then re-run <code>scripts/trade_facts_refresh.py</code>; sweep other paper arms with resting GTC targets for closes outside 09:30&#8211;16:15 ET.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td>Engine startup pre-warm is a no-op on every boot: "Cannot derive routing_key from security_id: 'SPX'" for every watchlist underlying on all four engines (18 warnings today across the 08:00 restart and szagar's 08:10 / 08:23 restarts).</td><td>In <code>strategy_engine/server.py</code> (action <code>startup_prewarm</code>) resolve each symbol via <code>shared.symbol.identity.security_id_for(symbol, instrument_type)</code> before calling <code>routing_key()</code>; pin with a test that the pre-warm subscribes <code>index:SPX</code> / <code>future:ES:active</code>.</td></tr>
+  <tr><td><span class="badge-err">Infrastructure</span></td><td>Redis password logged in plaintext inside the connection URL at INFO on every client connect (three call sites; visible in today's szagar engine log at 08:24 ET).</td><td>Log a userinfo-stripped URL at <code>shared/market_data/client.py:198</code>, <code>shared/market_data/manager.py:209</code>, <code>services/mds/mds/server.py:294</code>, and add a <code>://[^@]*@</code> rewrite to <code>RedactionFilter</code> so the class cannot recur.</td></tr>
+  <tr><td><span class="badge-warn">Risk</span></td><td>TG-8425 (the /ES vixdyn control) is stored as <code>vertical_call</code> with underlying <code>E3BU6</code> though it is a put spread on /ES. Its max_loss $9,797.50 is 48&#215; max_profit $202.50 &#8212; structural for a 200-wide spread sold at 4.05, not a mispricing.</td><td>Check tt-ledger's structure classifier for future-option verticals (option_type must come from the leg's security_id, not the series code); every /ES vixdyn arm will mis-bucket under <code>GROUP BY strategy_type</code> until fixed.</td></tr>
+  <tr><td><span class="badge-warn">Config/Param</span></td><td>24 entry-side arms on same-reason skip streaks (unchanged from 09-04): <code>credit.below_min</code> &#8212; fut_ibfly_0dte_30w_ok_paper 9d, idx_ibfly_0dte_30w_ok on szagar_paper / kaity_paper / squid_paper 5d, bwb_spx_put_mc1 / mc2 5d; <code>filter.threshold</code> &#8212; ic_0dte_em_paper (two accounts), idx_ic_45dte_paper, vol_pairs_entry_paper 9d; <code>structure.unresolvable</code> &#8212; sosnoff_jade_lizard_paper, sosnoff_put_ratio_1x2_es_paper 9d, ic_16d_5w_paper 6d, taylor_put_ratio_90dte_es / taylor_short_put_ctrl_es 5d; <code>entry.max_concurrent</code> &#8212; five kaity double-calendar/diagonal arms; <code>watchlist.empty</code> &#8212; neglected_strangle_entry_paper, put_spreads; <code>gate.feature</code> &#8212; bwb_rsi_call / put.</td><td>Same three decisions as the 09-04 report, none taken yet: (1) settle the 20.00 iron-fly <code>min_credit</code> (four arms priced 16.1&#8211;16.7 Friday); (2) fix the /ES <code>no_greeks</code> path behind the <code>structure.unresolvable</code> set before Tuesday; (3) feed the <code>earnings_play</code> / <code>neglected_play</code> / <code>put-spreads</code> watchlists. <code>skip-streaks-2026-09-07.json</code>.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td>app-host swap has been pinned above threshold for four consecutive daily snapshots (today avg 12.5 GB / peak 15.3 GB; mem_available 18%). zts RSS is ~195 MB, so the pressure is the host's desktop double-duty, not a leaking service.</td><td>Read the <code>groups</code> block in <code>resource-health-samples-app-host-2026-09-07.jsonl</code> for the top non-zts residents and either trim them or plan the RAM upgrade; keep watching for a <code>zts_proc_rss_high</code> entry, which would change the diagnosis.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td><code>ambient_context_health</code> ran with <code>in_window: true</code> on a market holiday and flagged three TradingView signals stale (TICK 5m, SPX heartbeat 15m, PCC 1h) &#8212; false positives, since the emitters have no bars to fire on.</td><td>Gate the window in <code>scripts/ambient_context_health.py</code> on <code>get_trading_calendar().is_trading_day()</code>, the same check <code>sod-brief</code> used correctly this morning.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td>MDS <code>cap_blocked</code> is 0 today only because nothing asked for greeks; Friday's fleet-wide saturation (sydney 848 / szagar 802 / tommyboy 818 channels vs an 800 cap) is untouched.</td><td>Before Tuesday 09:30, act on the 09-04 report's cap item (raise the per-session ceiling or push more far-DTE greeks to Massive via <code>MDS_MASSIVE_GREEKS_MAX_DTE</code>); verify with the first <code>data_req.reconcile.tick</code> after the open.</td></tr>
+</table>
+
+<hr style="border:none;border-top:1px solid #e0e0e0;margin-top:32px">
+<p style="color:#999;font-size:11px">Generated by zts-massive daily-report.sh &#183; 2026-09-07</p>
+</body>
+</html>
