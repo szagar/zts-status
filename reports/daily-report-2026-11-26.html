@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body{font-family:Arial,sans-serif;font-size:14px;color:#222;max-width:900px;margin:0 auto;padding:16px}
+h1{color:#1a237e;border-bottom:2px solid #1a237e;padding-bottom:6px}
+h2{color:#283593;margin-top:24px;margin-bottom:8px}
+table{border-collapse:collapse;width:100%;margin-bottom:16px}
+th{background:#e8eaf6;color:#1a237e;text-align:left;padding:8px 10px;font-size:13px}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;font-size:13px;vertical-align:top}
+tr:hover td{background:#f5f5f5}
+.profit{color:#2e7d32;font-weight:bold}
+.loss{color:#c62828;font-weight:bold}
+.badge-ok{background:#e8f5e9;color:#2e7d32;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-warn{background:#fff8e1;color:#f57f17;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-err{background:#ffebee;color:#c62828;padding:2px 7px;border-radius:10px;font-size:12px}
+.badge-skip{background:#f3f3f3;color:#777;padding:2px 7px;border-radius:10px;font-size:12px}
+.box-ok{background:#f1f8e9;border-left:4px solid #66bb6a;padding:8px 12px;margin-bottom:12px}
+.box-warn{background:#fffde7;border-left:4px solid #ffca28;padding:8px 12px;margin-bottom:12px}
+.box-err{background:#ffebee;border-left:4px solid #ef5350;padding:8px 12px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<p style="font-size:.85rem"><a href="../index.html">&larr; back to overview</a></p>
+
+<h1>ZTS Daily Report &#8212; 2026-11-26</h1>
+
+<div class="box-warn">
+  <strong>Summary:</strong>
+  <ul>
+    <li><strong>Thanksgiving: US markets closed.</strong> <code>TradingCalendar.is_trading_day(2026-11-26)</code> = False. Zero bot fires, zero orders, no trade groups opened. Realized P&amp;L <strong>$0.00</strong>. Tomorrow (Fri 11-27) is a trading day; it should be the early 13:00 ET close.</li>
+    <li>Ledger: 2 groups closed today (29225, 29241, both <code>stefano</code>). Both are empty <code>ignored</code> groups that the auto-heal misattribution pass closed at 12:05 and 13:05 ET. They are housekeeping, not trades: 1 leg, NULL P&amp;L.</li>
+    <li>MDS: all 3 instances (szagar / sydney / tommyboy) stayed up 00:00&#8211;16:31 ET with <strong>0 ERROR lines</strong>. There were 6 DXLink disconnects across the fleet (at most 3 per instance), 5 of them graceful. The slowest recovery was ~1.6 s.</li>
+    <li>Needs attention: <strong>app-host swap pressure</strong> (17 <code>swap_high</code> alerts, peak 4.8 GB swap at 20:00 ET on 11-25, load peak 14.1 at 23:45 ET on 11-25). The skip-streak backlog (203 streaks) is unchanged from yesterday because no bots ran.</li>
+    <li>Holiday-expected gaps (not issues): no ledger-health snapshot, an empty greeks-shadow (<code>roots: {}</code>), no bot-metrics snapshot for today, and subscription-health showing all STALE/SILENT (off-RTH, so it reports but does not gate).</li>
+  </ul>
+</div>
+
+<h2>Bot Fires</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Bot</th><th>Login</th><th>Result</th><th>ms</th><th>Detail</th></tr>
+  <tr><td>&#8212;</td><td colspan="5"><span class="badge-skip">market holiday</span> No <code>bot_runs</code> rows for 2026-11-26. The last fire was 2026-11-25 16:20 ET. Schedulers no-op on non-trading days.</td></tr>
+</table>
+
+<h2>Orders</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Order ID</th><th>Account</th><th>Strategy</th><th>Status</th><th>Limit</th><th>Fill</th><th>Qty</th></tr>
+  <tr><td colspan="8">No orders created today.</td></tr>
+</table>
+
+<h2>P&amp;L &#8212; Closed Positions</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Closed (ET)</th><th>Hold</th><th>Max Profit</th><th>Realized P&amp;L</th></tr>
+  <tr><td>&#8212;</td><td>custom (TG 29225, ignored)</td><td>stefano</td><td>11-23 10:07 (created)</td><td>12:05</td><td>&#8212;</td><td>&#8212;</td><td>&#8212; (auto-heal close, not a trade)</td></tr>
+  <tr><td>&#8212;</td><td>custom (TG 29241, ignored)</td><td>stefano</td><td>11-23 10:37 (created)</td><td>13:05</td><td>&#8212;</td><td>&#8212;</td><td>&#8212; (auto-heal close, not a trade)</td></tr>
+</table>
+<p>
+  <strong>Day Total:</strong>
+  <span class="profit">$0.00</span>
+  &nbsp;|&nbsp; Winners: 0 &nbsp;|&nbsp; Losers: 0
+</p>
+
+<h2>Open Positions (entered today)</h2>
+<table>
+  <tr><th>Underlying</th><th>Strategy</th><th>Account</th><th>Opened (ET)</th><th>Max Profit</th><th>Max Loss</th></tr>
+  <tr><td colspan="6">None. No entries on a holiday.</td></tr>
+</table>
+
+<h2>Bot Metrics (R)</h2>
+<p style="color:#777;font-size:12px">There is no <code>bot-metrics-2026-11-26.json</code> because the rollup does not run on market holidays. These rows come from the latest snapshot, <strong>bot-metrics-2026-11-25.json</strong>, which has 85 bots with trades and 77 with a measurable SQN. Window: last_60_trades. Showing the top 12 by SQN.</p>
+<table>
+  <tr><th>Account</th><th>Bot</th><th>N (60)</th><th>W-L</th><th>Exp $</th><th>Exp R</th><th>SQN</th><th>N (all)</th></tr>
+<tr><td>szagar_paper</td><td>taylor_put_ratio_90dte_es_paper</td><td>2</td><td>2-0</td><td>$710.00</td><td class='profit'>+0.124</td><td>139.34</td><td>2</td></tr>
+<tr><td>szagar_paper</td><td>taylor_short_put_ctrl_es_paper</td><td>2</td><td>2-0</td><td>$1,050.62</td><td class='profit'>+0.063</td><td>110.21</td><td>2</td></tr>
+<tr><td>szagar_paper</td><td>sosnoff_bwb_call_paper</td><td>60</td><td>60-0</td><td>$194.92</td><td class='profit'>+0.086</td><td>45.13</td><td>65</td></tr>
+<tr><td>kaity_paper</td><td>spx_call_cal_7dte_fri_ts_kaity_paper</td><td>3</td><td>3-0</td><td>$180.00</td><td class='profit'>+0.249</td><td>26.91</td><td>3</td></tr>
+<tr><td>kaity_paper</td><td>batman_spx_call_kaity_paper</td><td>7</td><td>7-0</td><td>$88.57</td><td class='profit'>+0.038</td><td>21.93</td><td>7</td></tr>
+<tr><td>kaity_paper</td><td>batman_spx_put_kaity_paper</td><td>9</td><td>9-0</td><td>$56.67</td><td class='profit'>+0.012</td><td>15.80</td><td>9</td></tr>
+<tr><td>atlas_paper</td><td>atlas_ic_strict_entry</td><td>5</td><td>5-0</td><td>$196.00</td><td class='profit'>+0.650</td><td>13.15</td><td>5</td></tr>
+<tr><td>szagar_paper</td><td>idx_ic_45dte_paper</td><td>21</td><td>21-0</td><td>$385.36</td><td class='profit'>+0.209</td><td>11.09</td><td>21</td></tr>
+<tr><td>szagar_paper</td><td>sosnoff_jade_lizard_paper</td><td>28</td><td>27-1</td><td>$573.04</td><td class='profit'>+0.157</td><td>10.39</td><td>28</td></tr>
+<tr><td>szagar_paper</td><td>vixdyn_ps_highvol_es_paper</td><td>2</td><td>2-0</td><td>$725.62</td><td class='profit'>+0.079</td><td>7.57</td><td>2</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_1030_kaity_paper</td><td>36</td><td>36-0</td><td>$18.96</td><td class='profit'>+0.010</td><td>7.26</td><td>36</td></tr>
+<tr><td>kaity_paper</td><td>bwb_spx_put_1000_kaity_paper</td><td>41</td><td>41-0</td><td>$16.04</td><td class='profit'>+0.009</td><td>7.14</td><td>41</td></tr>
+<tr><td colspan='8' style='color:#777'>… bottom 5 by SQN:</td></tr>
+<tr><td>szagar_paper</td><td>jade_lizard_0dte_atm_paper</td><td>17</td><td>9-8</td><td>$-354.56</td><td class='loss'>-0.216</td><td>-1.43</td><td>17</td></tr>
+<tr><td>individual</td><td>disc_iron_man_es</td><td>8</td><td>2-6</td><td>$-128.96</td><td class='loss'>-0.320</td><td>-1.59</td><td>8</td></tr>
+<tr><td>szagar_paper</td><td>ic_16d_5w_paper</td><td>2</td><td>0-2</td><td>$-2,470.00</td><td class='loss'>-7.057</td><td>-1.67</td><td>2</td></tr>
+<tr><td>stefano</td><td>meic</td><td>51</td><td>44-7</td><td>$-17.40</td><td class='loss'>-0.064</td><td>-1.74</td><td>136</td></tr>
+<tr><td>sniper_paper</td><td>smb_momo_atr_v1</td><td>14</td><td>4-10</td><td>$-101.96</td><td class='loss'>-0.418</td><td>-2.38</td><td>14</td></tr>
+</table>
+
+<h2>MDS Performance</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Uptime window</td><td>00:00 &#8211; 16:31 ET (all 3 instances, logs still writing at report time)</td></tr>
+  <tr><td>DXLink reconnects</td><td>6 total. szagar 1: 08:00 graceful. sydney 2: 01:30 and 08:00 graceful. tommyboy 3: 01:30 graceful, 07:28 connection lost (1.16 s gap), 08:00 graceful. Max recovery ~1.6 s.</td></tr>
+  <tr><td>Peak subscriptions</td><td>szagar 2,476 q / 27 g · sydney 4,695 q / 181 g · tommyboy 913 q / 28 g (max values logged)</td></tr>
+  <tr><td>Quote latency P50 / P95 / max</td><td>n/a: no GetQuoteOrSubscribe calls today (holiday, no bot fires)</td></tr>
+  <tr><td>Errors</td><td>0</td></tr>
+  <tr><td>Warnings</td><td>5,961. szagar 1,012 (1,011 <code>data_req.reconcile.cap_block</code>). sydney 4,009 (4,007 <code>cap_block</code>). tommyboy 940 (936 <code>data_req.reconcile.unresolvable</code>). The rest are the <code>dxlink_disconnected</code> lines.</td></tr>
+  <tr><td>Greeks shadow (SPXW)</td><td>No paired rows (<code>roots: {}</code>). This is expected on a holiday; there is no gate data today.</td></tr>
+</table>
+
+<h2>Host Resources</h2>
+<table>
+  <tr><th>Host</th><th>Load avg / peak</th><th>Swap avg / peak</th><th>Mem avail avg</th><th>Alerts</th></tr>
+  <tr><td>app-host (8 GB)</td><td>2.55 / 14.14 (23:45 ET 11-25)</td><td>854 MB / 4,843 MB (20:00 ET 11-25)</td><td>25.9%</td><td><span class="badge-warn">swap_high 17 · load_high 1</span></td></tr>
+  <tr><td>data-host (16 GB)</td><td>2.82 / 3.82</td><td>0 / 0 MB</td><td>40.1%</td><td><span class="badge-ok">none</span></td></tr>
+</table>
+
+<h2>Policy Sweep</h2>
+<p>Latest snapshot is <code>policy-sweep-2026-11-25.json</code>. It tested K=972 candidates against 5,690 fires (5,575 closed) and returned REJECT 114, NEUTRAL 60, INSUFFICIENT_DATA 798. Verdicts that changed since 11-24:</p>
+<ul>
+  <li>INSUFFICIENT_DATA &#8594; <strong>REJECT</strong>: iron_fly/vix_pctl_gt_85, bwb_spx_put/vix_pctl_gt_85, double_calendar/vix_gt_25, ic_45dte/regime_halt_only, ic_45dte/backwardation</li>
+  <li>REJECT &#8594; NEUTRAL: iron_fly/daily_caution, iron_fly/below_200dma</li>
+  <li>INSUFFICIENT_DATA &#8594; NEUTRAL: systest/adx_gt_20</li>
+  <li>No candidate moved into or out of RECOMMEND.</li>
+</ul>
+<p>Econ calendar horizon: OK. FOMC/CPI/NFP coverage runs to 2027-12-03 (372 days).</p>
+
+<h2>Issues &amp; Anomalies</h2>
+<table>
+  <tr><th>Time (ET)</th><th>Service</th><th>Issue</th><th>Trace / Signal ID</th></tr>
+  <tr><td>all day</td><td>resource-health (app-host)</td><td><span class="badge-warn">warn</span> 17 swap_high alerts and 1 load_high. Swap peaked at 4,843 MB (20:00 ET 11-25) and load1 at 14.14 (23:45 ET 11-25) on the 8 GB host.</td><td>resource-health-app-host-2026-11-26.json</td></tr>
+  <tr><td>through 11-25</td><td>strategy-engine (skip streaks)</td><td><span class="badge-warn">warn</span> 203 unbroken skip streaks, the same set as yesterday. 175 are <code>exit.no_entries</code> (szagar 103, kaity 45, tommyboy 25, sydney 2). The 28 non-exit streaks are listed below.</td><td>skip-streaks-2026-11-26.json</td></tr>
+  <tr><td>08:00</td><td>strategy-engine (all 4 logins)</td><td><span class="badge-warn">warn</span> Startup pre-warm failed with <code>Cannot derive routing_key from security_id: '/ES'</code> (also /MES; on szagar also QQQ/SPX/SPY). This is chronic: 10 on 11-25 and 5 on 11-24.</td><td>action=startup_prewarm</td></tr>
+  <tr><td>all day</td><td>cockpit-api</td><td><span class="badge-warn">warn</span> 5,724 &#8220;per-group position claims do not reconcile&#8221; WARNINGs (16,920 on 11-25), all from one row: szagar_paper <code>option:SPXW:2026-12-18:put:7050</code>, broker_qty -1 vs claimed -3, groups 22586 / 23092 / 23550.</td><td>&#8212;</td></tr>
+</table>
+
+<h2>&#128269; Smells &amp; Next Steps</h2>
+<table>
+  <tr><th>Category</th><th>Observation</th><th>Suggested Next Step</th></tr>
+  <tr><td><span class="badge-warn">Config/Param</span></td><td>There are 13 szagar <code>watchlist.empty</code> 9-day streaks: atlas_* ×5, earnings_* ×3, pead_* ×4, neglected_strangle. There is also sydney <code>put_spreads</code>. This is the earnings_events feeder pattern: an empty feed means an empty watchlist.</td><td>Check freshness of <code>earnings_events</code> and the atlas export (re-export per cycle). Then check which watchlist <code>put_spreads</code> reads.</td></tr>
+  <tr><td><span class="badge-err">Config/Param</span></td><td>7 bots have <code>structure.unresolvable</code> streaks of 5–9 days: bwb_spx_put_1000/1030_kaity_paper, sniper_ic, iron_man_kaity_paper, ic_16d_5w_paper, tasty_roll_chain_mes_paper, jade_lizard_0dte_atm_paper. They cannot trade at all.</td><td>Pull the <code>setup</code> from the last fire per bot: <code>SELECT bot, skip_reason, decision_data FROM bot_runs WHERE skip_code='structure.unresolvable' AND started_at&gt;now()-interval '3 days'</code>. Fix params or disarm.</td></tr>
+  <tr><td><span class="badge-warn">Config/Param</span></td><td>Other single-cause streaks: <code>ic_0dte_em_bwb_defense_paper</code> signal.absent (45 runs / 9 d), <code>vol_pairs_entry_paper</code> filter.threshold (9 d), <code>tom_call_spread_entry_paper</code> entry.window_closed (9 d), <code>bwb_rsi_call_kaity_paper</code> gate.feature (9 d), <code>tp_0dte_put_spread_paper</code> watchlist.all_skipped (5 d).</td><td>Confirm that the signal ic_0dte_em_bwb_defense depends on is still produced. Check that the tom_call_spread cron falls inside its entry window. Review the vol_pairs threshold against <code>fire_features</code>.</td></tr>
+  <tr><td><span class="badge-warn">Config/Param</span></td><td><code>pmcc_itm_qqq_paper</code> (tommyboy, 9 d) and <code>itm_diag_etf_kaity_paper</code> (5 d) are stuck on entry.max_concurrent. Positions may never be exiting.</td><td>Review their open groups with <code>/trade-report</code>. Confirm the exit family is firing and the open groups are real, not ghost rows.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td>app-host (8 GB) swapped up to 4.8 GB with load 14 overnight on 11-25. This is the constrained host.</td><td>Read <code>latest.groups.zts.top</code> in resource-health-app-host-2026-11-26.json and the 20:00–23:45 ET samples in resource-health-samples-app-host-2026-11-25.jsonl to find the overnight job driving it.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td>Engine startup pre-warm passes bare <code>/ES</code> and <code>/MES</code> (and on szagar QQQ/SPX/SPY) where a security_id is expected. The result is &#8220;Cannot derive routing_key&#8221; on every restart.</td><td>Resolve via <code>security_id_for(sym, instrument_type)</code> before calling <code>routing_key()</code> in <code>strategy_engine/server.py</code> (action=startup_prewarm).</td></tr>
+  <tr><td><span class="badge-warn">Risk</span></td><td>szagar_paper SPXW 12-18 7050P: the ledger groups 22586, 23092 and 23550 together claim -3, but the broker holds -1. Cockpit logs this about 4 times a minute.</td><td>Apply the shared-strike rule: decide from each group's ledger net, not from the positions row. Repair the 2 stale claims. Also consider rate-limiting the warning in cockpit-api.</td></tr>
+  <tr><td><span class="badge-warn">Infrastructure</span></td><td>MDS logged 5.9k warnings on a holiday, almost all reconcile noise. sydney had 4,007 <code>data_req.reconcile.cap_block</code> and tommyboy 936 <code>data_req.reconcile.unresolvable</code>.</td><td>Grep the blocked and unresolvable data_req entries in <code>mds-tommyboy.log</code> on data-host. Look for stale <code>md:data_req</code> demand, such as expired expiries.</td></tr>
+</table>
+
+<h2>Non-exit Skip Streaks (detail)</h2>
+<table>
+  <tr><th>Reason</th><th>Login</th><th>Bot</th><th>Streak</th></tr>
+<tr><td><span class='badge-warn'>gate.feature</span></td><td>kaity</td><td>bwb_rsi_call_kaity_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>structure.unresolvable</span></td><td>kaity</td><td>bwb_spx_put_1000_kaity_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>structure.unresolvable</span></td><td>kaity</td><td>sniper_ic</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>sydney</td><td>put_spreads</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>atlas_bear_call_strict_entry</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>atlas_breakout_entry</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>atlas_bull_put_strict_entry</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>atlas_ic_calibrated_entry</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>atlas_ic_strict_entry</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>earnings_bear_call_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>earnings_bull_put_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>earnings_ic_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>signal.absent</span></td><td>szagar</td><td>ic_0dte_em_bwb_defense_paper</td><td>45 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>structure.unresolvable</span></td><td>szagar</td><td>ic_16d_5w_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>neglected_strangle_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>pead_abs_call_spread_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>pead_call_spread_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>pead_p7_call_spread_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.empty</span></td><td>szagar</td><td>pead_r4_call_spread_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>structure.unresolvable</span></td><td>szagar</td><td>tasty_roll_chain_mes_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>entry.window_closed</span></td><td>szagar</td><td>tom_call_spread_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>filter.threshold</span></td><td>szagar</td><td>vol_pairs_entry_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>entry.max_concurrent</span></td><td>tommyboy</td><td>pmcc_itm_qqq_paper</td><td>9 runs / 9 d</td></tr>
+<tr><td><span class='badge-warn'>structure.unresolvable</span></td><td>szagar</td><td>jade_lizard_0dte_atm_paper</td><td>8 runs / 8 d</td></tr>
+<tr><td><span class='badge-warn'>structure.unresolvable</span></td><td>kaity</td><td>iron_man_kaity_paper</td><td>6 runs / 6 d</td></tr>
+<tr><td><span class='badge-warn'>structure.unresolvable</span></td><td>kaity</td><td>bwb_spx_put_1030_kaity_paper</td><td>5 runs / 5 d</td></tr>
+<tr><td><span class='badge-warn'>entry.max_concurrent</span></td><td>kaity</td><td>itm_diag_etf_kaity_paper</td><td>5 runs / 5 d</td></tr>
+<tr><td><span class='badge-warn'>watchlist.all_skipped</span></td><td>szagar</td><td>tp_0dte_put_spread_paper</td><td>5 runs / 5 d</td></tr>
+</table>
+
+<hr style="border:none;border-top:1px solid #e0e0e0;margin-top:32px">
+<p style="color:#999;font-size:11px">Generated by zts-massive daily-report.sh &#183; 2026-11-26</p>
+</body>
+</html>
